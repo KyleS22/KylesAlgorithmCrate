@@ -12,7 +12,20 @@ pub struct Tree<T> {
 
 impl<T> Tree<T> 
     where T: Clone {
-
+    
+    /// Returns a new instance of a tree, with root_val as the value for the node
+    ///
+    /// # Arguments
+    ///
+    /// * `root_val` - The value to store at the root of this tree
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// # use kyles_algorithm_crate::tree::Tree;
+    /// // Creates a new tree with the value 1 at its root
+    /// let tree = Tree::new(1);
+    /// ``` 
     pub fn new(root_val: T) -> Self {
         Tree { data: root_val, _parent: None, children: Vec::new()}
     }
@@ -113,5 +126,20 @@ mod tests {
         expected.push(1);
 
         assert_eq!(expected, result);
+    }
+
+    #[test]
+    fn test_preorder_traversal(){
+        assert!(false);
+    }
+
+    #[test]
+    fn test_add_subtree(){
+        assert!(false);
+    }
+
+    #[test]
+    fn test_add_subtree_value(){
+        assert!(false);
     }
 }
