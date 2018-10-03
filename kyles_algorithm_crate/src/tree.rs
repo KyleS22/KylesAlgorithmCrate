@@ -13,21 +13,30 @@ impl<T> Tree<T>
         Tree { data: root_val, _parent: None, children: Vec::new()}
     }
 
-    pub fn postorder_traversal(self) -> Vec<T> {
+    pub fn add_subtree(&mut self, tree: Tree<T>) {
+        self.children.push(tree);
+    }
+
+    pub fn add_subtree_value(mut self, value: T){
+        let subtree = Tree::new(value);
+        self.add_subtree(subtree);
+    }
+
+    pub fn postorder_traversal(&self) -> Vec<T> {
         let mut values: Vec<T> = Vec::new();
 
         values.append(&mut Tree::postorder_traversal_node(self));
         values
     }
 
-    pub fn postorder_traversal_node(start_node: Tree<T>) -> Vec<T> {
+    pub fn postorder_traversal_node(start_node: &Tree<T>) -> Vec<T> {
         let mut values: Vec<T> = Vec::new();
         if start_node.children.len() == 0 {
             values.push(start_node.data.clone());
         } else { 
          // for child in children, values.append(postorder_traversal(child))
-         for child in start_node.children {
-             values.append(&mut Tree::postorder_traversal_node(child));
+         for child in start_node.children.iter() {
+             values.append(&mut Tree::postorder_traversal_node(&child));
          }
          values.push(start_node.data.clone());
         }
@@ -49,7 +58,8 @@ mod tests {
 
         let mut root = Tree::new(1);
 
-        let result = root.postorder_traversal();
+        let mut result;
+        result  = root.postorder_traversal();
         
         let mut expected = Vec::new();
         expected.push(1);
@@ -60,11 +70,11 @@ mod tests {
         let three = Tree::new(3);
         let four = Tree::new(4);
 
-        root.children.push(two);
-        root.children.push(three);
-        root.children.push(four);
+        root.add_subtree(two);
+        root.add_subtree(three);
+        root.add_subtree(four);
 
-        let result = root.postorder_traversal();
+        result = root.postorder_traversal();
 
         let mut expected = Vec::new();
         expected.push(2);
