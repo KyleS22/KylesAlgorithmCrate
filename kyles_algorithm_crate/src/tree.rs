@@ -1,8 +1,12 @@
 
 
+/// Representation of a tree structure
 pub struct Tree<T> {
+    /// The data stored at this node in the tree
     data: T,
+    /// Reference to a parent tree
     _parent: Option<Box<Tree<T>>>,
+    /// List of children trees
     children: Vec<Tree<T>>,
 }
 
@@ -21,7 +25,33 @@ impl<T> Tree<T>
         let subtree = Tree::new(value);
         self.add_subtree(subtree);
     }
-
+    
+    /// Returns the values in the tree that are visited in a post-order traversal of the tree from the root
+    ///
+    /// # Arguments
+    /// 
+    /// * `&self` - Borrows itself so that we can evaluate the child nodes and still be able to use the
+    ///             reference that called this function afterward
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// // Usage of postorder traversal
+    /// # use kyles_algorithm_crate::tree::Tree;
+    /// # // Create a tree with value 1 at its root
+    /// # let mut root = Tree::new(1);    
+    ///
+    /// # let two = Tree::new(2);
+    /// # let three = Tree::new(3);
+    /// # let four = Tree::new(4);
+    ///
+    /// # root.add_subtree(two);
+    /// # root.add_subtree(three);
+    /// # root.add_subtree(four);
+    ///
+    /// // This will contain a vector of the values in the order they were visited
+    /// let postorder = root.postorder_traversal();
+    /// 
     pub fn postorder_traversal(&self) -> Vec<T> {
         let mut values: Vec<T> = Vec::new();
 
