@@ -30,11 +30,51 @@ impl<T> Tree<T>
         Tree { data: root_val, _parent: None, children: Vec::new()}
     }
 
+    /// Adds a given tree to the list of children of this tree
+    ///
+    /// # Arguments
+    /// 
+    /// * `tree` - The tree to add to the list of children
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// # use kyles_algorithm_crate::tree::Tree;
+    /// // Creates a new tree with the value 1 at its root
+    /// let mut tree = Tree::new(1);
+    ///
+    /// let two = Tree::new(2);
+    /// let three = Tree::new(3);
+    ///
+    /// // Add the two new trees to the root
+    /// tree.add_subtree(two);
+    /// tree.add_subtree(three);
+    ///
+    /// // root.children now contains two and three
+    /// ```
     pub fn add_subtree(&mut self, tree: Tree<T>) {
         self.children.push(tree);
     }
 
-    pub fn add_subtree_value(mut self, value: T){
+    /// Add a new subtree to the root by specifying a value to store at the new child node
+    ///
+    /// # Arguments
+    ///
+    /// * `value` - The value to store at the new child node
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// # use kyles_algorithm_crate::tree::Tree;
+    /// // Creates a new tree with the value 1 at its root
+    /// let mut tree = Tree::new(1);
+    /// 
+    /// tree.add_subtree_value(2);
+    /// tree.add_subtree_value(3);
+    ///
+    /// // root.children now contains subtrees with values 2 and 3
+    /// ```
+    pub fn add_subtree_value(&mut self, value: T){
         let subtree = Tree::new(value);
         self.add_subtree(subtree);
     }
@@ -72,6 +112,9 @@ impl<T> Tree<T>
         values
     }
 
+    /// Returns the values in the tree that are visited in a post-order traversal of the tree from the given node
+    /// # Arguments
+    /// * `start_node` - The sub tree to start the traversal at
     pub fn postorder_traversal_node(start_node: &Tree<T>) -> Vec<T> {
         let mut values: Vec<T> = Vec::new();
         if start_node.children.len() == 0 {
@@ -86,8 +129,22 @@ impl<T> Tree<T>
         values   
     }
 
+    pub fn preorder_traversal_node(start_node: &Tree<T>) -> Vec<T>{
+        let mut values: Vec<T> = Vec::new();
+        values.push(start_node.data.clone());
+    
+        // for child in children, values.append(postorder_traversal(child))
+        for child in start_node.children.iter() {
+            values.append(&mut Tree::preorder_traversal_node(&child));
+        }
+    
+
+        values        
+    }
+
     pub fn preorder_traversal(&self) -> Vec<T> {
-        let values: Vec<T> = Vec::new();
+        let mut values: Vec<T> = Vec::new();
+        values.append(&mut Tree::preorder_traversal_node(self));
         values
     }
 }
@@ -130,16 +187,67 @@ mod tests {
 
     #[test]
     fn test_preorder_traversal(){
-        assert!(false);
+        use tree::Tree;
+
+        let mut root = Tree::new(1);
+
+        let mut result;
+        result  = root.preorder_traversal();
+        
+        let mut expected = Vec::new();
+        expected.push(1);
+
+        assert_eq!(expected, result);
+
+        let two = Tree::new(2);
+        let three = Tree::new(3);
+        let four = Tree::new(4);
+
+        root.add_subtree(two);
+        root.add_subtree(three);
+        root.add_subtree(four);
+
+        result = root.preorder_traversal();
+
+        let mut expected = Vec::new();
+        expected.push(1);
+        expected.push(2);
+        expected.push(3);
+        expected.push(4);
+
+        assert_eq!(expected, result);
     }
 
     #[test]
     fn test_add_subtree(){
-        assert!(false);
+        use tree::Tree;
+
+        let mut root = Tree::new(1);
+
+        let two = Tree::new(2);
+        let three = Tree::new(3);
+        let four = Tree::new(4);
+
+        root.add_subtree(two);
+        root.add_subtree(three);
+        root.add_subtree(four);
+
+        assert_eq!(root.children[0].data, 2);
+        assert_eq!(root.children[1].data, 3);
+        assert_eq!(root.children[2].data, 4);
     }
 
     #[test]
     fn test_add_subtree_value(){
-        assert!(false);
-    }
+        use tree::Tree;
+
+        let mut root = Tree::new(1);
+
+        root.add_subtree_value(2);
+        root.add_subtree_value(3);
+        root.add_subtree_value(4);
+
+        assert_eq!(root.children[0].data, 2);
+        assert_eq!(root.children[1].data, 3);
+        assert_eq!(root.children[2].data, 4);    }
 }
