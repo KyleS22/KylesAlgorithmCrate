@@ -41,13 +41,6 @@ impl<T> Graph<T>{
         from.edges.push(to);
     }
 
-    pub fn add_undirected_edge(&mut self, node1: Node<T>, node2: Node<T>){
-        self.add_directed_edge(node1, node2);
-        self.add_directed_edge(node2, node1);
-    }
-
-
-
 }
 
 #[cfg(test)]
