@@ -1,7 +1,9 @@
+use std::collections::HashMap;
 
 /// Adjacency list implementation of a graph
 pub struct Graph<T>{
-    nodes: Vec<Node<T>>,
+    pub nodes: HashMap<u32, Node<T>>,
+    pub edges: Vec<Edge>
 }
 
 /// Nodes that store data
@@ -10,37 +12,46 @@ pub struct Node<T>{
     edges: Vec<Node<T>>,
 }
 
+/// Directed edges between nodes
+pub struct Edge{
+    from: u32,
+    to: u32,
+    weight: u32
+}
+
 impl<T> Graph<T>{
 
-    /// Create a new graph with no vertices
     pub fn new() -> Self{
-        Graph{nodes: Vec::new()}
+        Graph{nodes: HashMap::new(), edges: Vec::new()}
     }
 
-    /// Add a new vertex to the graph with data
-    ///
-    /// # Arguments
-    ///
-    /// * `data` - The data to store at this vertex
-    ///
-    /// # Example
-    ///
-    /// ```
-    /// // Usage of postorder traversal
-    /// # use kyles_algorithm_crate::graph::Graph;
-    /// // Create a tree with value 1 at its root
-    /// let mut graph = Graph::new();    
-    /// graph.add_vertex(1);
-    /// ```
-    pub fn add_vertex(&mut self, data: T){
-        let vertex = Node{data: data, edges: Vec::new()};
-        self.nodes.push(vertex);
+    pub fn add_node(&mut self, node: Node<T>) -> u32{
+
+        // The new node id will be the current number of nodes in the graph
+        let node_id = self.nodes.len() as u32;
+
+        // Insert the node
+        self.nodes.insert(node_id, node);
+
+        // Return the hash index of the inserted node
+        node_id
     }
 
-    pub fn add_directed_edge(&mut self, mut from: Node<T>, to: Node<T>){
-        from.edges.push(to);
+    pub fn add_directed_edge(from: u32, to: u32){
+
     }
 
+    pub fn add_undirected_edge(node1: u32, node2: u32){
+
+    }
+
+    pub fn add_weighted_directed_edge(from: u32, to: u32){
+
+    }
+
+    pub fn add_weighted_undirected_edge(node1: u32, to: u32){
+
+    }
 }
 
 #[cfg(test)]
