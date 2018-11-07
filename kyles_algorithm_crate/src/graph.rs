@@ -20,17 +20,44 @@ pub struct Edge{
 
 impl<T> Graph<T>{
 
+    /// Returns a new instance of a Graph
+    /// # Example
+    ///
+    /// ```
+    /// # use kyles_algorithm_crate::graph::Graph;
+    /// // Creates a new graph
+    /// let graph = Graph::new(10);
+    /// ``` 
     pub fn new() -> Self{
         Graph{nodes: HashMap::new()}
     }
 
-    pub fn add_node(&mut self, node: Node<T>) -> u32{
+    /// Add a new node to the graph with supplied data.  Returns the id of the node in the graph.
+    /// # Arguments
+    /// 
+    /// `data` - The data to put in the node to be added
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// # use kyles_algorithm_crate::graph::Graph;
+    /// // Creates a new node
+    /// let graph = Graph::new();
+    /// 
+    /// // Adds a new node with value 10 to the graph
+    /// // node_id now contains the id to access that node in the graph
+    /// let node_id = graph.add_node(10);
+    /// 
+    /// ``` 
+    pub fn add_node(&mut self, data: T) -> u32{
 
         // The new node id will be the current number of nodes in the graph
         let node_id = self.nodes.len() as u32;
 
+        let new_node = Node::new(data);
+
         // Insert the node
-        self.nodes.insert(node_id, node);
+        self.nodes.insert(node_id, new_node);
 
         // Return the hash index of the inserted node
         node_id
@@ -104,7 +131,16 @@ mod tests {
 
     #[test]
     fn test_add_node(){
-        assert!(false);
+        use graph::Graph;
+
+        let mut graph = Graph::new();
+
+        let zeroth_node = graph.add_node(0);
+
+        assert_eq!(zeroth_node, 0);
+        assert_eq!(graph.nodes.len(), 1);
+        // TODO: FIXassert_eq!(graph.nodes.get(&0), Some(Node.data));
+
     }
 
     #[test]
