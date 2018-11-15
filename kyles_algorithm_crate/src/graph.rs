@@ -5,12 +5,14 @@ pub struct Graph<T>{
     pub nodes: HashMap<u32, Node<T>>
 }
 
+#[derive(Debug)]
 /// Nodes that store data
 pub struct Node<T>{
     data: T,
     edges: Vec<Edge>
 }
 
+#[derive(Debug)]
 /// Directed edges between nodes
 pub struct Edge{
     from: u32, 
@@ -63,15 +65,22 @@ impl<T> Graph<T>{
         node_id
     }
 
-    pub fn add_directed_edge(from: u32, to: u32){
+    pub fn add_directed_edge(&mut self, from: u32, to: u32){
         // Create a new edge with weight 1
-        // Get the from node from the hashmap
-        // Add the edge to the node
+        let edge = Edge::new(from, to, 1);
+
+        // Grab the from node and add the edge to its list of edges
+        if let Some(n) = self.nodes.get_mut(&from){
+            n.edges.push(edge);
+        }
     }
 
-    pub fn add_undirected_edge(node1: u32, node2: u32){
+    pub fn add_undirected_edge(&mut self, node1: u32, node2: u32){
         // Add directed edge from node1 to node2
+        self.add_directed_edge(node1, node2);
+
         // Add directed edge from node2 to node1
+        self.add_directed_edge(node2, node1);
     }
 
     pub fn add_weighted_directed_edge(from: u32, to: u32){
@@ -139,13 +148,66 @@ mod tests {
 
         assert_eq!(zeroth_node, 0);
         assert_eq!(graph.nodes.len(), 1);
-        // TODO: FIXassert_eq!(graph.nodes.get(&0), Some(Node.data));
+        assert_eq!(graph.nodes.get(&zeroth_node).unwrap().data, 0);
+        
+        let first_node = graph.add_node(1);
+
+        assert_eq!(first_node, 1);
+        assert_eq!(graph.nodes.len(), 2);
+        assert_eq!(graph.nodes.get(&zeroth_node).unwrap().data, 0);
+        assert_eq!(graph.nodes.get(&first_node).unwrap().data, 1);
+
 
     }
 
     #[test]
     fn test_add_directed_edge(){
-        assert!(false);
+        use graph::Graph;
+
+        let mut graph = Graph::new();
+
+        let zeroth_node = graph.add_node(0);
+        let first_node = graph.add_node(1);
+
+        graph.add_directed_edge(zeroth_node, first_node);
+
+        let graph_nodes = &mut graph.nodes;
+
+        let node = &graph_nodes.get(&zeroth_node).unwrap();
+
+        assert_eq!(node.edges.len(), 1);
+        assert_eq!(node.edges[0].to, first_node);
+        assert_eq!(node.edges[0].weight, 1);
+        
+        let node2 = graph_nodes.get(&first_node).unwrap();
+
+        assert_eq!(node2.edges.len(), 0);
+
+        let mut graph2 = Graph::new();
+
+        let node1_id = graph2.add_node(1);
+        let node2_id = graph2.add_node(2);
+
+
+        graph2.add_directed_edge(node1_id, node2_id);
+        graph2.add_directed_edge(node2_id, node1_id);
+
+        let graph_nodes2 = &mut graph2.nodes;
+
+        let node = &graph_nodes2.get(&node1_id).unwrap();
+
+        assert_eq!(node.edges.len(), 1);
+        assert_eq!(node.edges[0].to, node2_id);
+        assert_eq!(node.edges[0].weight, 1);
+        
+        let node2 = graph_nodes2.get(&node2_id).unwrap();
+
+        assert_eq!(node2.edges.len(), 1);
+        assert_eq!(node2.edges[0].to, node1_id);
+        assert_eq!(node2.edges[0].weight, 1);
+
+
+
     }
 
     #[test]
