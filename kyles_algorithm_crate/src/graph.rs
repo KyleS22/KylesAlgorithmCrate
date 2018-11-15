@@ -93,6 +93,12 @@ impl<T> Graph<T>{
         // Add directed edge from node1 to node2
         // Add directed edge from node2 to node1
     }
+
+    pub fn get_node(&mut self, node: u32) -> Option<&mut Node<T>>{
+
+        self.nodes.get_mut(&node)
+
+    }
 }
 
 impl<T> Node<T>{
@@ -159,6 +165,12 @@ mod tests {
 
 
     }
+
+    #[test]
+    fn test_get_node(){
+        assert!(false);
+    }
+
 
     #[test]
     fn test_add_directed_edge(){
