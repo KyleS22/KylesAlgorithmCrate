@@ -94,10 +94,17 @@ impl<T> Graph<T>{
         // Add directed edge from node2 to node1
     }
 
-    pub fn get_node(&mut self, node: u32) -> Option<&mut Node<T>>{
+    pub fn get_node(&self, node: u32) -> Option<&Node<T>>{
+        self.nodes.get(&node)
+    }
 
-        self.nodes.get_mut(&node)
+    pub fn get_node_mut(&mut self, node: u32) -> Option<&mut Node<T>>{
 
+        if let Some(res) = self.nodes.get_mut(&node){
+            Some(res)
+        }else{
+            None
+        }
     }
 }
 
@@ -168,7 +175,58 @@ mod tests {
 
     #[test]
     fn test_get_node(){
-        assert!(false);
+        use graph::Graph;
+
+        let mut graph = Graph::new();
+
+        let zeroth_node = graph.add_node('A');
+        let first_node = graph.add_node('B');
+
+        
+        {
+            let dat = graph.get_node(zeroth_node);
+            assert_eq!(dat.unwrap().data, 'A'); 
+        };
+        
+        {
+            let dat = graph.get_node(first_node);
+            assert_eq!(dat.unwrap().data, 'B');
+        };
+
+        
+       {
+            let dat = graph.get_node(7);
+            assert!(dat.is_none());
+       }
+    }
+
+
+    #[test]
+    fn test_get_node_mut(){
+        use graph::Graph;
+
+        let mut graph = Graph::new();
+
+        let zeroth_node = graph.add_node('A');
+        let first_node = graph.add_node('B');
+
+        
+        {
+            let dat = graph.get_node_mut(zeroth_node);
+            assert_eq!(dat.unwrap().data, 'A'); 
+        };
+        
+        {
+            let dat = graph.get_node_mut(first_node);
+            assert_eq!(dat.unwrap().data, 'B');
+        };
+
+        
+       {
+            let dat = graph.get_node_mut(7);
+            assert!(dat.is_none());
+       }
+
     }
 
 
