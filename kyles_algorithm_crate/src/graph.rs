@@ -43,7 +43,7 @@ impl<T> Graph<T>{
     ///
     /// ```
     /// # use kyles_algorithm_crate::graph::Graph;
-    /// // Creates a new node
+    /// // Creates a new graph
     /// let graph = Graph::new();
     /// 
     /// // Adds a new node with value 10 to the graph
@@ -65,6 +65,26 @@ impl<T> Graph<T>{
         node_id
     }
 
+    /// Add a directed edge from one node to another
+    /// # Arguments
+    ///
+    /// `from` - The node the edge will start at
+    /// `to` - The node the edge will go to
+    ///
+    /// # Example
+    /// ```
+    /// #use kyles_algorithm_crate::graph::Graph;
+    /// // Create a graph
+    /// let graph = Graph::new();
+    /// 
+    /// // Add two nodes
+    /// let node1 = graph.add_node(1);
+    /// let node2 = graph.add_node(2);
+    ///
+    /// // Add an edge from node1 to node 2
+    /// graph.add_directed_edge(node1, node2);
+    ///
+    /// ```
     pub fn add_directed_edge(&mut self, from: u32, to: u32){
         // Create a new edge with weight 1
         let edge = Edge::new(from, to, 1);
@@ -83,15 +103,22 @@ impl<T> Graph<T>{
         self.add_directed_edge(node2, node1);
     }
 
-    pub fn add_weighted_directed_edge(from: u32, to: u32){
+    pub fn add_weighted_directed_edge(&mut self, from: u32, to: u32, weight: u32){
         // Create a new edge
+        let edge = Edge::new(from, to, weight);
+
         // Get the from node from the hashmap
-        // Add the edge to the node
+        if let Some(n) = self.nodes.get_mut(&from){
+            n.edges.push(edge);
+        }
     }
 
-    pub fn add_weighted_undirected_edge(node1: u32, to: u32){
+    pub fn add_weighted_undirected_edge(&mut self, node1: u32, node2: u32, weight: u32){
         // Add directed edge from node1 to node2
+        self.add_weighted_directed_edge(node1, node2, weight);
+
         // Add directed edge from node2 to node1
+        self.add_weighted_directed_edge(node2, node1, weight);
     }
 
     pub fn get_node(&self, node: u32) -> Option<&Node<T>>{
