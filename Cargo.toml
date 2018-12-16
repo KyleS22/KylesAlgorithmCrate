@@ -1,6 +1,6 @@
 [package]
 name = "kyles_algorithm_crate"
 version = "0.1.0"
-authors = ["KyleS22 <25314187+KyleS22@users.noreply.github.com>"]
+authors = ["KyleS22"]
 
 [dependencies]
