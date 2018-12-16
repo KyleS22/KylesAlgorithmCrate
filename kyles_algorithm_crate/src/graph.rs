@@ -28,7 +28,7 @@ impl<T> Graph<T>{
     /// ```
     /// # use kyles_algorithm_crate::graph::Graph;
     /// // Creates a new graph
-    /// let graph = Graph::new(10);
+    /// let graph: Graph<u32> = Graph::new();
     /// ``` 
     pub fn new() -> Self{
         Graph{nodes: HashMap::new()}
@@ -44,7 +44,7 @@ impl<T> Graph<T>{
     /// ```
     /// # use kyles_algorithm_crate::graph::Graph;
     /// // Creates a new graph
-    /// let graph = Graph::new();
+    /// let mut graph = Graph::new();
     /// 
     /// // Adds a new node with value 10 to the graph
     /// // node_id now contains the id to access that node in the graph
@@ -68,14 +68,14 @@ impl<T> Graph<T>{
     /// Add a directed edge from one node to another
     /// # Arguments
     ///
-    /// `from` - The node the edge will start at
-    /// `to` - The node the edge will go to
+    /// `from` - The ID of the  node the edge will start at
+    /// `to` - The ID of the node the edge will go to
     ///
     /// # Example
     /// ```
-    /// #use kyles_algorithm_crate::graph::Graph;
+    /// # use kyles_algorithm_crate::graph::Graph;
     /// // Create a graph
-    /// let graph = Graph::new();
+    /// let mut graph = Graph::new();
     /// 
     /// // Add two nodes
     /// let node1 = graph.add_node(1);
@@ -95,6 +95,25 @@ impl<T> Graph<T>{
         }
     }
 
+    /// Add an undirected edge between two nodes
+    /// # Arguments
+    ///
+    /// `node1` - The ID of the first node to add an edge to
+    /// `node2` - The ID of the second node to add an edge to
+    ///
+    /// # Example
+    /// ```
+    /// # use kyles_algorithm_crate::graph::Graph;
+    /// // Create a graph
+    /// let mut graph = Graph::new();
+    /// 
+    /// // Add two nodes
+    /// let node1 = graph.add_node(1);
+    /// let node2 = graph.add_node(2);
+    ///
+    /// // Add an edge from node1 to node 2
+    /// graph.add_undirected_edge(node1, node2);
+    /// ```
     pub fn add_undirected_edge(&mut self, node1: u32, node2: u32){
         // Add directed edge from node1 to node2
         self.add_directed_edge(node1, node2);
@@ -103,6 +122,26 @@ impl<T> Graph<T>{
         self.add_directed_edge(node2, node1);
     }
 
+    /// Add a weighted directed edge from one node to another
+    /// # Arguments
+    ///
+    /// `from` - The ID of the node the edge will come from
+    /// `to` - The ID of the node the edge will go to
+    /// `weight` - The weight of the edge
+    ///
+    /// # Example
+    /// ```
+    /// # use kyles_algorithm_crate::graph::Graph;
+    /// // Create a graph
+    /// let mut graph = Graph::new();
+    /// 
+    /// // Add two nodes
+    /// let node1 = graph.add_node(1);
+    /// let node2 = graph.add_node(2);
+    ///
+    /// // Add an edge of weight 10 from node1 to node 2
+    /// graph.add_weighted_directed_edge(node1, node2, 10);
+    /// ```
     pub fn add_weighted_directed_edge(&mut self, from: u32, to: u32, weight: u32){
         // Create a new edge
         let edge = Edge::new(from, to, weight);
@@ -113,6 +152,26 @@ impl<T> Graph<T>{
         }
     }
 
+    /// Add a weighted undirected edge between two nodes
+    /// # Arguments
+    /// 
+    /// `node1` - The ID of the first node to add the edge to
+    /// `node2` - The ID of the second node to add the edge to
+    /// `weight` - The weight for the edge
+    ///
+    /// # Example
+    /// ```
+    /// # use kyles_algorithm_crate::graph::Graph;
+    /// // Create a graph
+    /// let mut graph = Graph::new();
+    /// 
+    /// // Add two nodes
+    /// let node1 = graph.add_node(1);
+    /// let node2 = graph.add_node(2);
+    ///
+    /// // Add an edge of weight 10 from node1 to node 2
+    /// graph.add_weighted_undirected_edge(node1, node2, 10);
+    /// ```
     pub fn add_weighted_undirected_edge(&mut self, node1: u32, node2: u32, weight: u32){
         // Add directed edge from node1 to node2
         self.add_weighted_directed_edge(node1, node2, weight);
@@ -121,10 +180,44 @@ impl<T> Graph<T>{
         self.add_weighted_directed_edge(node2, node1, weight);
     }
 
+    /// Get a node from the graph
+    /// # Arguments
+    /// 'node' - The ID of the node to get from the graph
+    ///
+    /// # Example
+    /// ```
+    /// # use kyles_algorithm_crate::graph::Graph;
+    /// // Create a graph
+    /// let mut graph = Graph::new();
+    /// 
+    /// // Add two nodes
+    /// let node1 = graph.add_node(1);
+    /// let node2 = graph.add_node(2);
+    ///
+    /// // get node 1
+    /// let received_node = graph.get_node(node1);
+    /// ```
     pub fn get_node(&self, node: u32) -> Option<&Node<T>>{
         self.nodes.get(&node)
     }
 
+    /// Get a mutable node from the graph
+    /// # Arguments
+    /// 'node' - The ID of the node to get from the graph
+    ///
+    /// # Example
+    /// ```
+    /// # use kyles_algorithm_crate::graph::Graph;
+    /// // Create a graph
+    /// let mut graph = Graph::new();
+    /// 
+    /// // Add two nodes
+    /// let node1 = graph.add_node(1);
+    /// let node2 = graph.add_node(2);
+    ///
+    /// // get node 1
+    /// let received_node = graph.get_node_mut(node1);
+    /// ```
     pub fn get_node_mut(&mut self, node: u32) -> Option<&mut Node<T>>{
 
         if let Some(res) = self.nodes.get_mut(&node){
@@ -146,6 +239,7 @@ impl<T> Node<T>{
     ///
     /// ```
     /// # use kyles_algorithm_crate::graph::Graph;
+    /// # use kyles_algorithm_crate::graph::Node;
     /// // Creates a new node
     /// let node = Node::new(10);
     /// ``` 
@@ -159,14 +253,15 @@ impl Edge{
     /// Returns a new instance of an edge from one node to another, with a given weight
     /// # Arguments
     ///
-    /// * `from` - The id of the node this edge starts from
-    /// * `to`   - The id of the node this edge goes to
+    /// * `from` - The ID of the node this edge starts from
+    /// * `to`   - The ID of the node this edge goes to
     /// * `weight` - The weight of the edge 
     ///
     /// # Example
     ///
     /// ```
     /// # use kyles_algorithm_crate::graph::Graph;
+    /// # use kyles_algorithm_crate::graph::Edge;
     /// // Creates a new edge
     /// let edge = Edge::new(1, 2, 10);
     /// ``` 
@@ -309,16 +404,102 @@ mod tests {
 
     #[test]
     fn test_add_undirected_edge(){
-        assert!(false);
+        use graph::Graph;
+
+        let mut graph = Graph::new();
+
+        let zeroth_node = graph.add_node(0);
+        let first_node = graph.add_node(1);
+
+        graph.add_undirected_edge(zeroth_node, first_node);
+
+        let graph_nodes = &mut graph.nodes;
+
+        let node = &graph_nodes.get(&zeroth_node).unwrap();
+
+        assert_eq!(node.edges.len(), 1);
+        assert_eq!(node.edges[0].to, first_node);
+        assert_eq!(node.edges[0].weight, 1);
+        
+        let node2 = graph_nodes.get(&first_node).unwrap();
+
+        assert_eq!(node2.edges.len(), 1);
+        assert_eq!(node2.edges[0].to, zeroth_node);
+        assert_eq!(node2.edges[0].weight, 1);
+
     }
 
     #[test]
     fn test_add_weighted_directed_edge(){
-        assert!(false);
+        use graph::Graph;
+
+        let mut graph = Graph::new();
+
+        let zeroth_node = graph.add_node(0);
+        let first_node = graph.add_node(1);
+
+        graph.add_weighted_directed_edge(zeroth_node, first_node, 15);
+
+        let graph_nodes = &mut graph.nodes;
+
+        let node = &graph_nodes.get(&zeroth_node).unwrap();
+
+        assert_eq!(node.edges.len(), 1);
+        assert_eq!(node.edges[0].to, first_node);
+        assert_eq!(node.edges[0].weight, 15);
+        
+        let node2 = graph_nodes.get(&first_node).unwrap();
+
+        assert_eq!(node2.edges.len(), 0);
+
+        let mut graph2 = Graph::new();
+
+        let node1_id = graph2.add_node(1);
+        let node2_id = graph2.add_node(2);
+
+
+        graph2.add_weighted_directed_edge(node1_id, node2_id, 15);
+        graph2.add_weighted_directed_edge(node2_id, node1_id, 20);
+
+        let graph_nodes2 = &mut graph2.nodes;
+
+        let node = &graph_nodes2.get(&node1_id).unwrap();
+
+        assert_eq!(node.edges.len(), 1);
+        assert_eq!(node.edges[0].to, node2_id);
+        assert_eq!(node.edges[0].weight, 15);
+        
+        let node2 = graph_nodes2.get(&node2_id).unwrap();
+
+        assert_eq!(node2.edges.len(), 1);
+        assert_eq!(node2.edges[0].to, node1_id);
+        assert_eq!(node2.edges[0].weight, 20);
     }
 
     #[test]
     fn test_add_weighted_undirected_edge(){
-        assert!(false);
+        use graph::Graph;
+
+        let mut graph = Graph::new();
+
+        let zeroth_node = graph.add_node(0);
+        let first_node = graph.add_node(1);
+
+        graph.add_weighted_undirected_edge(zeroth_node, first_node, 15);
+
+        let graph_nodes = &mut graph.nodes;
+
+        let node = &graph_nodes.get(&zeroth_node).unwrap();
+
+        assert_eq!(node.edges.len(), 1);
+        assert_eq!(node.edges[0].to, first_node);
+        assert_eq!(node.edges[0].weight, 15);
+        
+        let node2 = graph_nodes.get(&first_node).unwrap();
+
+        assert_eq!(node2.edges.len(), 1);
+        assert_eq!(node2.edges[0].to, zeroth_node);
+        assert_eq!(node2.edges[0].weight, 15);
+
     }
 }
