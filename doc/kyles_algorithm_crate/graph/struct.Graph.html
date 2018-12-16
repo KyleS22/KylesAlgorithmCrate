@@ -1,0 +1,126 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `Graph` struct in crate `kyles_algorithm_crate`."><meta name="keywords" content="rust, rustlang, rust-lang, Graph"><title>kyles_algorithm_crate::graph::Graph - Rust</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc struct"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><p class='location'>Struct Graph</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#fields">Fields</a><div class="sidebar-links"><a href="#structfield.nodes">nodes</a></div><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.add_node">add_node</a><a href="#method.add_directed_edge">add_directed_edge</a><a href="#method.add_undirected_edge">add_undirected_edge</a><a href="#method.add_weighted_directed_edge">add_weighted_directed_edge</a><a href="#method.add_weighted_undirected_edge">add_weighted_undirected_edge</a><a href="#method.get_node">get_node</a><a href="#method.get_node_mut">get_node_mut</a></div><a class="sidebar-title" href="#synthetic-implementations">Auto Trait Implementations</a><div class="sidebar-links"><a href="#impl-Send">Send</a><a href="#impl-Sync">Sync</a></div></div><p class='location'><a href='../index.html'>kyles_algorithm_crate</a>::<wbr><a href='index.html'>graph</a></p><script>window.sidebarCurrent = {name: 'Graph', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>kyles_algorithm_crate</a>::<wbr><a href='index.html'>graph</a>::<wbr><a class="struct" href=''>Graph</a></span><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../../src/kyles_algorithm_crate/graph.rs.html#4-6' title='goto source code'>[src]</a></span></h1><div class="docblock type-decl"><pre class='rust struct'>pub struct Graph&lt;T&gt; {
+    pub nodes: <a class="struct" href="https://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html" title="struct std::collections::hash::map::HashMap">HashMap</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <a class="struct" href="../../kyles_algorithm_crate/graph/struct.Node.html" title="struct kyles_algorithm_crate::graph::Node">Node</a>&lt;T&gt;&gt;,
+}</pre></div><div class='docblock'><p>Adjacency list implementation of a graph</p>
+</div><h2 id='fields' class='fields small-section-header'>
+                       Fields<a href='#fields' class='anchor'></a></h2><span id="structfield.nodes" class="structfield small-section-header">
+                           <a href="#structfield.nodes" class="anchor field"></a>
+                           <span id="nodes.v" class='invisible'>
+                           <code>nodes: <a class="struct" href="https://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html" title="struct std::collections::hash::map::HashMap">HashMap</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <a class="struct" href="../../kyles_algorithm_crate/graph/struct.Node.html" title="struct kyles_algorithm_crate::graph::Node">Node</a>&lt;T&gt;&gt;</code>
+                           </span></span>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;T&gt; <a class="struct" href="../../kyles_algorithm_crate/graph/struct.Graph.html" title="struct kyles_algorithm_crate::graph::Graph">Graph</a>&lt;T&gt;</code><a href='#impl' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/kyles_algorithm_crate/graph.rs.html#23-229' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/kyles_algorithm_crate/graph.rs.html#33-35' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Returns a new instance of a Graph</p>
+<h1 id="example" class="section-header"><a href="#example">Example</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="comment">// Creates a new graph</span>
+<span class="kw">let</span> <span class="ident">graph</span>: <span class="ident">Graph</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Graph</span>::<span class="ident">new</span>();</pre>
+</div><h4 id='method.add_node' class="method"><span id='add_node.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.add_node' class='fnname'>add_node</a>(&amp;mut self, data: T) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a></code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/kyles_algorithm_crate/graph.rs.html#54-66' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Add a new node to the graph with supplied data.  Returns the id of the node in the graph.</p>
+<h1 id="arguments" class="section-header"><a href="#arguments">Arguments</a></h1>
+<p><code>data</code> - The data to put in the node to be added</p>
+<h1 id="example-1" class="section-header"><a href="#example-1">Example</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="comment">// Creates a new graph</span>
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">graph</span> <span class="op">=</span> <span class="ident">Graph</span>::<span class="ident">new</span>();
+ 
+<span class="comment">// Adds a new node with value 10 to the graph</span>
+<span class="comment">// node_id now contains the id to access that node in the graph</span>
+<span class="kw">let</span> <span class="ident">node_id</span> <span class="op">=</span> <span class="ident">graph</span>.<span class="ident">add_node</span>(<span class="number">10</span>);
+ </pre>
+</div><h4 id='method.add_directed_edge' class="method"><span id='add_directed_edge.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.add_directed_edge' class='fnname'>add_directed_edge</a>(&amp;mut self, from: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, to: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>)</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/kyles_algorithm_crate/graph.rs.html#88-96' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Add a directed edge from one node to another</p>
+<h1 id="arguments-1" class="section-header"><a href="#arguments-1">Arguments</a></h1>
+<p><code>from</code> - The ID of the  node the edge will start at
+<code>to</code> - The ID of the node the edge will go to</p>
+<h1 id="example-2" class="section-header"><a href="#example-2">Example</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="comment">// Create a graph</span>
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">graph</span> <span class="op">=</span> <span class="ident">Graph</span>::<span class="ident">new</span>();
+ 
+<span class="comment">// Add two nodes</span>
+<span class="kw">let</span> <span class="ident">node1</span> <span class="op">=</span> <span class="ident">graph</span>.<span class="ident">add_node</span>(<span class="number">1</span>);
+<span class="kw">let</span> <span class="ident">node2</span> <span class="op">=</span> <span class="ident">graph</span>.<span class="ident">add_node</span>(<span class="number">2</span>);
+
+<span class="comment">// Add an edge from node1 to node 2</span>
+<span class="ident">graph</span>.<span class="ident">add_directed_edge</span>(<span class="ident">node1</span>, <span class="ident">node2</span>);
+</pre>
+</div><h4 id='method.add_undirected_edge' class="method"><span id='add_undirected_edge.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.add_undirected_edge' class='fnname'>add_undirected_edge</a>(&amp;mut self, node1: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, node2: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>)</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/kyles_algorithm_crate/graph.rs.html#117-123' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Add an undirected edge between two nodes</p>
+<h1 id="arguments-2" class="section-header"><a href="#arguments-2">Arguments</a></h1>
+<p><code>node1</code> - The ID of the first node to add an edge to
+<code>node2</code> - The ID of the second node to add an edge to</p>
+<h1 id="example-3" class="section-header"><a href="#example-3">Example</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="comment">// Create a graph</span>
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">graph</span> <span class="op">=</span> <span class="ident">Graph</span>::<span class="ident">new</span>();
+ 
+<span class="comment">// Add two nodes</span>
+<span class="kw">let</span> <span class="ident">node1</span> <span class="op">=</span> <span class="ident">graph</span>.<span class="ident">add_node</span>(<span class="number">1</span>);
+<span class="kw">let</span> <span class="ident">node2</span> <span class="op">=</span> <span class="ident">graph</span>.<span class="ident">add_node</span>(<span class="number">2</span>);
+
+<span class="comment">// Add an edge from node1 to node 2</span>
+<span class="ident">graph</span>.<span class="ident">add_undirected_edge</span>(<span class="ident">node1</span>, <span class="ident">node2</span>);</pre>
+</div><h4 id='method.add_weighted_directed_edge' class="method"><span id='add_weighted_directed_edge.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.add_weighted_directed_edge' class='fnname'>add_weighted_directed_edge</a>(&amp;mut self, from: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, to: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, weight: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>)</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/kyles_algorithm_crate/graph.rs.html#145-153' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Add a weighted directed edge from one node to another</p>
+<h1 id="arguments-3" class="section-header"><a href="#arguments-3">Arguments</a></h1>
+<p><code>from</code> - The ID of the node the edge will come from
+<code>to</code> - The ID of the node the edge will go to
+<code>weight</code> - The weight of the edge</p>
+<h1 id="example-4" class="section-header"><a href="#example-4">Example</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="comment">// Create a graph</span>
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">graph</span> <span class="op">=</span> <span class="ident">Graph</span>::<span class="ident">new</span>();
+ 
+<span class="comment">// Add two nodes</span>
+<span class="kw">let</span> <span class="ident">node1</span> <span class="op">=</span> <span class="ident">graph</span>.<span class="ident">add_node</span>(<span class="number">1</span>);
+<span class="kw">let</span> <span class="ident">node2</span> <span class="op">=</span> <span class="ident">graph</span>.<span class="ident">add_node</span>(<span class="number">2</span>);
+
+<span class="comment">// Add an edge of weight 10 from node1 to node 2</span>
+<span class="ident">graph</span>.<span class="ident">add_weighted_directed_edge</span>(<span class="ident">node1</span>, <span class="ident">node2</span>, <span class="number">10</span>);</pre>
+</div><h4 id='method.add_weighted_undirected_edge' class="method"><span id='add_weighted_undirected_edge.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.add_weighted_undirected_edge' class='fnname'>add_weighted_undirected_edge</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;node1: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;node2: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;weight: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a><br>)</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/kyles_algorithm_crate/graph.rs.html#175-181' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Add a weighted undirected edge between two nodes</p>
+<h1 id="arguments-4" class="section-header"><a href="#arguments-4">Arguments</a></h1>
+<p><code>node1</code> - The ID of the first node to add the edge to
+<code>node2</code> - The ID of the second node to add the edge to
+<code>weight</code> - The weight for the edge</p>
+<h1 id="example-5" class="section-header"><a href="#example-5">Example</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="comment">// Create a graph</span>
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">graph</span> <span class="op">=</span> <span class="ident">Graph</span>::<span class="ident">new</span>();
+ 
+<span class="comment">// Add two nodes</span>
+<span class="kw">let</span> <span class="ident">node1</span> <span class="op">=</span> <span class="ident">graph</span>.<span class="ident">add_node</span>(<span class="number">1</span>);
+<span class="kw">let</span> <span class="ident">node2</span> <span class="op">=</span> <span class="ident">graph</span>.<span class="ident">add_node</span>(<span class="number">2</span>);
+
+<span class="comment">// Add an edge of weight 10 from node1 to node 2</span>
+<span class="ident">graph</span>.<span class="ident">add_weighted_undirected_edge</span>(<span class="ident">node1</span>, <span class="ident">node2</span>, <span class="number">10</span>);</pre>
+</div><h4 id='method.get_node' class="method"><span id='get_node.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.get_node' class='fnname'>get_node</a>(&amp;self, node: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;<a class="struct" href="../../kyles_algorithm_crate/graph/struct.Node.html" title="struct kyles_algorithm_crate::graph::Node">Node</a>&lt;T&gt;&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/kyles_algorithm_crate/graph.rs.html#200-202' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Get a node from the graph</p>
+<h1 id="arguments-5" class="section-header"><a href="#arguments-5">Arguments</a></h1>
+<p>'node' - The ID of the node to get from the graph</p>
+<h1 id="example-6" class="section-header"><a href="#example-6">Example</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="comment">// Create a graph</span>
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">graph</span> <span class="op">=</span> <span class="ident">Graph</span>::<span class="ident">new</span>();
+ 
+<span class="comment">// Add two nodes</span>
+<span class="kw">let</span> <span class="ident">node1</span> <span class="op">=</span> <span class="ident">graph</span>.<span class="ident">add_node</span>(<span class="number">1</span>);
+<span class="kw">let</span> <span class="ident">node2</span> <span class="op">=</span> <span class="ident">graph</span>.<span class="ident">add_node</span>(<span class="number">2</span>);
+
+<span class="comment">// get node 1</span>
+<span class="kw">let</span> <span class="ident">received_node</span> <span class="op">=</span> <span class="ident">graph</span>.<span class="ident">get_node</span>(<span class="ident">node1</span>);</pre>
+</div><h4 id='method.get_node_mut' class="method"><span id='get_node_mut.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.get_node_mut' class='fnname'>get_node_mut</a>(&amp;mut self, node: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;mut <a class="struct" href="../../kyles_algorithm_crate/graph/struct.Node.html" title="struct kyles_algorithm_crate::graph::Node">Node</a>&lt;T&gt;&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/kyles_algorithm_crate/graph.rs.html#221-228' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Get a mutable node from the graph</p>
+<h1 id="arguments-6" class="section-header"><a href="#arguments-6">Arguments</a></h1>
+<p>'node' - The ID of the node to get from the graph</p>
+<h1 id="example-7" class="section-header"><a href="#example-7">Example</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="comment">// Create a graph</span>
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">graph</span> <span class="op">=</span> <span class="ident">Graph</span>::<span class="ident">new</span>();
+ 
+<span class="comment">// Add two nodes</span>
+<span class="kw">let</span> <span class="ident">node1</span> <span class="op">=</span> <span class="ident">graph</span>.<span class="ident">add_node</span>(<span class="number">1</span>);
+<span class="kw">let</span> <span class="ident">node2</span> <span class="op">=</span> <span class="ident">graph</span>.<span class="ident">add_node</span>(<span class="number">2</span>);
+
+<span class="comment">// get node 1</span>
+<span class="kw">let</span> <span class="ident">received_node</span> <span class="op">=</span> <span class="ident">graph</span>.<span class="ident">get_node_mut</span>(<span class="ident">node1</span>);</pre>
+</div></div>
+                <h2 id='synthetic-implementations' class='small-section-header'>
+                  Auto Trait Implementations<a href='#synthetic-implementations' class='anchor'></a>
+                </h2>
+                <div id='synthetic-implementations-list'>
+            <h3 id='impl-Send' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;T&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> for <a class="struct" href="../../kyles_algorithm_crate/graph/struct.Graph.html" title="struct kyles_algorithm_crate::graph::Graph">Graph</a>&lt;T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a>,&nbsp;</span></code><a href='#impl-Send' class='anchor'></a></span></td><td><span class='out-of-band'></span></td></tr></tbody></table></h3><div class='impl-items'></div><h3 id='impl-Sync' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;T&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> for <a class="struct" href="../../kyles_algorithm_crate/graph/struct.Graph.html" title="struct kyles_algorithm_crate::graph::Graph">Graph</a>&lt;T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a>,&nbsp;</span></code><a href='#impl-Sync' class='anchor'></a></span></td><td><span class='out-of-band'></span></td></tr></tbody></table></h3><div class='impl-items'></div></div></section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../../";window.currentCrate = "kyles_algorithm_crate";</script><script src="../../aliases.js"></script><script src="../../main.js"></script><script defer src="../../search-index.js"></script></body></html>
