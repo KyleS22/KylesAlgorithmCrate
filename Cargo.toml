@@ -1,0 +1,6 @@
+[package]
+name = "kyles_algorithm_crate"
+version = "0.1.0"
+authors = ["KyleS22"]
+
+[dependencies]
