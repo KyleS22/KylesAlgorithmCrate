@@ -6,3 +6,43 @@ A rust library containing implementations of various algorithms.  Intended as a 
 |---------|--------|-------------|
 | CI      |[![Build Status](https://travis-ci.org/KyleS22/KylesAlgorithmCrate.svg?branch=master)](https://travis-ci.org/KyleS22/KylesAlgorithmCrate) | [![Build Status](https://travis-ci.org/KyleS22/KylesAlgorithmCrate.svg?branch=development)](https://travis-ci.org/KyleS22/KylesAlgorithmCrate)| 
 
+## Feature List
+
+### Graphs
+   - [ ] Breadth First Search
+   - [ ] Depth First Search
+   - [ ] Djikstras
+   - [ ] Kruskal
+   - [ ] Kosaraju for strongly connected components
+   - [ ] Diameter of a Graph
+   - [ ] Node Distance
+   - [ ] Average Pairwise Distance
+   - [ ] Middle Nodes
+   - [ ] Topological Ordering
+   - [ ] Prims 
+
+### Divide and Conquor Algorithms
+   - [ ] Merge Sort
+   - [ ] Closest Pair in a Plane
+
+### Dynamic Programming Algorithms
+
+### Network Flow
+   - [ ] Ford Fulkerson
+
+### Data Structures
+   - [ ] Min Heap
+   - [ ] Fibonacci Heap
+   - [ ] Stack
+   - [ ] Queue
+   - [ ] Priority Queue
+   - [ ] Red Black Tree
+
+### Models of Computation
+   - [ ] Deterministic Finite Automaton
+   - [ ] Turing Machines
+   
+### Geometric Algorithms
+   - [ ] Convex Hull for a set of 2D Points
+| 
+
