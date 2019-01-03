@@ -8,7 +8,94 @@ A rust library containing implementations of various algorithms.  Intended as a 
 
 ## Feature List
 
+### Base Components
+   - [ ] BilinearIterator
+   - [ ] Container
+   - [ ] Cursor
+   - [ ] CursorPosition
+   - [ ] CursorSaving
+   - [ ] Dispenser
+   - [ ] LinearIterator
+   - [ ] Membership
+   - [ ] NDPoint
+   - [ ] Pair
+   - [ ] Searchable
+ 
+### Dictionaries
+   - [ ] BasicDict
+   - [ ] Dict
+
+### Dispensers
+   - [ ] ArrayedQueue
+   - [ ] ArrayedStack
+   - [ ] LinkedQueue
+   - [ ] LinkedStack
+   - [ ] PriorityQueue
+   - [ ] Queue interface
+   - [ ] Stack interface
+
+### Custom Errors
+   - [ ] AfterTheEndError
+   - [ ] BeforeTheStartError
+   - [ ] ContainerError
+   - [ ] ContainerEmptyError
+   - [ ] ContainerFullError
+   - [ ] DuplicateItemsError
+   - [ ] InvalidArgumentError
+   - [ ] InvalidStateError
+   - [ ] ItemNotFoundError
+   - [ ] IteratorError
+   - [ ] NoCurrentItemError
+
 ### Graphs
+   - [ ] Edge
+   - [ ] Graph
+   - [ ] GraphAdjacencyListRep
+   - [ ] GraphMatrixRep
+   - [ ] GraphPosition
+   - [ ] GraphWithCursors
+   - [ ] MinSpanningTree
+   - [ ] NonNegativeWeightedGraphAdjacencyListRep
+   - [ ] Vertex
+   - [ ] VertexProperties
+   - [ ] WeightedEdge
+   - [ ] WeightedGraphAdjacencyListRep
+   - [ ] WeightedGraphMatrixRep
+
+### Lists
+   - [ ] ArrayedList
+   - [ ] ArrayedListIterator
+   - [ ] BilinkedIterator
+   - [ ] BilinkedList
+   - [ ] BilinkedNode
+   - [ ] LinkedIterator
+   - [ ] LinkedList
+   - [ ] LinkedNode
+   - [ ] SimpleList
+   
+   
+### Trees
+   - [ ] AVLTree
+   - [ ] AVLTreeNode
+   - [ ] ArrayedBinaryTree
+   - [ ] ArrayedHeap
+   - [ ] ArrayedMinHeap
+   - [ ] ArrayedTree
+   - [ ] BinaryNode
+   - [ ] ExpressionTree
+   - [ ] HuffmanEncoder
+   - [ ] InternalTwoThreeNode
+   - [ ] KDNode
+   - [ ] KDTree
+   - [ ] LeafTwoThreeNode
+   - [ ] LinkedSimpleTree
+   - [ ] OrderedSimpleTree
+   - [ ] RootComparableSimpleLinkedTree
+   - [ ] SimpleTree
+   - [ ] TwoThreeNode
+   - [ ] TwoThreeTree
+
+### Graph Algorithms
    - [ ] Breadth First Search
    - [ ] Depth First Search
    - [ ] Djikstras
