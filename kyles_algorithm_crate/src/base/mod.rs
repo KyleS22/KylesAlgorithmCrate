@@ -3,3 +3,4 @@ pub mod linear_iterator;
 pub mod bilinear_iterator;
 pub mod container;
 pub mod cursor;
+pub mod cursor_saving;

@@ -13,7 +13,7 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [X] Container
    - [X] Cursor
    - [X] CursorPosition
-   - [ ] CursorSaving
+   - [X] CursorSaving
    - [ ] Dispenser
    - [X] LinearIterator
    - [ ] Membership
