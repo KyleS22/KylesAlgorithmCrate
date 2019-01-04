@@ -9,7 +9,7 @@ A rust library containing implementations of various algorithms.  Intended as a 
 ## Feature List
 
 ### Base Components
-   - [ ] BilinearIterator
+   - [X] BilinearIterator
    - [ ] Container
    - [ ] Cursor
    - [X] CursorPosition
