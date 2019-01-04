@@ -1,4 +1,5 @@
-pub mod tree;
+pub mod base;
+pub mod custom_errors;
 
 
 #[cfg(test)]
