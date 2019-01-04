@@ -10,7 +10,7 @@ A rust library containing implementations of various algorithms.  Intended as a 
 
 ### Base Components
    - [X] BilinearIterator
-   - [ ] Container
+   - [X] Container
    - [ ] Cursor
    - [X] CursorPosition
    - [ ] CursorSaving

@@ -1,4 +1,5 @@
 use custom_errors::before_the_start_error::BeforeTheStartError;
+use base::linear_iterator::LinearIterator;
 
 /// An iterator that can move forward and backward
 pub trait BilinearIterator: LinearIterator {
