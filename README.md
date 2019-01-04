@@ -11,7 +11,7 @@ A rust library containing implementations of various algorithms.  Intended as a 
 ### Base Components
    - [X] BilinearIterator
    - [X] Container
-   - [ ] Cursor
+   - [X] Cursor
    - [X] CursorPosition
    - [ ] CursorSaving
    - [ ] Dispenser
