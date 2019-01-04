@@ -11,7 +11,7 @@ pub trait Dispenser<T>: Container + Cursor<T> {
     /// Returns a DuplicateItemError or ContainerFullError
     ///
     /// # Arguments
-    /// * 'x' - The item to insert into the structure
+    /// * `x` - The item to insert into the structure
     fn insert(x: T) -> Result<(), Error>;
 
     /// Delete the current item from the structure

@@ -16,7 +16,7 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [X] CursorSaving
    - [X] Dispenser
    - [X] LinearIterator
-   - [ ] Membership
+   - [X] Membership
    - [ ] NDPoint
    - [ ] Pair
    - [ ] Searchable

@@ -10,6 +10,6 @@ pub trait CursorSaving {
     /// Go to the given position
     ///
     /// # Arguments
-    /// * 'pos' - The position to go to
+    /// * `pos` - The position to go to
     fn go_position(pos: CursorPosition);
 }

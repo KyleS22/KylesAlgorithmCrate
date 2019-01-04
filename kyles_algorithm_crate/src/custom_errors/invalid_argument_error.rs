@@ -7,14 +7,14 @@ pub struct InvalidArgumentError;
 
 impl fmt::Display for InvalidArgumentError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "invalid argument error!")
+        write!(f, "Invalid Argument!")
     }
 }
 
 // This is important for other errors to wrap this one.
 impl error::Error for InvalidArgumentError {
     fn description(&self) -> &str {
-        "invalid argument error!"
+        "Invalid Argument!"
     }
 
     fn cause(&self) -> Option<&error::Error> {
