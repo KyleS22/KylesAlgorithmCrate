@@ -59,6 +59,8 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [ ] WeightedEdge
    - [ ] WeightedGraphAdjacencyListRep
    - [ ] WeightedGraphMatrixRep
+   - [ ] CapacityEdge (Network Flow)
+   - [ ] ResidualEdge (Network Flow)
 
 ### Lists
    - [ ] ArrayedList
@@ -92,6 +94,8 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [ ] SimpleTree
    - [ ] TwoThreeNode
    - [ ] TwoThreeTree
+   - [ ] Red Black Tree
+   - [ ] Fibonacci Heap
 
 ### Graph Algorithms
    - [ ] Breadth First Search
@@ -114,14 +118,6 @@ A rust library containing implementations of various algorithms.  Intended as a 
 
 ### Network Flow
    - [ ] Ford Fulkerson
-
-### Data Structures
-   - [ ] Min Heap
-   - [ ] Fibonacci Heap
-   - [ ] Stack
-   - [ ] Queue
-   - [ ] Priority Queue
-   - [ ] Red Black Tree
 
 ### Models of Computation
    - [ ] Deterministic Finite Automaton
