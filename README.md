@@ -132,4 +132,6 @@ A rust library containing implementations of various algorithms.  Intended as a 
 ### Geometric Algorithms
    - [ ] Convex Hull for a set of 2D Points
    - [ ] Find Intersecting Line Segments
+   - [ ] Doubly Connected Edge List
+   - [ ] Computing the Overlay of Two Subdivisions (Using doubly connected Edge List)
 
