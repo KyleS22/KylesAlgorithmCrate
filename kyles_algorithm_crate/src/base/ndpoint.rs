@@ -135,6 +135,8 @@ impl Eq for NDPoint{
 
 impl Ord for NDPoint{
     
+    /// Compares this point to another point based on the first non-equal dimension (like lexicographical ordering)
+    // A point with fewer dimension is less than a point with higher dimension
     fn cmp(&self, other: &Self) -> Ordering {
         Ordering::Less  
     }
@@ -349,7 +351,49 @@ mod ndpoint_tests {
 
     #[test]
     fn test_cmp(){
-        assert!(false);
+
+        use base::ndpoint::NDPoint;
+        use std::cmp::Ordering;
+
+        let point = NDPoint::new(2);
+        let point2 = NDPoint::from_coordinate(vec![1.0, 2.0]);
+
+        let result = point.cmp(&point2);
+
+        if result != Ordering::Less {
+            assert!(false);
+        }
+
+        let result2 = point2.cmp(&point);
+
+        if result2 != Ordering::Greater {
+            assert!(false);
+        }
+
+        let equal_point = NDPoint::new(2);
+
+        let result3 = point.cmp(&equal_point);
+
+        if result3 != Ordering::Equal {
+            assert!(false);
+        }
+
+        let higher_dim_point = NDPoint::new(4);
+
+        let result4 = higher_dim_point.cmp(&point);
+
+        if result4 != Ordering::Greater {
+            assert!(false);
+        }
+
+        let result5 = point.cmp(&higher_dim_point);
+
+        if result5 != Ordering::Less {
+            assert!(false);
+        }
+
+
+
     }
 
     #[test]
@@ -359,6 +403,45 @@ mod ndpoint_tests {
 
     #[test]
     fn test_partial_cmp() {
-        assert!(false);
+        
+        use base::ndpoint::NDPoint;
+        use std::cmp::Ordering;
+
+        let point = NDPoint::new(2);
+        let point2 = NDPoint::from_coordinate(vec![1.0, 2.0]);
+
+        let result = point.partial_cmp(&point2).unwrap();
+
+        if result != Ordering::Less {
+            assert!(false);
+        }
+
+        let result2 = point2.cmp(&point);
+
+        if result2 != Ordering::Greater {
+            assert!(false);
+        }
+
+        let equal_point = NDPoint::new(2);
+
+        let result3 = point.partial_cmp(&equal_point).unwrap();
+
+        if result3 != Ordering::Equal {
+            assert!(false);
+        }
+
+        let higher_dim_point = NDPoint::new(4);
+
+        let result4 = higher_dim_point.cmp(&point);
+
+        if result4 != Ordering::Greater {
+            assert!(false);
+        }
+
+        let result5 = point.partial_cmp(&higher_dim_point).unwrap();
+
+        if result5 != Ordering::Less {
+            assert!(false);
+        }
     }
 }
