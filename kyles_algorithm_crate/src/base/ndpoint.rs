@@ -398,7 +398,37 @@ mod ndpoint_tests {
 
     #[test]
     fn test_eq() {
-        assert!(false);
+        use base::ndpoint::NDPoint;
+
+        let point = NDPoint::new(2);
+        let point2 = NDPoint::from_coordinate(vec![1.0, 2.0]);
+
+        let result = point.eq(&point2);
+
+        if result != false {
+            assert!(false);
+        }
+
+        let result2 = point2.eq(&point);
+
+        if result != false {
+            assert!(false);
+        }
+
+        let eq_point = NDPoint::from_coordinate(vec![1.0, 2.0]);
+
+        let result3 = eq_point.eq(&point2);
+
+        if result3 != true {
+            assert!(false);
+        }
+
+        let result4 = point2.eq(&eq_point);
+
+        if result4 != true {
+            assert!(false);
+        }
+
     }
 
     #[test]
