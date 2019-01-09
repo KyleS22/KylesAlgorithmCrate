@@ -75,7 +75,23 @@ impl NDPoint{
     /// nd_point.set_point([3.2, 4.5, 6.7]);
     /// ```
     pub fn set_point(&mut self, pt: Vec<f32>) -> Result<(), InvalidArgumentError> {
-        Result::Err(InvalidArgumentError)
+
+        let dim = pt.len() as i32;
+
+        if dim < 1 {
+            return Err(InvalidArgumentError)
+        }
+
+        let mut coords = Vec::new();
+
+        for p in pt {
+            coords.push(p);
+        }
+
+        self.dim = dim;
+        self.coords = coords;
+
+        Result::Ok(())
     }
 
     /// Return the ith coodinate of the point
