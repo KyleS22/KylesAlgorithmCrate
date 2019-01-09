@@ -108,8 +108,13 @@ impl NDPoint{
     /// let nd_point = NDPoint::from_coordinate([5.0, 6.0, 7.0]);
     /// let y = nd_point.idx(1);
     /// assert_eq!(y, 6.0);
-    pub fn idx(&self, i: u32) -> f32{
-        0.0
+    pub fn idx(&self, i: usize) -> Result<f32, InvalidArgumentError> {
+        
+        if i  > self.dim as usize{
+            return Err(InvalidArgumentError)
+        }
+
+        Ok(self.coords[i])
     }
 
     /// Compares the ith coordinate of this point to another point
@@ -496,6 +501,41 @@ mod ndpoint_tests {
 
         if result5 != Ordering::Less {
             assert!(false);
+        }
+    }
+
+    #[test]
+    fn test_idx() {
+        use base::ndpoint::NDPoint;
+        use custom_errors::invalid_argument_error::InvalidArgumentError;
+
+        let point = NDPoint::from_coordinate(vec![1.0, 2.0]);
+
+        let result = point.idx(0);
+
+        if let Ok(r) = result {
+            if r != 1.0 {
+                assert!(false);
+            }
+        } else {
+            assert!(false);
+        }
+
+        let result2 = point.idx(1);
+
+        if let Ok(r) = result2 {
+            if r != 2.0 {
+                assert!(false);
+            }
+        } else {
+            assert!(false);
+        }
+
+        let result3 = point.idx(3);
+
+        match result3 {
+            Ok(e) => assert!(false),
+            Err(e) => assert_eq!(e.to_string(), InvalidArgumentError.to_string())
         }
     }
 }
