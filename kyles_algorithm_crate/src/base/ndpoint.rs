@@ -43,8 +43,16 @@ impl NDPoint{
     /// let nd_point = NDPoint::from_coordinate([1.5, 2.5, 3.5]);
     /// ```
     pub fn from_coordinate(pt: Vec<f32>) -> Self {
-        let coords = vec![0.0, 0.0, 0.0];
-        NDPoint {coords, dim: 3}
+        let dim = pt.len() as i32;
+
+        let mut coords = Vec::new();
+
+        for p in pt {
+            coords.push(p);
+        }
+
+        NDPoint{dim: dim, coords: coords}
+
     }
 
     /// Get the dimensionality of the point
