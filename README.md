@@ -134,4 +134,8 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [ ] Find Intersecting Line Segments
    - [ ] Doubly Connected Edge List
    - [ ] Computing the Overlay of Two Subdivisions (Using doubly connected Edge List)
+   - [ ] Partitioning a polygon into monotone pieces
+   - [ ] Triangulating a monotone polygon
+   - [ ] Triangulating a simple polygon
+   - [ ] 3-colouring a simple polygon
 
