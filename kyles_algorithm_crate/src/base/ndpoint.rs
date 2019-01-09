@@ -107,7 +107,7 @@ impl NDPoint{
     /// // compare the points
     /// let res = nd_point.compare_by_dim(0, nd_point2);
     /// assert_eq(res, -1);
-    pub fn compare_by_dim(&self, i: u32, other: &NDPoint) -> Result<u32, InvalidArgumentError> {
+    pub fn compare_by_dim(&self, i: u32, other: &NDPoint) -> Result<i8, InvalidArgumentError> {
         Result::Err(InvalidArgumentError)
     }
 
@@ -234,7 +234,7 @@ mod ndpoint_tests {
 
         let result2 = point.compare_by_dim(1, &point2);
 
-        if let Ok(r) = result{
+        if let Ok(r) = result2{
             if r == 0 || r == 1 {
                 assert!(false);
             }
@@ -242,12 +242,108 @@ mod ndpoint_tests {
             assert!(false);
         }
 
-        // TODO: test point2.compare by dim
+        let result3 = point2.compare_by_dim(0, &point);
 
-        // TODO: test equal points
+        if let Ok(r) = result3{
+            if r == -1 || r == 0 {
+                assert!(false);
+            }
+        }else{
+            assert!(false);
+        }
 
-        // TODO: test point with different dimensionality for InvalidArgumentError
-        
+        let result4 = point2.compare_by_dim(1, &point);
+
+        if let Ok(r) = result4 {
+            if r == -1 || r == 0 {
+                assert!(false);
+            }
+        } else {
+            assert!(false);
+        }
+
+        // test equal points
+        let point3 = NDPoint::new(2);
+
+        let result5 = point3.compare_by_dim(0, &point);
+
+        if let Ok(r) = result5 {
+            if r == -1 || r == 1 {
+                assert!(false);
+            }
+        } else {
+            assert!(false);
+        }
+
+        let result6 = point.compare_by_dim(0, &point3);
+
+        if let Ok(r) = result6 {
+            if r == -1 || r == 1{
+                assert!(false);
+            }
+        } else {
+            assert!(false);
+        }
+
+
+        // test point with different dimensionality for InvalidArgumentError
+        let diff_dim_point = NDPoint::new(4);
+
+        let result7 = diff_dim_point.compare_by_dim(0, &point);
+
+         
+        match result7 {
+            Ok(e) => assert!(false),
+            Err(e) => assert_eq!(e.to_string(), InvalidArgumentError.to_string())
+        }
+
+        let result8 = diff_dim_point.compare_by_dim(1, &point);
+
+         
+        match result8 {
+            Ok(e) => assert!(false),
+            Err(e) => assert_eq!(e.to_string(), InvalidArgumentError.to_string())
+        }
+
+        let result9 = diff_dim_point.compare_by_dim(2, &point);
+
+         
+        match result9 {
+            Ok(e) => assert!(false),
+            Err(e) => assert_eq!(e.to_string(), InvalidArgumentError.to_string())
+        }
+
+        let result10 = diff_dim_point.compare_by_dim(3, &point);
+
+         
+        match result10 {
+            Ok(e) => assert!(false),
+            Err(e) => assert_eq!(e.to_string(), InvalidArgumentError.to_string())
+        }
+
+        let result11 = point.compare_by_dim(0, &diff_dim_point);
+
+         
+        match result11 {
+            Ok(e) => assert!(false),
+            Err(e) => assert_eq!(e.to_string(), InvalidArgumentError.to_string())
+        }
+
+        let result12 = point.compare_by_dim(1, &diff_dim_point);
+
+         
+        match result12 {
+            Ok(e) => assert!(false),
+            Err(e) => assert_eq!(e.to_string(), InvalidArgumentError.to_string())
+        }
+
+        let result13 = point.compare_by_dim(2, &diff_dim_point);
+
+         
+        match result13 {
+            Ok(e) => assert!(false),
+            Err(e) => assert_eq!(e.to_string(), InvalidArgumentError.to_string())
+        }
 
     }
 
