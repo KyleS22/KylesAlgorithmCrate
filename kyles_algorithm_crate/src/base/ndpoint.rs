@@ -168,7 +168,19 @@ impl Eq for NDPoint{
 impl PartialEq for NDPoint{
     
     fn eq(&self, other: &NDPoint) -> bool {
-        false
+
+        let result = self.partial_cmp(&other);
+
+        match result {
+            None => false,
+            Some(r) => {
+                if r == Ordering::Equal {
+                    return true
+                } else {
+                    return false
+                }
+            }
+        }
     }    
 }
 
