@@ -108,13 +108,13 @@ impl NDPoint{
     /// let nd_point = NDPoint::from_coordinate([5.0, 6.0, 7.0]);
     /// let y = nd_point.idx(1);
     /// assert_eq!(y, 6.0);
-    pub fn idx(&self, i: usize) -> Result<f32, InvalidArgumentError> {
+    pub fn idx(&self, i: i32) -> Result<f32, InvalidArgumentError> {
         
-        if i  > self.dim as usize{
+        if i  > self.dim{
             return Err(InvalidArgumentError)
         }
 
-        Ok(self.coords[i])
+        Ok(self.coords[i as usize])
     }
 
     /// Compares the ith coordinate of this point to another point
@@ -136,22 +136,24 @@ impl NDPoint{
     /// // compare the points
     /// let res = nd_point.compare_by_dim(0, nd_point2);
     /// assert_eq(res, -1);
-    pub fn compare_by_dim(&self, i: u32, other: &NDPoint) -> Result<i8, InvalidArgumentError> {
-        Result::Err(InvalidArgumentError)
-    }
+    pub fn compare_by_dim(&self, i: i32, other: &NDPoint) -> Result<i8, InvalidArgumentError> {
 
-    // Private functions
+        if self.dim < i {
+            return Err(InvalidArgumentError)
+        } else if other.dim != self.dim {
+            return Err(InvalidArgumentError)
+        }
 
-    /// Copies the contents of the given vector into the point's coordinate vector
-    /// Returns InvalidArgumentError if the vector's length
-    /// is not equal to the point's dimensionality
-    ///
-    /// # Arguments
-    /// * `ar` - The vector to copy into the point's coordinate vector
-    ///
-    fn copy_array(ar: Vec<f32>) -> Result<(), InvalidArgumentError>{
-        // TODO: implement
-        Result::Err(InvalidArgumentError)
+        let comp_self = self.coords[i as usize];
+        let comp_other = other.coords[i as usize];
+
+        if comp_self < comp_other {
+            Ok(-1)
+        }else if comp_self == comp_other {
+            Ok(0)
+        } else {
+            Ok(1)
+        }
     }
 
 }
