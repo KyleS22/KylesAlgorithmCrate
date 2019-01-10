@@ -173,8 +173,24 @@ impl PartialEq for NDPoint{
 }
 
 impl PartialOrd for NDPoint{
+    /// Lexicographical comparison by dimension
     fn partial_cmp(&self, other: &NDPoint) -> Option<Ordering> {
-        Some(Ordering::Less)
+        if self.dim != other.dim {
+            return None
+        }
+
+        for i in 0..self.dim {
+            let result = self.compare_by_dim(i, &other).unwrap();
+            if result != 0 {
+                if result == -1 {
+                    return Some(Ordering::Less)
+                }else {
+                    return Some(Ordering::Greater)
+                }
+            }
+        }
+
+        Some(Ordering::Equal)
     }
 }
 
@@ -439,15 +455,15 @@ mod ndpoint_tests {
 
         let higher_dim_point = NDPoint::new(4);
 
-        let result4 = higher_dim_point.partial_cmp(&point).unwrap();
+        let result4 = higher_dim_point.partial_cmp(&point);
 
-        if result4 != Ordering::Greater {
+        if result4 != None{
             assert!(false);
         }
 
-        let result5 = point.partial_cmp(&higher_dim_point).unwrap();
+        let result5 = point.partial_cmp(&higher_dim_point);
 
-        if result5 != Ordering::Less {
+        if result5 != None {
             assert!(false);
         }
     }
