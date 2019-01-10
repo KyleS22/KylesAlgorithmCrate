@@ -7,3 +7,4 @@ pub mod cursor_saving;
 pub mod dispenser;
 pub mod membership;
 pub mod ndpoint;
+pub mod pair;

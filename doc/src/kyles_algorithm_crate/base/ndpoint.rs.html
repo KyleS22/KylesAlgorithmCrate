@@ -515,6 +515,14 @@
 <span id="515">515</span>
 <span id="516">516</span>
 <span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">custom_errors</span>::<span class="ident">invalid_argument_error</span>::<span class="ident">InvalidArgumentError</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
@@ -726,8 +734,7 @@
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">NDPoint</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="comment">// TODO: implement</span>
-        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">dim</span>)
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{:?}&quot;</span>, <span class="self">self</span>.<span class="ident">coords</span>)
     }
 }
 
@@ -762,7 +769,7 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">point</span> <span class="op">=</span> <span class="ident">NDPoint</span>::<span class="ident">new</span>(<span class="number">2</span>);
 
         <span class="kw">match</span> <span class="ident">point</span>.<span class="ident">set_point</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">1.5</span>, <span class="number">2.5</span>]) {
-            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
+            <span class="prelude-val">Err</span>(<span class="ident">_e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
             <span class="kw">_</span> <span class="op">=&gt;</span> ()
         }
 
@@ -770,7 +777,7 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">point</span>.<span class="ident">dim</span>, <span class="number">2</span>);
 
         <span class="kw">match</span> <span class="ident">point</span>.<span class="ident">set_point</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">10.0</span>, <span class="number">11.0</span>, <span class="number">12.0</span>]) {
-            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
+            <span class="prelude-val">Err</span>(<span class="ident">_e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
             <span class="kw">_</span> <span class="op">=&gt;</span> ()
         }
 
@@ -778,7 +785,7 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">point</span>.<span class="ident">dim</span>, <span class="number">3</span>);
 
         <span class="kw">match</span> <span class="ident">point</span>.<span class="ident">set_point</span>(<span class="macro">vec</span><span class="macro">!</span>[]) {
-            <span class="prelude-val">Ok</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
+            <span class="prelude-val">Ok</span>(<span class="ident">_e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">e</span>.<span class="ident">to_string</span>(), <span class="ident">InvalidArgumentError</span>.<span class="ident">to_string</span>())
         }
 
@@ -864,7 +871,7 @@
 
          
         <span class="kw">match</span> <span class="ident">result7</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
+            <span class="prelude-val">Ok</span>(<span class="ident">_e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">e</span>.<span class="ident">to_string</span>(), <span class="ident">InvalidArgumentError</span>.<span class="ident">to_string</span>())
         }
 
@@ -872,7 +879,7 @@
 
          
         <span class="kw">match</span> <span class="ident">result8</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
+            <span class="prelude-val">Ok</span>(<span class="ident">_e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">e</span>.<span class="ident">to_string</span>(), <span class="ident">InvalidArgumentError</span>.<span class="ident">to_string</span>())
         }
 
@@ -880,7 +887,7 @@
 
          
         <span class="kw">match</span> <span class="ident">result9</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
+            <span class="prelude-val">Ok</span>(<span class="ident">_e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">e</span>.<span class="ident">to_string</span>(), <span class="ident">InvalidArgumentError</span>.<span class="ident">to_string</span>())
         }
 
@@ -888,7 +895,7 @@
 
          
         <span class="kw">match</span> <span class="ident">result10</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
+            <span class="prelude-val">Ok</span>(<span class="ident">_e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">e</span>.<span class="ident">to_string</span>(), <span class="ident">InvalidArgumentError</span>.<span class="ident">to_string</span>())
         }
 
@@ -896,7 +903,7 @@
 
          
         <span class="kw">match</span> <span class="ident">result11</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
+            <span class="prelude-val">Ok</span>(<span class="ident">_e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">e</span>.<span class="ident">to_string</span>(), <span class="ident">InvalidArgumentError</span>.<span class="ident">to_string</span>())
         }
 
@@ -904,7 +911,7 @@
 
          
         <span class="kw">match</span> <span class="ident">result12</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
+            <span class="prelude-val">Ok</span>(<span class="ident">_e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">e</span>.<span class="ident">to_string</span>(), <span class="ident">InvalidArgumentError</span>.<span class="ident">to_string</span>())
         }
 
@@ -912,7 +919,7 @@
 
          
         <span class="kw">match</span> <span class="ident">result13</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
+            <span class="prelude-val">Ok</span>(<span class="ident">_e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">e</span>.<span class="ident">to_string</span>(), <span class="ident">InvalidArgumentError</span>.<span class="ident">to_string</span>())
         }
 
@@ -934,7 +941,7 @@
 
         <span class="kw">let</span> <span class="ident">result2</span> <span class="op">=</span> <span class="ident">point2</span>.<span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="ident">point</span>);
 
-        <span class="kw">if</span> <span class="ident">result</span> <span class="op">!=</span> <span class="bool-val">false</span> {
+        <span class="kw">if</span> <span class="ident">result2</span> <span class="op">!=</span> <span class="bool-val">false</span> {
             <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>);
         }
 
@@ -1028,9 +1035,18 @@
         <span class="kw">let</span> <span class="ident">result3</span> <span class="op">=</span> <span class="ident">point</span>.<span class="ident">idx</span>(<span class="number">3</span>);
 
         <span class="kw">match</span> <span class="ident">result3</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
+            <span class="prelude-val">Ok</span>(<span class="ident">_e</span>) <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>),
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">e</span>.<span class="ident">to_string</span>(), <span class="ident">InvalidArgumentError</span>.<span class="ident">to_string</span>())
         }
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_to_string</span>(){
+        <span class="kw">use</span> <span class="ident">base</span>::<span class="ident">ndpoint</span>::<span class="ident">NDPoint</span>;
+
+        <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> <span class="ident">NDPoint</span>::<span class="ident">new</span>(<span class="number">3</span>);
+
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">point</span>.<span class="ident">to_string</span>(), <span class="string">&quot;[0.0, 0.0, 0.0]&quot;</span>);
     }
 }</pre>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../../../";window.currentCrate = "kyles_algorithm_crate";</script><script src="../../../aliases.js"></script><script src="../../../main.js"></script><script defer src="../../../search-index.js"></script></body></html>

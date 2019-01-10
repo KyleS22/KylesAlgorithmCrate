@@ -208,8 +208,7 @@ impl PartialOrd for NDPoint{
 
 impl fmt::Display for NDPoint {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        // TODO: implement
-        write!(f, "{}", self.dim)
+        write!(f, "{:?}", self.coords)
     }
 }
 
@@ -244,7 +243,7 @@ mod ndpoint_tests {
         let mut point = NDPoint::new(2);
 
         match point.set_point(vec![1.5, 2.5]) {
-            Err(e) => assert!(false),
+            Err(_e) => assert!(false),
             _ => ()
         }
 
@@ -252,7 +251,7 @@ mod ndpoint_tests {
         assert_eq!(point.dim, 2);
 
         match point.set_point(vec![10.0, 11.0, 12.0]) {
-            Err(e) => assert!(false),
+            Err(_e) => assert!(false),
             _ => ()
         }
 
@@ -260,7 +259,7 @@ mod ndpoint_tests {
         assert_eq!(point.dim, 3);
 
         match point.set_point(vec![]) {
-            Ok(e) => assert!(false),
+            Ok(_e) => assert!(false),
             Err(e) => assert_eq!(e.to_string(), InvalidArgumentError.to_string())
         }
 
@@ -346,7 +345,7 @@ mod ndpoint_tests {
 
          
         match result7 {
-            Ok(e) => assert!(false),
+            Ok(_e) => assert!(false),
             Err(e) => assert_eq!(e.to_string(), InvalidArgumentError.to_string())
         }
 
@@ -354,7 +353,7 @@ mod ndpoint_tests {
 
          
         match result8 {
-            Ok(e) => assert!(false),
+            Ok(_e) => assert!(false),
             Err(e) => assert_eq!(e.to_string(), InvalidArgumentError.to_string())
         }
 
@@ -362,7 +361,7 @@ mod ndpoint_tests {
 
          
         match result9 {
-            Ok(e) => assert!(false),
+            Ok(_e) => assert!(false),
             Err(e) => assert_eq!(e.to_string(), InvalidArgumentError.to_string())
         }
 
@@ -370,7 +369,7 @@ mod ndpoint_tests {
 
          
         match result10 {
-            Ok(e) => assert!(false),
+            Ok(_e) => assert!(false),
             Err(e) => assert_eq!(e.to_string(), InvalidArgumentError.to_string())
         }
 
@@ -378,7 +377,7 @@ mod ndpoint_tests {
 
          
         match result11 {
-            Ok(e) => assert!(false),
+            Ok(_e) => assert!(false),
             Err(e) => assert_eq!(e.to_string(), InvalidArgumentError.to_string())
         }
 
@@ -386,7 +385,7 @@ mod ndpoint_tests {
 
          
         match result12 {
-            Ok(e) => assert!(false),
+            Ok(_e) => assert!(false),
             Err(e) => assert_eq!(e.to_string(), InvalidArgumentError.to_string())
         }
 
@@ -394,7 +393,7 @@ mod ndpoint_tests {
 
          
         match result13 {
-            Ok(e) => assert!(false),
+            Ok(_e) => assert!(false),
             Err(e) => assert_eq!(e.to_string(), InvalidArgumentError.to_string())
         }
 
@@ -416,7 +415,7 @@ mod ndpoint_tests {
 
         let result2 = point2.eq(&point);
 
-        if result != false {
+        if result2 != false {
             assert!(false);
         }
 
@@ -510,8 +509,17 @@ mod ndpoint_tests {
         let result3 = point.idx(3);
 
         match result3 {
-            Ok(e) => assert!(false),
+            Ok(_e) => assert!(false),
             Err(e) => assert_eq!(e.to_string(), InvalidArgumentError.to_string())
         }
+    }
+
+    #[test]
+    fn test_to_string(){
+        use base::ndpoint::NDPoint;
+
+        let point = NDPoint::new(3);
+
+        assert_eq!(point.to_string(), "[0.0, 0.0, 0.0]");
     }
 }
