@@ -20,10 +20,10 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [X] NDPoint
    - [X] Pair
    - [X] Searchable
- 
+   - [X] BasicDict
+
 ### Dictionaries
-   - [ ] BasicDict
-   - [ ] Dict
+     - [ ] Dict
 
 ### Dispensers
    - [ ] ArrayedQueue

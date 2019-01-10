@@ -9,3 +9,4 @@ pub mod membership;
 pub mod ndpoint;
 pub mod pair;
 pub mod searchable;
+pub mod basic_dict;
