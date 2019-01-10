@@ -23,7 +23,7 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [X] BasicDict
 
 ### Dictionaries
-    - [ ] Dict
+    - [X] Dict
 
 ### Dispensers
    - [ ] ArrayedQueue
