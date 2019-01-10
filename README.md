@@ -140,4 +140,5 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [ ] Triangulating a monotone polygon
    - [ ] Triangulating a simple polygon
    - [ ] 3-colouring a simple polygon
+   - [ ] Intersecting Half-Planes
 
