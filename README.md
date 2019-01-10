@@ -19,7 +19,7 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [X] Membership
    - [X] NDPoint
    - [X] Pair
-   - [ ] Searchable
+   - [X] Searchable
  
 ### Dictionaries
    - [ ] BasicDict

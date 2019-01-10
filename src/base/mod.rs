@@ -8,3 +8,4 @@ pub mod dispenser;
 pub mod membership;
 pub mod ndpoint;
 pub mod pair;
+pub mod searchable;
