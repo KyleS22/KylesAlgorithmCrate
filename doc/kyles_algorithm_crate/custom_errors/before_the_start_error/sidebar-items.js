@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["BeforeTheStartError","An error that occurs when a cursor is before the start of the structure"]]});

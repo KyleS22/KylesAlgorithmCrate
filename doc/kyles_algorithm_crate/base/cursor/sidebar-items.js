@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["Cursor","Represents a cursor that points to an item"]]});

@@ -9,17 +9,17 @@ A rust library containing implementations of various algorithms.  Intended as a 
 ## Feature List
 
 ### Base Components
-   - [ ] BilinearIterator
-   - [ ] Container
-   - [ ] Cursor
-   - [ ] CursorPosition
-   - [ ] CursorSaving
-   - [ ] Dispenser
-   - [ ] LinearIterator
-   - [ ] Membership
-   - [ ] NDPoint
-   - [ ] Pair
-   - [ ] Searchable
+   - [X] BilinearIterator
+   - [X] Container
+   - [X] Cursor
+   - [X] CursorPosition
+   - [X] CursorSaving
+   - [X] Dispenser
+   - [X] LinearIterator
+   - [X] Membership
+   - [X] NDPoint
+   - [X] Pair
+   - [X] Searchable
  
 ### Dictionaries
    - [ ] BasicDict
@@ -35,17 +35,15 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [ ] Stack interface
 
 ### Custom Errors
-   - [ ] AfterTheEndError
-   - [ ] BeforeTheStartError
-   - [ ] ContainerError
-   - [ ] ContainerEmptyError
-   - [ ] ContainerFullError
-   - [ ] DuplicateItemsError
-   - [ ] InvalidArgumentError
-   - [ ] InvalidStateError
-   - [ ] ItemNotFoundError
-   - [ ] IteratorError
-   - [ ] NoCurrentItemError
+   - [X] AfterTheEndError
+   - [X] BeforeTheStartError
+   - [X] ContainerEmptyError
+   - [X] ContainerFullError
+   - [X] DuplicateItemsError
+   - [X] InvalidArgumentError
+   - [X] InvalidStateError
+   - [X] ItemNotFoundError
+   - [X] NoCurrentItemError
 
 ### Graphs
    - [ ] Edge
@@ -61,6 +59,8 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [ ] WeightedEdge
    - [ ] WeightedGraphAdjacencyListRep
    - [ ] WeightedGraphMatrixRep
+   - [ ] CapacityEdge (Network Flow)
+   - [ ] ResidualEdge (Network Flow)
 
 ### Lists
    - [ ] ArrayedList
@@ -95,6 +95,8 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [ ] SimpleTree
    - [ ] TwoThreeNode
    - [ ] TwoThreeTree
+   - [ ] Red Black Tree
+   - [ ] Fibonacci Heap
 
 ### Graph Algorithms
    - [ ] Breadth First Search
@@ -125,7 +127,7 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [ ] Queue
    - [ ] Priority Queue
    - [ ] Red Black Tree
-
+   
 ### Models of Computation
    - [ ] Deterministic Finite Automaton
    - [ ] Turing Machines
@@ -138,4 +140,5 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [ ] Triangulating a monotone polygon
    - [ ] Triangulating a simple polygon
    - [ ] 3-colouring a simple polygon
+   - [ ] Intersecting Half-Planes
 

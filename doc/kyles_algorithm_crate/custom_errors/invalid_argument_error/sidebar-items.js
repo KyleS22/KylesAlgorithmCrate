@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["InvalidArgumentError","An error that occurs when an invalid argument is given"]]});

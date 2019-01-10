@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Edge","Directed edges between nodes"],["Graph","Adjacency list implementation of a graph"],["Node","Nodes that store data"]]});
