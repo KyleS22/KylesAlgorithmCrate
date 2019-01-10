@@ -9,7 +9,6 @@ A rust library containing implementations of various algorithms.  Intended as a 
 ## Feature List
 
 ### Base Components
-<<<<<<< HEAD
    - [X] BilinearIterator
    - [X] Container
    - [X] Cursor
@@ -19,17 +18,6 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [X] LinearIterator
    - [X] Membership
    - [X] NDPoint
-=======
-   - [ ] BilinearIterator
-   - [ ] Container
-   - [ ] Cursor
-   - [ ] CursorPosition
-   - [ ] CursorSaving
-   - [ ] Dispenser
-   - [ ] LinearIterator
-   - [ ] Membership
-   - [ ] NDPoint
->>>>>>> development
    - [ ] Pair
    - [ ] Searchable
  
@@ -47,7 +35,6 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [ ] Stack interface
 
 ### Custom Errors
-<<<<<<< HEAD
    - [X] AfterTheEndError
    - [X] BeforeTheStartError
    - [X] ContainerEmptyError
@@ -57,19 +44,6 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [X] InvalidStateError
    - [X] ItemNotFoundError
    - [X] NoCurrentItemError
-=======
-   - [ ] AfterTheEndError
-   - [ ] BeforeTheStartError
-   - [ ] ContainerError
-   - [ ] ContainerEmptyError
-   - [ ] ContainerFullError
-   - [ ] DuplicateItemsError
-   - [ ] InvalidArgumentError
-   - [ ] InvalidStateError
-   - [ ] ItemNotFoundError
-   - [ ] IteratorError
-   - [ ] NoCurrentItemError
->>>>>>> development
 
 ### Graphs
    - [ ] Edge
@@ -85,11 +59,8 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [ ] WeightedEdge
    - [ ] WeightedGraphAdjacencyListRep
    - [ ] WeightedGraphMatrixRep
-<<<<<<< HEAD
    - [ ] CapacityEdge (Network Flow)
    - [ ] ResidualEdge (Network Flow)
-=======
->>>>>>> development
 
 ### Lists
    - [ ] ArrayedList
@@ -101,10 +72,7 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [ ] LinkedList
    - [ ] LinkedNode
    - [ ] SimpleList
-<<<<<<< HEAD
-=======
    - [ ] Doubly Connected Edge List
->>>>>>> development
    
    
 ### Trees
@@ -127,11 +95,8 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [ ] SimpleTree
    - [ ] TwoThreeNode
    - [ ] TwoThreeTree
-<<<<<<< HEAD
    - [ ] Red Black Tree
    - [ ] Fibonacci Heap
-=======
->>>>>>> development
 
 ### Graph Algorithms
    - [ ] Breadth First Search
@@ -155,8 +120,6 @@ A rust library containing implementations of various algorithms.  Intended as a 
 ### Network Flow
    - [ ] Ford Fulkerson
 
-<<<<<<< HEAD
-=======
 ### Data Structures
    - [ ] Min Heap
    - [ ] Fibonacci Heap
@@ -164,22 +127,17 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [ ] Queue
    - [ ] Priority Queue
    - [ ] Red Black Tree
-
->>>>>>> development
+   
 ### Models of Computation
    - [ ] Deterministic Finite Automaton
    - [ ] Turing Machines
    
 ### Geometric Algorithms
    - [ ] Convex Hull for a set of 2D Points
-<<<<<<< HEAD
-| 
-=======
    - [ ] Find Intersecting Line Segments
    - [ ] Computing the Overlay of Two Subdivisions (Using doubly connected Edge List)
    - [ ] Partitioning a polygon into monotone pieces
    - [ ] Triangulating a monotone polygon
    - [ ] Triangulating a simple polygon
    - [ ] 3-colouring a simple polygon
->>>>>>> development
 
