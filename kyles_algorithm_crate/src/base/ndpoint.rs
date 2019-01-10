@@ -20,7 +20,7 @@ impl NDPoint{
     /// # Example
     /// 
     /// ```
-    /// # use kyles_algorithm_crate::base::NDPoint;
+    /// # use kyles_algorithm_crate::base::ndpoint::NDPoint;
     /// // creates a new 3-dimensional point at the origin
     /// let nd_point = NDPoint::new(3);
     /// ```
@@ -38,9 +38,9 @@ impl NDPoint{
     /// # Example
     /// 
     /// ```
-    /// # use kyles_algorithm_crate::base::NDPoint;
+    /// # use kyles_algorithm_crate::base::ndpoint::NDPoint;
     /// // creates a new 3-dimensional point at (1.5, 2.5, 3.5)
-    /// let nd_point = NDPoint::from_coordinate([1.5, 2.5, 3.5]);
+    /// let nd_point = NDPoint::from_coordinate(vec![1.5, 2.5, 3.5]);
     /// ```
     pub fn from_coordinate(pt: Vec<f32>) -> Self {
         let dim = pt.len() as i32;
@@ -68,11 +68,11 @@ impl NDPoint{
     ///
     /// # Example
     /// ```
-    /// # use kyles_algorithm_crate::base::NDPoint;
+    /// # use kyles_algorithm_crate::base::ndpoint::NDPoint;
     /// // creates a new 3-dimensional point at the origin
     /// let mut nd_point = NDPoint::new(3);
     /// // Set the point to coordinates (3.2, 4.5, 6.7)
-    /// nd_point.set_point([3.2, 4.5, 6.7]);
+    /// nd_point.set_point(vec![3.2, 4.5, 6.7]);
     /// ```
     pub fn set_point(&mut self, pt: Vec<f32>) -> Result<(), InvalidArgumentError> {
 
@@ -103,10 +103,10 @@ impl NDPoint{
     ///
     /// # Example
     /// ```
-    /// # use kyles_algorithm_crate::base::NDPoint;
+    /// # use kyles_algorithm_crate::base::ndpoint::NDPoint;
     /// // creates a new 3-dimensional point at the origin
-    /// let nd_point = NDPoint::from_coordinate([5.0, 6.0, 7.0]);
-    /// let y = nd_point.idx(1);
+    /// let nd_point = NDPoint::from_coordinate(vec![5.0, 6.0, 7.0]);
+    /// let y = nd_point.idx(1).unwrap();
     /// assert_eq!(y, 6.0);
     pub fn idx(&self, i: i32) -> Result<f32, InvalidArgumentError> {
         
@@ -129,10 +129,10 @@ impl NDPoint{
     /// * `other` - Another NDPoint to compare to
     /// 
     /// # Example
-    /// # use kyles_algorithm_crate::base::NDPoint;
+    /// # use kyles_algorithm_crate::base::ndpoint::NDPoint;
     /// // creates a new 3-dimensional point at the origin
     /// let nd_point = NDPoint::new(3);
-    /// let nd_point2 = NDPoint::from_coordinate([1.0, 1.0, 1.0]);
+    /// let nd_point2 = NDPoint::from_coordinate(vec![1.0, 1.0, 1.0]);
     /// // compare the points
     /// let res = nd_point.compare_by_dim(0, nd_point2);
     /// assert_eq(res, -1);
