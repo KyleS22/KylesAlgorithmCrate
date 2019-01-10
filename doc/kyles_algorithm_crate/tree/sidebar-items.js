@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Tree","Representation of a tree structure"]]});
