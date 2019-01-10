@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["NDPoint","A representation of an N-dimensional point"]]});

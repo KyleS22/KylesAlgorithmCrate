@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["CursorSaving","Interface for getting the current position of a cursor and go to a specified cursor position"]]});

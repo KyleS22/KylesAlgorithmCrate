@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["AfterTheEndError","An error that occurs when a cursor is after the end of the structure"]]});

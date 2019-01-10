@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["ContainerFullError","An error that occurs when a container is full and elements are inserted"]]});

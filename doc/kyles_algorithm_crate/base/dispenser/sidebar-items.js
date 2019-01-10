@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["Dispenser","A container that keeps track of the current item as inserts are made Only the current item can be deleted"]]});
