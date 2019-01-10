@@ -18,7 +18,7 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [X] LinearIterator
    - [X] Membership
    - [X] NDPoint
-   - [ ] Pair
+   - [X] Pair
    - [ ] Searchable
  
 ### Dictionaries
