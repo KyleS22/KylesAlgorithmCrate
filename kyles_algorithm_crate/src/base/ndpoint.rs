@@ -164,14 +164,6 @@ impl Eq for NDPoint{
     
 }
 
-impl Ord for NDPoint{
-    
-    /// Compares this point to another point based on the first non-equal dimension (like lexicographical ordering)
-    // A point with fewer dimension is less than a point with higher dimension
-    fn cmp(&self, other: &Self) -> Ordering {
-        Ordering::Less  
-    }
-}
 
 impl PartialEq for NDPoint{
     
@@ -182,7 +174,7 @@ impl PartialEq for NDPoint{
 
 impl PartialOrd for NDPoint{
     fn partial_cmp(&self, other: &NDPoint) -> Option<Ordering> {
-        Some(self.cmp(other))
+        Some(Ordering::Less)
     }
 }
 
@@ -380,52 +372,6 @@ mod ndpoint_tests {
 
     }
 
-    #[test]
-    fn test_cmp(){
-
-        use base::ndpoint::NDPoint;
-        use std::cmp::Ordering;
-
-        let point = NDPoint::new(2);
-        let point2 = NDPoint::from_coordinate(vec![1.0, 2.0]);
-
-        let result = point.cmp(&point2);
-
-        if result != Ordering::Less {
-            assert!(false);
-        }
-
-        let result2 = point2.cmp(&point);
-
-        if result2 != Ordering::Greater {
-            assert!(false);
-        }
-
-        let equal_point = NDPoint::new(2);
-
-        let result3 = point.cmp(&equal_point);
-
-        if result3 != Ordering::Equal {
-            assert!(false);
-        }
-
-        let higher_dim_point = NDPoint::new(4);
-
-        let result4 = higher_dim_point.cmp(&point);
-
-        if result4 != Ordering::Greater {
-            assert!(false);
-        }
-
-        let result5 = point.cmp(&higher_dim_point);
-
-        if result5 != Ordering::Less {
-            assert!(false);
-        }
-
-
-
-    }
 
     #[test]
     fn test_eq() {
@@ -477,7 +423,7 @@ mod ndpoint_tests {
             assert!(false);
         }
 
-        let result2 = point2.cmp(&point);
+        let result2 = point2.partial_cmp(&point).unwrap();
 
         if result2 != Ordering::Greater {
             assert!(false);
@@ -493,7 +439,7 @@ mod ndpoint_tests {
 
         let higher_dim_point = NDPoint::new(4);
 
-        let result4 = higher_dim_point.cmp(&point);
+        let result4 = higher_dim_point.partial_cmp(&point).unwrap();
 
         if result4 != Ordering::Greater {
             assert!(false);
