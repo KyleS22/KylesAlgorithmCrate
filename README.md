@@ -71,7 +71,7 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [ ] LinkedIterator
    - [ ] LinkedList
    - [ ] LinkedNode
-   - [ ] SimpleList
+   - [X] SimpleList
    - [ ] Doubly Connected Edge List
    
    

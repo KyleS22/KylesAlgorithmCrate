@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["base",""],["custom_errors",""]]});
+initSidebarItems({"mod":[["base",""],["custom_errors",""],["dictionary",""],["lists",""]]});
