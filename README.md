@@ -141,4 +141,11 @@ A rust library containing implementations of various algorithms.  Intended as a 
    - [ ] Triangulating a simple polygon
    - [ ] 3-colouring a simple polygon
    - [ ] Intersecting Half-Planes
+   - [ ] 2DBoundedLinearProgram for computing an optimal point in the intersection of half planes
+   
+   
+   ## References
+   Computational Geometry Algorithms and Applications, Third Edition by Mark de Berg, Otfried Cheong, Marc van Kreveld, and Mark Overmars
+   
+   Algorithm Design by Jon Kleinberg and Eva Tardos
 
