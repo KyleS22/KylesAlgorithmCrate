@@ -1,5 +1,5 @@
 # KylesAlgorithmCrate
-A rust library containing implementations of various algorithms.  Intended as a supplement to studying for an algorithms class.
+A rust library containing implementations of various algorithms.  Intended as a supplement to studying for an algorithms class, as well as deeper understanding of various algorithms and programming concepts.
 
 ## Build Status
 | Service | Master | Development |
