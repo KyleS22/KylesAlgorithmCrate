@@ -97,6 +97,7 @@ A rust library containing implementations of various algorithms and data structu
    - [ ] TwoThreeTree
    - [ ] Red Black Tree
    - [ ] Fibonacci Heap
+   - [ ] Range Tree
 
 ### Graph Algorithms
    - [ ] Breadth First Search
@@ -142,6 +143,8 @@ A rust library containing implementations of various algorithms and data structu
    - [ ] 3-colouring a simple polygon
    - [ ] Intersecting Half-Planes
    - [ ] 2DBoundedLinearProgram for computing an optimal point in the intersection of half planes
+   - [ ] Range querying with kd-trees
+   - [ ] Range querying with range trees
    
    
    ## References
