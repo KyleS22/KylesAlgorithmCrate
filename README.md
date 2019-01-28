@@ -145,6 +145,7 @@ A rust library containing implementations of various algorithms and data structu
    - [ ] 2DBoundedLinearProgram for computing an optimal point in the intersection of half planes
    - [ ] Range querying with kd-trees
    - [ ] Range querying with range trees
+   - [ ] 2D Voronoi Diagrams
    
    
    ## References
