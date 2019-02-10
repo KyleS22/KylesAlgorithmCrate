@@ -147,6 +147,7 @@ A rust library containing implementations of various algorithms and data structu
    - [ ] Range querying with range trees
    - [ ] 2D Voronoi Diagrams for points
    - [ ] 2D Voronoi Diagrams for line segments
+   - [ ] 2D Farthest Point Voronoi Diagram
    
    
    ## References
