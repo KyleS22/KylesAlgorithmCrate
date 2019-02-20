@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["Searchable","Represents a structure that can be searched that has a cursor that  can be moved around"]]});

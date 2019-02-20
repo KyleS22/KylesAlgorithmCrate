@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["NoCurrentItemError","An error that occurs when there is no current item at the cursor"]]});

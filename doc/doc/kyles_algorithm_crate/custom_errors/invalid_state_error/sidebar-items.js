@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["InvalidStateError","An error that occurs when a structure is in an invalid state"]]});

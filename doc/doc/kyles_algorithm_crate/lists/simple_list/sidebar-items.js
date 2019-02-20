@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["SimpleList","A simple list with insert, search, delete functions"]]});
