@@ -8,22 +8,22 @@ use custom_errors::container_empty_error::ContainerEmptyError;
 pub trait LinearIterator: CursorPosition {
     
     /// Is the current position before the start of the structure?
-    fn before() -> bool;
+    fn before(&self) -> bool;
 
     /// Is the current position after the end of the structure?
-    fn after() -> bool;
+    fn after(&self) -> bool;
 
     /// Advance one item in the data structure.
     /// Returns an AfterTheEndError if the cursor goes after the end of the structure
-    fn go_forth() -> Result<(), AfterTheEndError>;
+    fn go_forth(&mut self) -> Result<(), AfterTheEndError>;
     
     /// Sets the cursor to the first element in the structure
     /// Returns a ContainerEmptyError if the structure is empty
-    fn go_first() -> Result<(), ContainerEmptyError>;
+    fn go_first(&mut self) -> Result<(), ContainerEmptyError>;
 
     /// Move the cursor to the position before the first element of the structure
-    fn go_before();
+    fn go_before(&mut self);
 
     /// Move the cursor to the position after the last element of the structure
-    fn go_after();
+    fn go_after(&mut self);
 }
