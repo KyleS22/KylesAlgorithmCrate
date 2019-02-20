@@ -64,7 +64,7 @@ A rust library containing implementations of various algorithms.  Intended as a 
 
 ### Lists
    - [ ] ArrayedList
-   - [ ] ArrayedListIterator
+   - [X] ArrayedListIterator
    - [ ] BilinkedIterator
    - [ ] BilinkedList
    - [ ] BilinkedNode
