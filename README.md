@@ -61,6 +61,9 @@ A rust library containing implementations of various algorithms and data structu
    - [ ] WeightedGraphMatrixRep
    - [ ] CapacityEdge (Network Flow)
    - [ ] ResidualEdge (Network Flow)
+   - [ ] Chordal Graphs
+   - [ ] Permutation Graphs
+   - [ ] Comparability Graphs
 
 ### Lists
    - [ ] ArrayedList
@@ -111,6 +114,9 @@ A rust library containing implementations of various algorithms and data structu
    - [ ] Middle Nodes
    - [ ] Topological Ordering
    - [ ] Prims 
+   - [ ] Clique Cover on Chordal Graphs
+   - [ ] Clique Cover on Permutation Graphs
+   - [ ] Dominating Clique in Comparability Graphs
 
 ### Divide and Conquor Algorithms
    - [ ] Merge Sort
@@ -135,6 +141,7 @@ A rust library containing implementations of various algorithms and data structu
    
 ### Geometric Algorithms
    - [ ] Convex Hull for a set of 2D Points
+   - [ ] O(log n) alg for distance from a convex polygon to a point outside of P
    - [ ] Find Intersecting Line Segments
    - [ ] Computing the Overlay of Two Subdivisions (Using doubly connected Edge List)
    - [ ] Partitioning a polygon into monotone pieces
