@@ -29,6 +29,9 @@ use lists::simple_list::SimpleList;
 use dictionary::dict::Dict;
 
 use std::fmt;
+use std::io;
+use std::io::Error;
+
  
 /// A struct to represent an arrayed list structure
 #[derive(Clone, Debug)]
@@ -95,35 +98,9 @@ impl<T> SimpleList<T> for ArrayedList<T>
 
 }
 
-impl<T> Dict<T> for ArrayedList<T> 
-    where T: Clone
-{
-    fn insert_first(x: T) -> Result<(), ContainerFullError>{
-        Err(ContainerFullError)
-    }
 
-    fn first_item() -> Result<T, ContainerEmptyError>{
-        Err(ContainerEmptyError)
-    }
 
-    fn delete_first() -> Result<(), ContainerEmptyError>{
-        Err(ContainerEmptyError)
-    }
-
-    fn insert_last(x: T) -> Result<(), ContainerFullError>{
-        Err(ContainerFullError)
-    }
-
-    fn last_item() -> Result<T, ContainerEmptyError>{
-        Err(ContainerEmptyError)
-    }
-
-    fn delete_last() -> Result<(), ContainerEmptyError>{
-        Err(ContainerEmptyError)
-    }
- 
-}
-
+    
 impl<T> BasicDict<T> for ArrayedList<T>
     where T: Clone
 {
@@ -218,8 +195,9 @@ impl<T> CursorSaving for ArrayedList<T>
     where T: Clone
 {
   
-    fn current_position() -> CursorPosition{
-        CursorPosition {}
+    fn current_position() -> Box<CursorPosition>{
+        let cursor_pos = ArrayedListIterator::new();
+        Box::new(cursor_pos)
     }
     
   
@@ -257,6 +235,11 @@ impl<T> LinearIterator for ArrayedList<T>
     fn go_after(&mut self){
 
     }
+
+}
+
+impl<T> Dict<T> for ArrayedList<T>
+    where T: Clone{
 
 }
 

@@ -5,7 +5,7 @@ use base::cursor_position::CursorPosition;
 pub trait CursorSaving {
     
     /// Get the current position in the structure
-    fn current_position() -> CursorPosition;
+    fn current_position() -> Box<CursorPosition>;
 
     /// Go to the given position
     ///
