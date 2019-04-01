@@ -5,8 +5,8 @@ use custom_errors::no_current_item_error::NoCurrentItemError;
 pub trait Cursor<T>: CursorPosition + Clone {
     
     /// Returns the current item, or a NoCurrentItemError if there is no item
-    fn item() -> Result<T, NoCurrentItemError>;
+    fn item(&self) -> Result<T, NoCurrentItemError>;
 
     /// Returns true if there is an item, false otherwise
-    fn item_exists() -> bool;
+    fn item_exists(&self) -> bool;
 }

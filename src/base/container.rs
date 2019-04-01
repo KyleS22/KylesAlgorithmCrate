@@ -2,11 +2,11 @@
 pub trait Container: Clone{
 
     /// Returns true if the container is empty, false otherwise
-    fn is_empty() -> bool;
+    fn is_empty(&self) -> bool;
 
     /// Returns true if the container is full, false otherwise
-    fn is_full() -> bool;
+    fn is_full(&self) -> bool;
 
     /// Remove all items from the structure
-    fn clear();
+    fn clear(&mut self);
 }

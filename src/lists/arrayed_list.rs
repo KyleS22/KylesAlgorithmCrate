@@ -29,8 +29,7 @@ use lists::simple_list::SimpleList;
 use dictionary::dict::Dict;
 
 use std::fmt;
-use std::io;
-use std::io::Error;
+use std::fmt::Error;
 
  
 /// A struct to represent an arrayed list structure
@@ -39,7 +38,7 @@ pub struct ArrayedList<T>{
     list_elements: Vec<T>,
     head: i32,
     tail: i32,
-    capacity: u32,
+    capacity: usize,
     num_el: u32,
     position: i32,
     continue_search: bool,
@@ -49,50 +48,50 @@ impl <T> ArrayedList<T>
     where T: Copy + Clone {
     
      
-    pub fn new(capacity: u32) -> Self {
+    pub fn new(capacity: usize) -> Self {
         let mut vec = Vec::with_capacity(capacity);
-        ArrayedList {list_elements: vec, head: 0, tail: 0, capacity: capacity, position: 0, continue_search: false}
+        ArrayedList {list_elements: vec, head: 0, tail: 0, capacity: capacity, position: 0, num_el: 0,  continue_search: false}
     }
     
-    pub fn capacity() -> u32 {
+    pub fn capacity(&self) -> usize {
         return 0;
     }
 
-    pub fn iterator() -> ArrayedListIterator<T>{
-        return ArrayedListIterator::new();
+    pub fn iterator(&self) -> ArrayedListIterator<T>{
+        return ArrayedListIterator::new(self.list_elements, self.head, self.tail, self.num_el);
     }
 
-    pub fn get_item_at_index(index: u32) -> Result<T, InvalidArgumentError>{
+    pub fn get_item_at_index(&self, index: u32) -> Result<T, InvalidArgumentError>{
         Err(InvalidArgumentError)
     }
 
 }
 
 impl<T> SimpleList<T> for ArrayedList<T>
-    where T: Clone
+    where T: Clone + Copy
 {
-    fn insert_first(x: T) -> Result<(), ContainerFullError>{
+    fn insert_first(&mut self, x: T) -> Result<(), ContainerFullError>{
         Err(ContainerFullError)
     }
 
-    fn first_item() -> Result<T, ContainerEmptyError>{
+    fn first_item(&self) -> Result<T, ContainerEmptyError>{
         Err(ContainerEmptyError)
     }
 
-    fn delete_first() -> Result<(), ContainerEmptyError>{
+    fn delete_first(&mut self) -> Result<(), ContainerEmptyError>{
         Err(ContainerEmptyError)
     }
 
-    fn insert_last(x: T) -> Result<(), ContainerFullError>{
+    fn insert_last(&mut self, x: T) -> Result<(), ContainerFullError>{
         Err(ContainerFullError)
     }
 
-    fn last_item() -> Result<T, ContainerEmptyError>{
+    fn last_item(&self) -> Result<T, ContainerEmptyError>{
         Err(ContainerEmptyError)
 
     }
 
-    fn delete_last() -> Result<(), ContainerEmptyError>{
+    fn delete_last(&mut self) -> Result<(), ContainerEmptyError>{
         Err(ContainerEmptyError)
     }
 
@@ -104,15 +103,15 @@ impl<T> SimpleList<T> for ArrayedList<T>
 impl<T> BasicDict<T> for ArrayedList<T>
     where T: Clone
 {
-    fn obtain(y: T) -> Result<T, ItemNotFoundError>{
+    fn obtain(&self, y: T) -> Result<T, ItemNotFoundError>{
         Err(ItemNotFoundError)
     }
 
-    fn insert(x: T) -> Result<(), io::Error>{
+    fn insert(&mut self, x: T) -> Result<(), Error>{
         Err(Error)
     }
 
-    fn delete(x: T) -> Result<(), ItemNotFoundError>{
+    fn delete(&mut self, x: T) -> Result<(), ItemNotFoundError>{
         Err(ItemNotFoundError)
     }
  
@@ -121,15 +120,15 @@ impl<T> BasicDict<T> for ArrayedList<T>
 impl<T> Searchable<T> for ArrayedList<T>
     where T: Clone
 {
-    fn search(x: T){
+    fn search(&self, x: T){
 
     }
 
-    fn restart_searches(){
+    fn restart_searches(&mut self){
 
     }
 
-    fn resume_searches(){
+    fn resume_searches(&mut self){
 
     }
 
@@ -138,11 +137,11 @@ impl<T> Searchable<T> for ArrayedList<T>
 impl<T> Membership<T> for ArrayedList<T>
     where T: Clone
 {
-    fn has(x: T) -> bool{
+    fn has(&self, x: T) -> bool{
         false
     }
 
-    fn membership_equals(x: T, y: T) -> bool{
+    fn membership_equals(&self, x: T, y: T) -> bool{
         false
     }
 
@@ -151,11 +150,11 @@ impl<T> Membership<T> for ArrayedList<T>
 impl<T> Dispenser<T> for ArrayedList<T>
     where T: Clone
 {
-    fn insert(x: T) -> Result<(), Error>{
+    fn insert(&mut self, x: T) -> Result<(), Error>{
         Err(Error)
     }
     
-    fn delete_item() -> Result<(), NoCurrentItemError>{
+    fn delete_item(&mut self) -> Result<(), NoCurrentItemError>{
         Err(NoCurrentItemError)
     }
 
@@ -164,15 +163,15 @@ impl<T> Dispenser<T> for ArrayedList<T>
 impl<T> Container for ArrayedList<T>
     where T: Clone
 {
-    fn is_empty() -> bool{
+    fn is_empty(&self) -> bool{
         false
     }
     
-    fn is_full() -> bool{
+    fn is_full(&self) -> bool{
         false
     }
     
-    fn clear(){
+    fn clear(&mut self){
 
     }
 }
@@ -181,27 +180,27 @@ impl<T> Cursor<T> for ArrayedList<T>
     where T: Clone
 {
     
-    fn item() -> Result<T, NoCurrentItemError>{
+    fn item(&self) -> Result<T, NoCurrentItemError>{
         Err(NoCurrentItemError)
     }
     
-    fn item_exists() -> bool{
+    fn item_exists(&self) -> bool{
         false
     }
 }
 
 
 impl<T> CursorSaving for ArrayedList<T>
-    where T: Clone
+    where T: Clone + Copy
 {
   
-    fn current_position() -> Box<CursorPosition>{
-        let cursor_pos = ArrayedListIterator::new();
+    fn current_position(&self) -> Box<CursorPosition>{
+        let cursor_pos = ArrayedListIterator::new(self.list_elements, self.head, self.tail, self.num_el);
         Box::new(cursor_pos)
     }
     
   
-    fn go_position(pos: CursorPosition){
+    fn go_position(&mut self, pos: CursorPosition){
 
     }
 
@@ -239,7 +238,7 @@ impl<T> LinearIterator for ArrayedList<T>
 }
 
 impl<T> Dict<T> for ArrayedList<T>
-    where T: Clone{
+    where T: Clone + Copy{
 
 }
 

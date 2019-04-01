@@ -1,6 +1,6 @@
 use base::membership::Membership;
 use custom_errors::item_not_found_error::ItemNotFoundError;
-use std::io;
+use std::fmt::Error;
 
 /// Represents a basic dictionary
 pub trait BasicDict<T>: Membership<T> {
@@ -10,7 +10,7 @@ pub trait BasicDict<T>: Membership<T> {
     ///
     /// # Arguments
     /// * `y` - The item to retrieve
-    fn obtain(y: T) -> Result<T, ItemNotFoundError>;
+    fn obtain(&self, y: T) -> Result<T, ItemNotFoundError>;
 
     /// Insert an item into the dictionary
     /// Returns ContainerFullError if the container is full, or DuplicateItemsError if 
@@ -18,13 +18,13 @@ pub trait BasicDict<T>: Membership<T> {
     ///
     /// # Arguments
     /// * `x` - The item to insert
-    fn insert(x: T) -> Result<(), io::Error>;
+    fn insert(&mut self, x: T) -> Result<(), Error>;
 
     /// Delete the specified item
     /// Returns ItemNotFoundError if the item is not in the dict
     ///
     /// # Arguments
     /// * `x` - The item to delete
-    fn delete(x: T) -> Result<(), ItemNotFoundError>;
+    fn delete(&mut self, x: T) -> Result<(), ItemNotFoundError>;
 
 }

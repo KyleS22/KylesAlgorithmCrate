@@ -5,11 +5,11 @@ use base::cursor_position::CursorPosition;
 pub trait CursorSaving {
     
     /// Get the current position in the structure
-    fn current_position() -> Box<CursorPosition>;
+    fn current_position(&self) -> Box<CursorPosition>;
 
     /// Go to the given position
     ///
     /// # Arguments
     /// * `pos` - The position to go to
-    fn go_position(pos: CursorPosition);
+    fn go_position(&mut self, pos: CursorPosition);
 }
