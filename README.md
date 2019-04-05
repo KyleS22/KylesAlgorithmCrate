@@ -101,6 +101,7 @@ A rust library containing implementations of various algorithms and data structu
    - [ ] Red Black Tree
    - [ ] Fibonacci Heap
    - [ ] Range Tree
+   - [ ] Kd-Tree
 
 ### Graph Algorithms
    - [ ] Breadth First Search
