@@ -135,6 +135,7 @@ A rust library containing implementations of various algorithms and data structu
    - [ ] Queue
    - [ ] Priority Queue
    - [ ] Red Black Tree
+   - [ ] Trapezoidal Map
    
 ### Models of Computation
    - [ ] Deterministic Finite Automaton
