@@ -499,9 +499,62 @@ mod test_arrayed_list {
             _ => assert!(false)
         }
     }   
-
+    
     // TODO: Tests
     // last item
+    #[test]
+    fn test_last_item(){
+        use lists::arrayed_list::ArrayedList;
+        use lists::simple_list::SimpleList;
+
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+
+        // Last item on empty should give error
+        match list.last_item(){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+
+        // Insert a few different items and check the last
+        list.insert_last(1);
+
+        match list.last_item(){
+            Ok(1) => assert!(true),
+            _ => assert!(false)
+        }
+
+        list.insert_last(2);
+
+        match list.last_item(){
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+
+        list.insert_last(3);
+
+        match list.last_item() {
+            Ok(3) => assert!(true),
+            _ => assert!(false)
+        }
+
+        
+        // Last item should not change after deleting first
+        list.delete_first();
+
+        match list.last_item(){
+            Ok(3) => assert!(true),
+            _ => assert!(false)
+        }
+
+        list.insert_first(4);
+
+        match list.last_item(){
+            Ok(3) => assert!(true),
+            _ => assert!(false)
+        }
+
+    }
+
     // delete last
     //
     // obtain
