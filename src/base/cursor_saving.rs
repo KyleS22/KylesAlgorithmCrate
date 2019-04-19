@@ -11,5 +11,5 @@ pub trait CursorSaving {
     ///
     /// # Arguments
     /// * `pos` - The position to go to
-    fn go_position(&mut self, pos: CursorPosition);
+    fn go_position(&mut self, pos: &CursorPosition);
 }

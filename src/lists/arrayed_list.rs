@@ -34,7 +34,7 @@ use std::fmt::Error;
  
 /// A struct to represent an arrayed list structure
 #[derive(Clone, Debug)]
-pub struct ArrayedList<T>{
+pub struct ArrayedList<T: 'static>{
     list_elements: Vec<T>,
     head: i32,
     tail: i32,
@@ -58,7 +58,7 @@ impl <T> ArrayedList<T>
     }
 
     pub fn iterator(&self) -> ArrayedListIterator<T>{
-        return ArrayedListIterator::new(self.list_elements, self.head, self.tail, self.num_el);
+        return ArrayedListIterator::new(self.list_elements.clone(), self.head, self.tail, self.num_el);
     }
 
     pub fn get_item_at_index(&self, index: u32) -> Result<T, InvalidArgumentError>{
@@ -195,12 +195,12 @@ impl<T> CursorSaving for ArrayedList<T>
 {
   
     fn current_position(&self) -> Box<CursorPosition>{
-        let cursor_pos = ArrayedListIterator::new(self.list_elements, self.head, self.tail, self.num_el);
+        let cursor_pos = ArrayedListIterator::new(self.list_elements.clone(), self.head, self.tail, self.num_el);
         Box::new(cursor_pos)
     }
     
   
-    fn go_position(&mut self, pos: CursorPosition){
+    fn go_position(&mut self, pos: &CursorPosition){
 
     }
 
