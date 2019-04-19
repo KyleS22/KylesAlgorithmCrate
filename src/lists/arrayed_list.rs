@@ -30,7 +30,6 @@ use dictionary::dict::Dict;
 
 use std::fmt;
 use std::fmt::Error;
-
  
 /// A struct to represent an arrayed list structure
 #[derive(Clone, Debug)]
@@ -45,7 +44,7 @@ pub struct ArrayedList<T: 'static>{
 }
 
 impl <T> ArrayedList<T>
-    where T: Copy + Clone {
+    where T: Copy + Clone, {
     
      
     pub fn new(capacity: usize) -> Self {
@@ -150,9 +149,9 @@ impl<T> Membership<T> for ArrayedList<T>
 impl<T> Dispenser<T> for ArrayedList<T>
     where T: Clone
 {
-    fn insert(&mut self, x: T) -> Result<(), Error>{
-        Err(Error)
-    }
+    //fn insert(&mut self, x: T) -> Result<(), Error>{
+    //    Err(Error)
+    //}
     
     fn delete_item(&mut self) -> Result<(), NoCurrentItemError>{
         Err(NoCurrentItemError)
@@ -256,6 +255,55 @@ impl<T> fmt::Display for ArrayedList<T> {
 
 #[cfg(test)]
 mod test_arrayed_list {
-    // TODO: Write tests
+    
+    #[test]
+    fn test_capacity(){
+        use lists::arrayed_list::ArrayedList;
+        
+        let list = ArrayedList::new(10);  
+        
+        assert_eq!(list.capacity(), 10);     
+    }
+    
+
+    #[test]
+    fn test_get_item_at_index(){
+        use lists::arrayed_list::ArrayedList;
+        use base::basic_dict::BasicDict;
+         
+        let list = ArrayedList::new(5);
+
+        list.insert(1);
+        list.insert(2);
+        list.insert(3);
+
+        let res = list.get_item_at_index(0);
+        let res2 = list.get_item_at_index(1);
+        let res3 = list.get_item_at_index(2);
+
+        match res {
+            Ok(1) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match res2 {
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match res3 {
+            Ok(3) => assert!(true),
+            _ => assert!(false)
+        }
+        
+        match list.get_item_at_index(4){
+            Err(_e) => assert!(true),
+            _ => assert!(false)
+        }
+
+    }
+
+
+
 }
 
