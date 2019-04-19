@@ -260,7 +260,7 @@ mod test_arrayed_list {
     fn test_capacity(){
         use lists::arrayed_list::ArrayedList;
         
-        let list = ArrayedList::new(10);  
+        let list: ArrayedList<i32> = ArrayedList::new(10);  
         
         assert_eq!(list.capacity(), 10);     
     }
@@ -271,12 +271,14 @@ mod test_arrayed_list {
         use lists::arrayed_list::ArrayedList;
         use base::basic_dict::BasicDict;
          
-        let list = ArrayedList::new(5);
+        let mut list: ArrayedList<i32> = ArrayedList::new(5);
 
+        // Insert 3 items
         list.insert(1);
         list.insert(2);
         list.insert(3);
-
+        
+        // Get the three items
         let res = list.get_item_at_index(0);
         let res2 = list.get_item_at_index(1);
         let res3 = list.get_item_at_index(2);
@@ -296,14 +298,239 @@ mod test_arrayed_list {
             _ => assert!(false)
         }
         
+        // See what happens when we get an out of bounds index
         match list.get_item_at_index(4){
             Err(_e) => assert!(true),
             _ => assert!(false)
         }
 
+        // NOTE: Negative indices are not possible because of the u32 type parameter
+
     }
 
+    #[test]
+    fn test_insert_first(){
+        use lists::arrayed_list::ArrayedList;
+        use lists::simple_list::SimpleList;
 
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+        
+        // Insert some elements
+        match list.insert_first(1) {
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
 
+        match list.insert_first(2) {
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        // The first item should be what we just inserted
+        match list.get_item_at_index(0){
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+         
+
+        match list.insert_first(3){
+             Ok(()) => assert!(true),
+             _ => assert!(false)
+        }
+
+        match list.get_item_at_index(0){
+            Ok(3) => assert!(true),
+            _ => assert!(false)
+        }
+
+        // Insert if list is full
+        match list.insert_first(4){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+
+    }
+
+    #[test]
+    fn test_first_item(){
+        use lists::arrayed_list::ArrayedList;
+        use lists::simple_list::SimpleList;
+        
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+
+        // Get the first item when the list is empty
+        match list.first_item(){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+
+        list.insert_first(1);
+
+        match list.first_item() {
+            Ok(1) => assert!(true),
+            _ => assert!(false)
+        }
+
+        list.insert_first(2);
+
+        match list.first_item(){
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+
+        list.insert_last(3);
+
+        match list.first_item(){
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+    }
+
+    #[test]
+    fn test_delete_first(){
+        use lists::arrayed_list::ArrayedList;
+        use lists::simple_list::SimpleList;
+
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+
+        // Delete first on empty list
+        match list.delete_first(){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+
+        // Insert up to capacity, then delete first until empty
+        list.insert_first(3);
+        list.insert_first(2);
+        list.insert_first(1);
+
+        match list.delete_first(){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+        
+        match list.first_item(){
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.delete_first(){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.first_item() {
+            Ok(1) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.delete_first(){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        // error on first item because it should not exist
+        match list.first_item(){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+
+        // One more delete on empty list to be safe
+        match list.delete_first(){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+    }
+    
+    #[test]
+    fn test_insert_last(){
+        use lists::arrayed_list::ArrayedList;
+        use lists::simple_list::SimpleList;
+
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+
+        // Insert last until full
+        match list.insert_last(1){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.last_item(){
+            Ok(3) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.insert_last(2){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.last_item(){
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.insert_last(3){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.last_item(){
+            Ok(3) => assert!(true),
+            _ => assert!(false)
+        }
+
+        // Insert last on full list should error
+        match list.insert_last(4){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+
+        // Delete an item and insert last again to make sure
+        list.delete_first();
+
+        match list.insert_last(4){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.last_item(){
+            Ok(4) => assert!(true),
+            _ => assert!(false)
+        }
+    }   
+
+    // TODO: Tests
+    // last item
+    // delete last
+    //
+    // obtain
+    // insert
+    // delete
+    //
+    // search
+    // restart_searches
+    // resume_searches
+    //
+    // has
+    // membership_equals
+    //
+    // delete_item
+    //
+    // is_empty
+    // is_full
+    // clear
+    //
+    // item
+    // item_exists
+    //
+    // current_position
+    // go_position
+    //
+    // before
+    // after
+    // go_forth
+    // go_first
+    // go_before
+    // go_after
 }
-
