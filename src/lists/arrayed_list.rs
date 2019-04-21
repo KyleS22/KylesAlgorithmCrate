@@ -106,6 +106,7 @@ impl<T> BasicDict<T> for ArrayedList<T>
         Err(ItemNotFoundError)
     }
 
+    // inserts at the current position 
     fn insert(&mut self, x: T) -> Result<(), Error>{
         Err(Error)
     }
@@ -153,6 +154,7 @@ impl<T> Dispenser<T> for ArrayedList<T>
     //    Err(Error)
     //}
     
+    // delets at the current position    
     fn delete_item(&mut self) -> Result<(), NoCurrentItemError>{
         Err(NoCurrentItemError)
     }
@@ -685,7 +687,9 @@ mod test_arrayed_list {
     fn test_insert(){
         use lists::arrayed_list::ArrayedList;
         use base::basic_dict::BasicDict;
-
+        use base::linear_iterator::LinearIterator;
+        use lists::simple_list::SimpleList;
+        
         let mut list: ArrayedList<i32> = ArrayedList::new(3);
 
 
@@ -694,26 +698,114 @@ mod test_arrayed_list {
             _ => assert!(false)
         }
 
+        list.go_first();
+
         match list.insert(2){
             Ok(()) => assert!(true),
             _ => assert!(false)
         }
+
+        match list.first_item(){
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+
+
+        list.go_first();
 
         match list.insert(3){
             Ok(()) => assert!(true),
             _ => assert!(false)
         }
 
+        match list.first_item(){
+            Ok(3) => assert!(true),
+            _ => assert!(false)
+        }
+
+
         // Over capacity
         match list.insert(4){
             Err(_) => assert!(true),
             _ => assert!(false)
         }
+
+        list.go_after();
+
+        match list.insert(50){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+
+        list.go_before();
+
+        match list.insert(50){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+
+
     }
 
 
     // delete
-    //
+    
+    #[test]
+    fn test_delete(){
+        use lists::arrayed_list::ArrayedList;
+        use base::basic_dict::BasicDict;
+        use base::membership::Membership;
+        use lists::simple_list::SimpleList;
+       
+        
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+
+        // Delete from empty should not work
+        match list.delete(5){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+        
+    
+        list.insert_last(1);
+        list.insert_last(2);
+        list.insert_last(3);
+        
+
+        match list.delete(1){
+            Ok(()) => assert!(true),
+            _  => assert!(false)
+        }
+
+        match list.has(1){
+            false => assert!(true),
+            true => assert!(false)
+        }
+
+        match list.delete(3){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.has(3){
+            false => assert!(true),
+            true  => assert!(false)
+        }
+
+        match list.delete(2){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.has(2){
+            false => assert!(true),
+            true => assert!(false)
+        }
+
+
+    }
+    
+
     // search
     // restart_searches
     // resume_searches
