@@ -556,7 +556,69 @@ mod test_arrayed_list {
     }
 
     // delete last
-    //
+    
+    #[test]
+    fn test_delete_last(){
+        use lists::arrayed_list::ArrayedList;
+        use lists::simple_list::SimpleList;
+        use base::container::Container;
+
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+
+        // Try to delete from empty
+        
+        match list.delete_last(){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+
+        // Fill the list and then delete
+        
+        list.insert_last(1);
+        list.insert_last(2);
+        list.insert_last(3);
+
+        match list.delete_last(){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.last_item(){
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+
+
+        match list.delete_last(){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.last_item() {
+            Ok(1) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.delete_last(){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.last_item(){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+
+        assert!(list.is_empty());
+        
+        // Delete from empty once more
+        match list.delete_last(){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+    }
+
+
     // obtain
     // insert
     // delete
