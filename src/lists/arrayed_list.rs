@@ -620,6 +620,66 @@ mod test_arrayed_list {
 
 
     // obtain
+    
+    #[test]
+    fn test_obtain(){
+        use lists::arrayed_list::ArrayedList;
+        use base::basic_dict::BasicDict;
+
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+
+        // Obtain on empty should error
+        match list.obtain(1){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+        
+        // Insert stuff
+        list.insert(1);
+        
+        match list.obtain(1){
+            Ok(1) => assert!(true),
+            _ => assert!(false)
+        }
+
+        list.insert(2);
+        
+        match list.obtain(1){
+            Ok(1) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.obtain(2){
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+    
+        list.insert(3);
+
+        match list.obtain(1){
+            Ok(1) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.obtain(2){
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.obtain(3){
+            Ok(3) => assert!(true),
+            _ => assert!(false)
+        }
+
+        // Try to obtain a nonexistant element
+
+        match list.obtain(4){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+    }
+
+
     // insert
     // delete
     //
