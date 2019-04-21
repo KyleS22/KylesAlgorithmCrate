@@ -12,7 +12,7 @@ pub trait Dispenser<T>: Container + Cursor<T> {
     ///
     /// # Arguments
     /// * `x` - The item to insert into the structure
-    //fn insert(&mut self, x: T) -> Result<(), Error>;
+    fn insert_item(&mut self, x: T) -> Result<(), Error>;
 
     /// Delete the current item from the structure
     /// Returns a NoCurrentItemError if there is no current item

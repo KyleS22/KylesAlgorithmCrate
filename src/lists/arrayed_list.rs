@@ -109,10 +109,12 @@ impl<T> BasicDict<T> for ArrayedList<T>
     // inserts at the current position 
     fn insert(&mut self, x: T) -> Result<(), Error>{
         Err(Error)
+        // TODO: just call self.insert_item()?
     }
 
     fn delete(&mut self, x: T) -> Result<(), ItemNotFoundError>{
         Err(ItemNotFoundError)
+        // TODO: just call self.delete_item()?
     }
  
 }
@@ -150,9 +152,9 @@ impl<T> Membership<T> for ArrayedList<T>
 impl<T> Dispenser<T> for ArrayedList<T>
     where T: Clone
 {
-    //fn insert(&mut self, x: T) -> Result<(), Error>{
-    //    Err(Error)
-    //}
+    fn insert_item(&mut self, x: T) -> Result<(), Error>{
+        Err(Error)
+    }
     
     // delets at the current position    
     fn delete_item(&mut self) -> Result<(), NoCurrentItemError>{
@@ -813,6 +815,7 @@ mod test_arrayed_list {
     // has
     // membership_equals
     //
+    // insert_item
     // delete_item
     //
     // is_empty
