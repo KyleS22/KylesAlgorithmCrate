@@ -681,6 +681,37 @@ mod test_arrayed_list {
 
 
     // insert
+    #[test]
+    fn test_insert(){
+        use lists::arrayed_list::ArrayedList;
+        use base::basic_dict::BasicDict;
+
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+
+
+        match list.insert(1){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.insert(2){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.insert(3){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        // Over capacity
+        match list.insert(4){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+    }
+
+
     // delete
     //
     // search
