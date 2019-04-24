@@ -118,6 +118,10 @@ A rust library containing implementations of various algorithms and data structu
    - [ ] Clique Cover on Chordal Graphs
    - [ ] Clique Cover on Permutation Graphs
    - [ ] Dominating Clique in Comparability Graphs
+   - [ ] Min Colour on Chordal Graphs
+   - [ ] Max Clique on Chordal Graphs
+   - [ ] Max Independent Set on Chordal Graphs
+   - [ ] Lex BFS for P.E.S. on Chordal Graphs
 
 ### Divide and Conquor Algorithms
    - [ ] Merge Sort
