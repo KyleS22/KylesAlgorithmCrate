@@ -115,6 +115,9 @@ A rust library containing implementations of various algorithms and data structu
    - [ ] Middle Nodes
    - [ ] Topological Ordering
    - [ ] Prims 
+   - [ ] Max Clique for Permutation Graphs
+   - [ ] Max Independent Set for Permutation Graphs
+   - [ ] Min Colour for Permutation Graphs
    - [ ] Clique Cover on Chordal Graphs
    - [ ] Clique Cover on Permutation Graphs
    - [ ] Dominating Clique in Comparability Graphs
