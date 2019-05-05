@@ -5,7 +5,7 @@ use base::cursor::Cursor;
 /// can be moved around
 pub trait Searchable<T>: Membership<T> + Cursor<T>{
 
-    /// Move the current position to the first or next occurane of 
+    /// Move the current position to the first or next occurance of 
     /// `x`, if it exists.
     ///
     /// # Arguments

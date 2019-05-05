@@ -809,9 +809,132 @@ mod test_arrayed_list {
     
 
     // search
+
+    #[test]
+    fn test_search(){
+    
+        use lists::arrayed_list::ArrayedList;
+        use base::searchable::Searchable;
+        use lists::simple_list::SimpleList;
+        use base::cursor::Cursor; 
+        use base::linear_iterator::LinearIterator;
+        
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+
+        
+        // Search empty list
+        list.search(1);
+        
+        match list.item(){
+            Ok(_) => assert!(false),
+            _ => assert!(true)
+        }
+
+        
+        // Add some items and search for each
+
+        list.insert_last(1);
+        list.insert_last(2);
+        list.insert_last(1);
+
+        list.go_before();
+
+        list.search(2);
+
+        match list.item(){
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+
+        list.search(1);
+
+        match list.item(){
+            Ok(1) => assert!(true),
+            _ => assert!(false)
+        }
+
+
+    }
+
+
     // restart_searches
+    #[test]
+    fn test_restart_searches(){
+        use lists::arrayed_list::ArrayedList;
+        use base::searchable::Searchable;
+        use lists::simple_list::SimpleList;
+        use base::cursor::Cursor; 
+        use base::linear_iterator::LinearIterator;
+        
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+
+        list.restart_searches();
+
+        list.insert_last(1);
+        list.insert_last(2);
+        list.insert_last(1);
+
+        list.search(1);
+
+        list.go_forth();
+
+        match list.item(){
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+
+        list.search(1);
+        
+        list.go_forth();
+
+        match list.item(){
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+    }
+
+
     // resume_searches
-    //
+    
+    #[test]
+    fn test_resume_searches(){
+        use lists::arrayed_list::ArrayedList;
+        use base::searchable::Searchable;
+        use lists::simple_list::SimpleList;
+        use base::cursor::Cursor; 
+        use base::linear_iterator::LinearIterator;
+        
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+
+        list.resume_searches();
+
+        list.insert_last(1);
+        list.insert_last(2);
+        list.insert_last(1);
+
+        list.search(1);
+
+        list.go_forth();
+
+        match list.item(){
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+
+        list.search(1);
+
+        list.go_forth();
+
+        if list.after(){
+            assert!(true);
+        }else{
+            assert!(false);
+        }
+
+
+    }
+
+
     // has
     // membership_equals
     //
