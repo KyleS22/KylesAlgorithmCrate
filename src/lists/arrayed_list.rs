@@ -936,9 +936,82 @@ mod test_arrayed_list {
 
 
     // has
+    #[test]
+    fn test_has(){
+        use lists::arrayed_list::ArrayedList;
+        use base::searchable::Searchable;
+        use lists::simple_list::SimpleList;
+        use base::cursor::Cursor; 
+        use base::linear_iterator::LinearIterator;
+        use base::membership::Membership;
+        
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+
+        list.insert_last(1);
+        list.insert_last(2);
+        list.insert_last(3);
+
+        match list.has(1){
+            true => assert!(true),
+            _ => assert!(false)
+        }
+        
+        match list.has(2){
+            true => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.has(3){
+            true => assert!(true),
+            _ => assert!(false)
+        }
+
+
+        match list.has(42){
+            true => assert!(false),
+            _ => assert!(true)
+        }
+    }
+
+
     // membership_equals
-    //
+    #[test]
+    fn test_membership_equals(){
+        use lists::arrayed_list::ArrayedList;
+        use base::searchable::Searchable;
+        use lists::simple_list::SimpleList;
+        use base::cursor::Cursor; 
+        use base::linear_iterator::LinearIterator;
+        use base::membership::Membership;
+       
+        
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+
+        list.insert_last(1);
+        list.insert_last(2);
+        list.insert_last(3);
+
+        if list.membership_equals(1, 2){
+            assert!(false);
+        }else{
+            assert!(true)
+        }
+
+        if list.membership_equals(2, 2){
+            assert!(false);
+        }else{
+            assert!(true)
+        }
+
+    }
+
     // insert_item
+    #[test]
+    fn test_insert_item(){
+        
+    }
+
+
     // delete_item
     //
     // is_empty
