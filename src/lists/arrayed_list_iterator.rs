@@ -348,7 +348,7 @@ mod arrayed_list_iterator_tests {
             _ => assert!(false)
         }
 
-        iter.set_position(1);
+        iter.set_position(1).expect("Error in set_position");
 
         match iter.item() {
             Ok(2) => assert!(true),
@@ -446,7 +446,7 @@ mod arrayed_list_iterator_tests {
 
         let mut iter = ArrayedListIterator::new(vec![1, 2, 3], 0, 2, 3);
         
-        iter.go_forth();
+        iter.go_forth().expect("Error in go_forth");
 
         match iter.go_first() {
             Err(_e) => assert!(false),

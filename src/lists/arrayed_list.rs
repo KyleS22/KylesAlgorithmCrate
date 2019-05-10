@@ -123,7 +123,7 @@ impl<T> Searchable<T> for ArrayedList<T>
     where T: Clone
 {
     fn search(&self, x: T){
-
+        // TODO: Paralellized binary search
     }
 
     fn restart_searches(&mut self){
@@ -278,9 +278,9 @@ mod test_arrayed_list {
         let mut list: ArrayedList<i32> = ArrayedList::new(5);
 
         // Insert 3 items
-        list.insert(1);
-        list.insert(2);
-        list.insert(3);
+        list.insert(1).expect("Error in insert");
+        list.insert(2).expect("Error in insert");
+        list.insert(3).expect("Error in insert");
         
         // Get the three items
         let res = list.get_item_at_index(0);
@@ -368,21 +368,21 @@ mod test_arrayed_list {
             _ => assert!(false)
         }
 
-        list.insert_first(1);
+        list.insert_first(1).expect("Error in insert_first");
 
         match list.first_item() {
             Ok(1) => assert!(true),
             _ => assert!(false)
         }
 
-        list.insert_first(2);
+        list.insert_first(2).expect("Error in insert_first");
 
         match list.first_item(){
             Ok(2) => assert!(true),
             _ => assert!(false)
         }
 
-        list.insert_last(3);
+        list.insert_last(3).expect("Error in go insert_last");
 
         match list.first_item(){
             Ok(2) => assert!(true),
@@ -404,9 +404,9 @@ mod test_arrayed_list {
         }
 
         // Insert up to capacity, then delete first until empty
-        list.insert_first(3);
-        list.insert_first(2);
-        list.insert_first(1);
+        list.insert_first(3).expect("Error in insert_first");
+        list.insert_first(2).expect("Error in insert_first");
+        list.insert_first(1).expect("Error in insert_first");
 
         match list.delete_first(){
             Ok(()) => assert!(true),
@@ -491,7 +491,7 @@ mod test_arrayed_list {
         }
 
         // Delete an item and insert last again to make sure
-        list.delete_first();
+        list.delete_first().expect("Error in delete_first");
 
         match list.insert_last(4){
             Ok(()) => assert!(true),
@@ -520,21 +520,21 @@ mod test_arrayed_list {
         }
 
         // Insert a few different items and check the last
-        list.insert_last(1);
+        list.insert_last(1).expect("Error in go insert_last");
 
         match list.last_item(){
             Ok(1) => assert!(true),
             _ => assert!(false)
         }
 
-        list.insert_last(2);
+        list.insert_last(2).expect("Error in go insert_last");
 
         match list.last_item(){
             Ok(2) => assert!(true),
             _ => assert!(false)
         }
 
-        list.insert_last(3);
+        list.insert_last(3).expect("Error in go insert_last");
 
         match list.last_item() {
             Ok(3) => assert!(true),
@@ -543,14 +543,14 @@ mod test_arrayed_list {
 
         
         // Last item should not change after deleting first
-        list.delete_first();
+        list.delete_first().expect("Error in delete_first");
 
         match list.last_item(){
             Ok(3) => assert!(true),
             _ => assert!(false)
         }
 
-        list.insert_first(4);
+        list.insert_first(4).expect("Error in insert_first");
 
         match list.last_item(){
             Ok(3) => assert!(true),
@@ -578,9 +578,9 @@ mod test_arrayed_list {
 
         // Fill the list and then delete
         
-        list.insert_last(1);
-        list.insert_last(2);
-        list.insert_last(3);
+        list.insert_last(1).expect("Error in go insert_last");
+        list.insert_last(2).expect("Error in go insert_last");
+        list.insert_last(3).expect("Error in go insert_last");
 
         match list.delete_last(){
             Ok(()) => assert!(true),
@@ -639,14 +639,14 @@ mod test_arrayed_list {
         }
         
         // Insert stuff
-        list.insert(1);
+        list.insert(1).expect("Error in insert");
         
         match list.obtain(1){
             Ok(1) => assert!(true),
             _ => assert!(false)
         }
 
-        list.insert(2);
+        list.insert(2).expect("Error in insert");
         
         match list.obtain(1){
             Ok(1) => assert!(true),
@@ -658,7 +658,7 @@ mod test_arrayed_list {
             _ => assert!(false)
         }
     
-        list.insert(3);
+        list.insert(3).expect("Error in insert");
 
         match list.obtain(1){
             Ok(1) => assert!(true),
@@ -700,7 +700,7 @@ mod test_arrayed_list {
             _ => assert!(false)
         }
 
-        list.go_first();
+        list.go_first().expect("Error in go first");
 
         match list.insert(2){
             Ok(()) => assert!(true),
@@ -713,7 +713,7 @@ mod test_arrayed_list {
         }
 
 
-        list.go_first();
+        list.go_first().expect("Error in go first");
 
         match list.insert(3){
             Ok(()) => assert!(true),
@@ -769,9 +769,9 @@ mod test_arrayed_list {
         }
         
     
-        list.insert_last(1);
-        list.insert_last(2);
-        list.insert_last(3);
+        list.insert_last(1).expect("Error in go insert_last");
+        list.insert_last(2).expect("Error in go insert_last");
+        list.insert_last(3).expect("Error in go insert_last");
         
 
         match list.delete(1){
@@ -833,9 +833,9 @@ mod test_arrayed_list {
         
         // Add some items and search for each
 
-        list.insert_last(1);
-        list.insert_last(2);
-        list.insert_last(1);
+        list.insert_last(1).expect("Error in go insert_last");
+        list.insert_last(2).expect("Error in go insert_last");
+        list.insert_last(1).expect("Error in go insert_last");
 
         list.go_before();
 
@@ -870,13 +870,13 @@ mod test_arrayed_list {
 
         list.restart_searches();
 
-        list.insert_last(1);
-        list.insert_last(2);
-        list.insert_last(1);
+        list.insert_last(1).expect("Error in go insert_last");
+        list.insert_last(2).expect("Error in go insert_last");
+        list.insert_last(1).expect("Error in go insert_last");
 
         list.search(1);
 
-        list.go_forth();
+        list.go_forth().expect("Error in go first");
 
         match list.item(){
             Ok(2) => assert!(true),
@@ -885,7 +885,7 @@ mod test_arrayed_list {
 
         list.search(1);
         
-        list.go_forth();
+        list.go_forth().expect("Error in go forth");
 
         match list.item(){
             Ok(2) => assert!(true),
@@ -908,13 +908,13 @@ mod test_arrayed_list {
 
         list.resume_searches();
 
-        list.insert_last(1);
-        list.insert_last(2);
-        list.insert_last(1);
+        list.insert_last(1).expect("Error in go insert_last");
+        list.insert_last(2).expect("Error in go insert_last");
+        list.insert_last(1).expect("Error in go insert_last");
 
         list.search(1);
 
-        list.go_forth();
+        list.go_forth().expect("Error in go forth");
 
         match list.item(){
             Ok(2) => assert!(true),
@@ -923,7 +923,7 @@ mod test_arrayed_list {
 
         list.search(1);
 
-        list.go_forth();
+        list.go_forth().expect("Error in go forth");
 
         if list.after(){
             assert!(true);
@@ -947,9 +947,9 @@ mod test_arrayed_list {
         
         let mut list: ArrayedList<i32> = ArrayedList::new(3);
 
-        list.insert_last(1);
-        list.insert_last(2);
-        list.insert_last(3);
+        list.insert_last(1).expect("Error in go insert_last");
+        list.insert_last(2).expect("Error in go insert_last");
+        list.insert_last(3).expect("Error in go insert_last");
 
         match list.has(1){
             true => assert!(true),
@@ -987,9 +987,9 @@ mod test_arrayed_list {
         
         let mut list: ArrayedList<i32> = ArrayedList::new(3);
 
-        list.insert_last(1);
-        list.insert_last(2);
-        list.insert_last(3);
+        list.insert_last(1).expect("Error in go insert_last");
+        list.insert_last(2).expect("Error in go insert_last");
+        list.insert_last(3).expect("Error in go insert_last");
 
         if list.membership_equals(1, 2){
             assert!(false);
@@ -998,9 +998,9 @@ mod test_arrayed_list {
         }
 
         if list.membership_equals(2, 2){
-            assert!(false);
+            assert!(true);
         }else{
-            assert!(true)
+            assert!(false)
         }
 
     }
@@ -1008,19 +1008,309 @@ mod test_arrayed_list {
     // insert_item
     #[test]
     fn test_insert_item(){
+        use lists::arrayed_list::ArrayedList;
+        use base::searchable::Searchable;
+        use lists::simple_list::SimpleList;
+        use base::cursor::Cursor; 
+        use base::linear_iterator::LinearIterator;
+        use base::membership::Membership;
+        use base::dispenser::Dispenser;       
         
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+       
+        match list.insert_item(1){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        
+        match list.item(){
+            Ok(1) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.insert_item(2){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+
+        match list.item(){
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.first_item(){
+            Ok(1) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.last_item(){
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+
+        list.go_first().expect("Error in go first");
+
+        match list.insert_item(3) {
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.item(){
+            Ok(3) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.first_item(){
+            Ok(3) => assert!(true),
+            _ => assert!(false)
+        }
+
+        list.go_forth().expect("Error in go forth");
+
+        match list.item(){
+            Ok(1) => assert!(true),
+            _ => assert!(false)
+        }
+
     }
 
 
     // delete_item
-    //
+    #[test]
+    fn test_delete_item(){
+        use lists::arrayed_list::ArrayedList;
+        use base::searchable::Searchable;
+        use lists::simple_list::SimpleList;
+        use base::cursor::Cursor; 
+        use base::linear_iterator::LinearIterator;
+        use base::membership::Membership;
+        use base::dispenser::Dispenser;       
+        
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+        
+        match list.delete_item(){
+            Ok(()) => assert!(false),
+            _ => assert!(true)
+        }
+
+        list.insert_item(1).expect("Error in insert");
+        list.insert_item(2).expect("Error in insert");
+        list.insert_item(3).expect("Error in insert"); 
+
+        list.go_first().expect("Error in go first");
+
+        match list.delete_item(){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.first_item(){
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+
+        list.go_forth().expect("Error in go forth");
+
+        match list.delete_item(){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.item() {
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+
+        match list.delete_item(){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+    
+        assert!(list.after());
+
+        match list.delete_item(){
+            Ok(()) => assert!(false),
+            _ => assert!(true)
+        }
+
+    }
+
+    
     // is_empty
+    #[test]
+    fn test_is_empty(){
+        use lists::arrayed_list::ArrayedList;
+        use base::searchable::Searchable;
+        use lists::simple_list::SimpleList;
+        use base::cursor::Cursor; 
+        use base::linear_iterator::LinearIterator;
+        use base::membership::Membership;
+        use base::dispenser::Dispenser;       
+        use base::container::Container;
+        
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+        
+        assert!(list.is_empty());
+
+        list.insert_first(1).expect("Error in insert_first");
+
+        assert!(!list.is_empty());
+
+        list.delete_item().expect("Error in delete item");
+
+        assert!(list.is_empty());
+
+    }
+
+    
     // is_full
+    #[test]
+    fn test_is_full(){
+        use lists::arrayed_list::ArrayedList;
+        use base::searchable::Searchable;
+        use lists::simple_list::SimpleList;
+        use base::cursor::Cursor; 
+        use base::linear_iterator::LinearIterator;
+        use base::membership::Membership;
+        use base::dispenser::Dispenser;       
+        use base::container::Container;
+        
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+    
+        assert!(!list.is_full());
+
+        list.insert_first(1).expect("Error in insert_first");
+        list.insert_first(2).expect("Error in insert_first");
+        list.insert_first(3).expect("Error in insert_first");
+
+        assert!(list.is_full());
+
+        list.delete_item().expect("Error in delete_item");
+
+        assert!(!list.is_full());
+
+
+    }
+
+
+
     // clear
-    //
+    #[test]
+    fn test_clear(){
+        use lists::arrayed_list::ArrayedList;
+        use base::searchable::Searchable;
+        use lists::simple_list::SimpleList;
+        use base::cursor::Cursor; 
+        use base::linear_iterator::LinearIterator;
+        use base::membership::Membership;
+        use base::dispenser::Dispenser;       
+        use base::container::Container;
+        
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+        
+        list.insert_first(1).expect("Error in insert_first");
+        
+        list.clear();
+        
+        assert!(list.is_empty());
+        
+        list.insert_first(1).expect("Error in insert_first"); 
+        list.insert_first(2).expect("Error in insert_first");
+        
+        list.clear();
+        
+        assert!(list.is_empty()); 
+
+    }
+
+
+
     // item
+    #[test]
+    fn test_item(){
+        use lists::arrayed_list::ArrayedList;
+        use base::searchable::Searchable;
+        use lists::simple_list::SimpleList;
+        use base::cursor::Cursor; 
+        use base::linear_iterator::LinearIterator;
+        use base::membership::Membership;
+        use base::dispenser::Dispenser;       
+        use base::container::Container;
+        
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+        
+        match list.item(){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+
+        list.insert_item(1).expect("Error in insert_first");
+
+        match list.item(){
+            Ok(1) => assert!(true),
+            _ => assert!(false)
+        }
+    
+
+        list.insert_item(2).expect("Error in insert_first");    
+        list.insert_item(3).expect("Error in insert_first");
+
+        match list.item(){
+            Ok(3) => assert!(true),
+            _ => assert!(false)
+        }
+
+        list.go_first().expect("Error in go first");
+
+        match list.item(){
+            Ok(1) => assert!(true),
+            _ => assert!(false)
+        }
+
+        list.go_forth().expect("Error in fo forth");
+
+        match list.item(){
+            Ok(2) => assert!(true),
+            _ => assert!(false)
+        }
+    }
+
+    
+
     // item_exists
-    //
+    #[test]
+    fn test_item_exists(){
+        use lists::arrayed_list::ArrayedList;
+        use base::searchable::Searchable;
+        use lists::simple_list::SimpleList;
+        use base::cursor::Cursor; 
+        use base::linear_iterator::LinearIterator;
+        use base::membership::Membership;
+        use base::dispenser::Dispenser;       
+        use base::container::Container;
+        
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+        
+        assert!(!list.item_exists());
+
+        list.insert_first(1);
+
+        assert!(list.item_exists());
+
+        list.go_before();
+
+        assert!(!list.item_exists());
+
+
+        list.go_after();
+
+        assert!(!list.item_exists());
+    }
+
+
+
     // current_position
     // go_position
     //
