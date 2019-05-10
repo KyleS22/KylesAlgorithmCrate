@@ -31,6 +31,11 @@ use dictionary::dict::Dict;
 use std::fmt;
 use std::fmt::Error;
  
+trait ConstPositions{
+    const AFTER_POS: i32 = -1;
+    const BEFORE_POS: i32 = -2;
+}
+
 /// A struct to represent an arrayed list structure
 #[derive(Clone, Debug)]
 pub struct ArrayedList<T: 'static>{
@@ -43,25 +48,106 @@ pub struct ArrayedList<T: 'static>{
     continue_search: bool,
 }
 
+impl <T> ConstPositions for ArrayedList<T>{
+
+}
+
 impl <T> ArrayedList<T>
     where T: Copy + Clone, {
     
-     
+         
+	/// Create an empty list
+	///
+	/// # Arguments
+	/// * `capacity` - The maximum number of elements that can go into the list
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    /// 
+    /// // Create a new list with capacity 3
+    /// let &mut list = ArrayedList::new(3);
+	/// ```
     pub fn new(capacity: usize) -> Self {
         let mut vec = Vec::with_capacity(capacity);
         ArrayedList {list_elements: vec, head: 0, tail: 0, capacity: capacity, position: 0, num_el: 0,  continue_search: false}
     }
-    
+   
+     
+	/// Return the capacity of the list
+	///
+	/// # Arguments
+	/// * `&self` - A mutable reference to the list
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    ///
+    /// // Create a list with capacity 3
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// // The capacity is 3
+    /// if list.capacity() == 3{
+    ///     println!("The capacity is 3");
+    /// }
+	/// ```
     pub fn capacity(&self) -> usize {
-        return 0;
+        return self.capacity;
     }
 
+    
+	/// Return an iterator for the list
+	///
+	/// # Arguments
+	/// * `&self` - A mutable reference to the list
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    ///
+    /// // Create a new list with capacity 3
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// // Get the iterator for this list
+    /// let iter = list.iterator();
+	/// ```
     pub fn iterator(&self) -> ArrayedListIterator<T>{
         return ArrayedListIterator::new(self.list_elements.clone(), self.head, self.tail, self.num_el);
     }
 
+    
+	/// Get an item from the list at a specific index
+	///
+	/// # Arguments
+	/// * `&self` - A mutable reference to the list
+	/// * `index` - The index to get an item from
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    ///
+    /// // Create a new list with capacity 3
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// list.insert_first(2);
+    ///
+    /// list.insert_first(1);
+    ///
+    /// // This will return the first item, 1
+    /// list.get_item_at_index(0);
+    ///
+    /// // This will return the second item, 2
+    /// list.get_item_at_index(1);
+	/// ```
     pub fn get_item_at_index(&self, index: u32) -> Result<T, InvalidArgumentError>{
-        Err(InvalidArgumentError)
+        
+        // Make sure the index is valid
+        if index < 0 || index > (self.tail - 1) as u32 {
+            return Err(InvalidArgumentError);
+        }
+        
+        return Ok(self.list_elements[index as usize]);
+    
     }
 
 }
@@ -69,12 +155,94 @@ impl <T> ArrayedList<T>
 impl<T> SimpleList<T> for ArrayedList<T>
     where T: Clone + Copy
 {
+    
+	/// Insert the given item into the list at the first position
+	///
+	/// # Arguments
+	/// * `&mut self` - A mutable reference to the list
+	/// * `x` - The item to insert into the first position of the list
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    /// use kyles_algorithm_crate::base::simple_list::SimpleList;
+    /// 
+    /// // Create a new list with capacity 3
+    /// let &mut list = ArrayedList::new(3);
+    /// 
+    /// // Insert the item 1 into the list at the beginning
+    /// list.insert_first(1).expect("The list is full");
+    ///
+    /// // Insert the item 2 into the list before the item 1
+    /// list.insert_first(2).expect("The list is full");
+    ///
+    /// // Insert a third element
+    /// list.insert_first(3).expect("The list is full");
+    ///
+    /// // Inserting another item will cause an error, because the list is full
+    /// list.insert_first(4).expect("The list is full");
+	/// ```
     fn insert_first(&mut self, x: T) -> Result<(), ContainerFullError>{
-        Err(ContainerFullError)
+        
+        // Make sure the list is not full
+        if self.is_full(){
+            return Err(ContainerFullError);
+        }
+        
+
+        // Special case for when the vector is empty
+        if self.is_empty(){
+            self.list_elements.insert(0, x);
+        }else{
+        
+            // Move the current items in the array down one
+            for i in self.tail..0{
+                self.list_elements[(i + 1) as usize] = self.list_elements[i as usize];
+            }
+    
+            self.list_elements[0] = x;
+        }
+        
+        self.num_el += 1;
+        self.tail += 1;
+
+        Ok(())
     }
 
+    
+	/// Return the first item in the list
+	///
+	/// # Arguments
+	/// * `&self` - A mutable reference to the list
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    /// use kyles_algorithm_crate::base::simple_list::SimpleList;
+    /// 
+    /// // Create a new list with capacity 3
+    /// let &mut list = ArrayedList::new(3);
+    /// 
+    /// // Insert some items
+    /// list.insert_last(1).expect("Error inserting item");
+    /// list.insert_last(2).expect("Error inserting item");
+    /// list.insert_last(3).expect("Error inserting item");
+    /// 
+    /// if list.first_item() == 1{
+    ///     println!("The first item is 1");
+    /// }else{
+    ///     println!("This should not happen");
+    /// }
+    ///
+	/// ```
     fn first_item(&self) -> Result<T, ContainerEmptyError>{
-        Err(ContainerEmptyError)
+        
+        // Check to see if the list is empty
+        if self.is_empty(){
+            return Err(ContainerEmptyError)
+        }
+        
+        return Ok(self.list_elements[self.head as usize]);
     }
 
     fn delete_first(&mut self) -> Result<(), ContainerEmptyError>{
@@ -105,16 +273,53 @@ impl<T> BasicDict<T> for ArrayedList<T>
     fn obtain(&self, y: T) -> Result<T, ItemNotFoundError>{
         Err(ItemNotFoundError)
     }
-
-    // inserts at the current position 
+    
+    
+	/// Insert the given item at the current position in the list
+	///
+	/// # Arguments
+	/// * `&mut self` - A mutable reference to the list
+	/// * `x` - The item to insert
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    /// use kyles_algorithm_crate::base::basic_dict::BasicDict;
+    ///
+    /// // Create an empty list with capacity 3
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// // Insert 1 at the current position in the list
+    /// list.insert(1);
+    ///
+    /// // 2 will be inserted after 1
+    /// list.insert(2);
+	/// ```
     fn insert(&mut self, x: T) -> Result<(), Error>{
-        Err(Error)
-        // TODO: just call self.insert_item()?
+        self.insert_item(x)
     }
 
+    
+	/// Delete the given item
+	///
+	/// # Arguments
+	/// * `&mut self` - A mutable reference to the list
+	/// * `x` - The item to delete
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    ///
+    /// // Create a new list with capacity 3
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// list.insert(1);
+    ///
+    /// // Delete 1 from the list
+    /// list.delete(1);
+	/// ```
     fn delete(&mut self, x: T) -> Result<(), ItemNotFoundError>{
         Err(ItemNotFoundError)
-        // TODO: just call self.delete_item()?
     }
  
 }
@@ -127,11 +332,11 @@ impl<T> Searchable<T> for ArrayedList<T>
     }
 
     fn restart_searches(&mut self){
-
+        self.continue_search = false;
     }
 
     fn resume_searches(&mut self){
-
+        self.continue_search = true;
     }
 
 }
@@ -167,15 +372,19 @@ impl<T> Container for ArrayedList<T>
     where T: Clone
 {
     fn is_empty(&self) -> bool{
-        false
+        return self.num_el == 0;
     }
     
     fn is_full(&self) -> bool{
-        false
+        return self.num_el == self.capacity as u32;
     }
     
     fn clear(&mut self){
-
+        self.list_elements.clear();
+        self.num_el = 0;
+        self.head = 0;
+        self.tail = 0;
+        self.position = 0;
     }
 }
 
@@ -214,28 +423,139 @@ impl<T> LinearIterator for ArrayedList<T>
 {
 
     fn before(&self) -> bool{
-        return false
+        return self.position == ArrayedList::<T>::BEFORE_POS;
     }
 
     fn after(&self) -> bool{
-        return false
+        return self.position == ArrayedList::<T>::AFTER_POS;
     }
 
 
+    
+	/// Move the cursor forward one position
+	///
+	/// # Arguments
+	/// * `&mut self` - A mutable reference to the list
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    /// use kyles_algorithm_crate::base::linear_iterator::LinearIterator;
+    ///
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// list.insert_first(1).expect("Error inserting into list");
+    /// list.insert_first(2).expect("Error inserting into list");
+    ///
+    /// // The cursor is now on element 2, which is first in the list
+    ///
+    /// match list.go_forth(){
+    ///     Ok(()) => println!("WE ARE NOW ON ELEMENT 1, the second item in the list")
+    /// }
+    ///
+	/// ```
     fn go_forth(&mut self) -> Result<(), AfterTheEndError>{
-        Err(AfterTheEndError)
+        
+        // If we are in the before position, go to first position
+        if self.position == ArrayedList::<T>::BEFORE_POS {
+            self.position = self.head;    
+
+        // We are after the end of the list, so error
+        } else if self.position == ArrayedList::<T>::AFTER_POS{
+           return Err(AfterTheEndError)
+
+        // otherwise, if we are going to be after the end when we go forth
+        } else if self.position + 1 > (self.num_el - 1) as i32{
+            self.position = ArrayedList::<T>::AFTER_POS;
+
+        // Otherwise, increment the position
+        } else{
+            self.position += 1;
+        }
+
+        Ok(())
     }
-    
+   
+   
+     
+	/// Move the cursor the the first position
+	///
+	/// # Arguments
+	/// * `&mut self` - A mutable reference to the list
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    /// use kyles_algorithm_crate::base::linear_iterator::LinearIterator;
+    ///
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// list.insert_first(1).expect("Error inserting into list");
+    /// list.insert_first(2).expect("Error inserting into list");
+    ///
+    /// list.go_after();
+    ///
+    /// match list.go_first(){
+    ///     Ok(()) => println!("WE ARE NOW ON ELEMENT 2, the first item in the list")
+    /// }
+    ///
+	/// ```
     fn go_first(&mut self) -> Result<(), ContainerEmptyError>{
-        Err(ContainerEmptyError)
+        
+        // Make sure the list is not empty first
+        if self.is_empty(){
+            return Err(ContainerEmptyError)
+        }
+
+        // set the position to be the head of the list
+        self.position = self.head;
+
+        Ok(())
     }
 
+    
+	/// Sets the cursor of the list to the before position of the list, which is an abstract
+    /// location before the first element in the list.
+	///
+	/// # Arguments
+	/// * `&mut self` - A mutable reference to the list
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    /// use kyles_algorithm_crate::base::linear_iterator::LinearIterator;
+    ///
+    /// let &mut list = ArrayedList::new(3);
+    /// 
+    /// list.go_before();
+    ///
+    /// // The cursor is now in the before position of the list
+    ///
+	/// ```
     fn go_before(&mut self){
-
+        self.position = ArrayedList::<T>::BEFORE_POS;
     }
     
+    /// Sets the cursor of the list to the after position of the list, which is an abstract
+    /// location after the last element in the list.
+	///
+	/// # Arguments
+	/// * `&mut self` - A mutable reference to the list
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    /// use kyles_algorithm_crate::base::linear_iterator::LinearIterator;
+    ///
+    /// let &mut list = ArrayedList::new(3);
+    /// 
+    /// list.go_after();
+    ///
+    /// // The cursor is now in the after position of the list
+    ///
+	/// ```
     fn go_after(&mut self){
-
+        self.position = ArrayedList::<T>::AFTER_POS;
     }
 
 }
