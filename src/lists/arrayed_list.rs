@@ -1295,7 +1295,7 @@ mod test_arrayed_list {
         
         assert!(!list.item_exists());
 
-        list.insert_first(1);
+        list.insert_first(1).expect("Error in insert_first");
 
         assert!(list.item_exists());
 
@@ -1312,12 +1312,239 @@ mod test_arrayed_list {
 
 
     // current_position
+    #[test]
+    fn test_current_position(){
+        assert!(false);
+        //TODO: I'm not sure how this is supposed to work yet        
+    }
+
+
     // go_position
-    //
+    #[test]
+    fn test_go_position(){
+        assert!(false);
+        // TODO: I'm not sure how this is supposed to work yet
+    }
+
+
     // before
+    #[test]
+    fn test_before(){
+        use lists::arrayed_list::ArrayedList;
+        use base::searchable::Searchable;
+        use lists::simple_list::SimpleList;
+        use base::cursor::Cursor; 
+        use base::linear_iterator::LinearIterator;
+        use base::membership::Membership;
+        use base::dispenser::Dispenser;       
+        use base::container::Container;
+        
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+        
+        list.insert_first(1).expect("Error in insert_first");
+
+        assert!(!list.before());
+
+        list.go_before();
+
+        assert!(list.before());
+
+        list.go_after();
+
+        assert!(!list.before());
+    }
+
     // after
+     #[test]
+    fn test_after(){
+        use lists::arrayed_list::ArrayedList;
+        use base::searchable::Searchable;
+        use lists::simple_list::SimpleList;
+        use base::cursor::Cursor; 
+        use base::linear_iterator::LinearIterator;
+        use base::membership::Membership;
+        use base::dispenser::Dispenser;       
+        use base::container::Container;
+        
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+        
+        list.insert_first(1).expect("Error in insert_first");
+
+        assert!(!list.after());
+
+        list.go_after();
+
+        assert!(list.after());
+
+        list.go_before();
+
+        assert!(!list.after());
+    }
+
+
     // go_forth
+    #[test]
+    fn test_go_forth(){
+        use lists::arrayed_list::ArrayedList;
+        use base::searchable::Searchable;
+        use lists::simple_list::SimpleList;
+        use base::cursor::Cursor; 
+        use base::linear_iterator::LinearIterator;
+        use base::membership::Membership;
+        use base::dispenser::Dispenser;       
+        use base::container::Container;
+        
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+        
+        match list.go_forth(){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        assert!(list.after());
+
+        match list.go_forth(){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+
+        list.insert_first(1).expect("Error in insert_first");
+        
+        list.go_before();
+
+        match list.go_forth(){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        assert_eq!(list.item().unwrap(), 1);
+
+        match list.go_forth(){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        assert!(list.after());
+
+        match list.go_forth(){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+    }
+
     // go_first
+    #[test]
+    fn test_go_first(){
+        use lists::arrayed_list::ArrayedList;
+        use base::searchable::Searchable;
+        use lists::simple_list::SimpleList;
+        use base::cursor::Cursor; 
+        use base::linear_iterator::LinearIterator;
+        use base::membership::Membership;
+        use base::dispenser::Dispenser;       
+        use base::container::Container;
+        
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+        
+        match list.go_first(){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+
+        assert!(list.before());
+
+        list.insert_first(1).expect("Error in insert_first");
+        
+        list.go_before();
+
+        match list.go_first(){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        assert_eq!(list.item().unwrap(), 1);
+
+        match list.go_first(){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        assert_eq!(list.item().unwrap(), 1);
+
+        list.go_after();
+
+        match list.go_first(){
+            Ok(()) => assert!(true),
+            _ => assert!(false)
+        }
+
+        
+        assert_eq!(list.item().unwrap(), 1);
+
+        list.delete_item().expect("Error in delete item");
+
+        match list.go_first(){
+            Err(_) => assert!(true),
+            _ => assert!(false)
+        }
+    }
+
+
     // go_before
+    #[test]
+    fn test_go_before(){
+        use lists::arrayed_list::ArrayedList;
+        use base::searchable::Searchable;
+        use lists::simple_list::SimpleList;
+        use base::cursor::Cursor; 
+        use base::linear_iterator::LinearIterator;
+        use base::membership::Membership;
+        use base::dispenser::Dispenser;       
+        use base::container::Container;
+        
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+        
+        list.go_after();
+
+        list.go_before();
+
+        assert!(list.before());
+
+        list.insert_first(1).expect("Error in insert_first");
+
+        list.go_before();
+
+        assert!(list.before());
+               
+    }
+
     // go_after
+    #[test]
+    fn test_go_after(){
+        use lists::arrayed_list::ArrayedList;
+        use base::searchable::Searchable;
+        use lists::simple_list::SimpleList;
+        use base::cursor::Cursor; 
+        use base::linear_iterator::LinearIterator;
+        use base::membership::Membership;
+        use base::dispenser::Dispenser;       
+        use base::container::Container;
+        
+        let mut list: ArrayedList<i32> = ArrayedList::new(3);
+        
+        list.go_before();
+
+        list.go_after();
+
+        assert!(list.after());
+
+        list.insert_first(1).expect("Error in insert_first");
+
+        list.go_after();
+
+        assert!(list.after());
+               
+    }
+
+
 }
