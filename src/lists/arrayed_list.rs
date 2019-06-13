@@ -190,21 +190,10 @@ impl<T> SimpleList<T> for ArrayedList<T>
         }
         
 
-        // Special case for when the vector is empty
-        if self.is_empty(){
-            self.list_elements.insert(0, x);
-        }else{
-        
-            // Move the current items in the array down one
-            for i in self.tail..0{
-                self.list_elements[(i + 1) as usize] = self.list_elements[i as usize];
-            }
-    
-            self.list_elements[0] = x;
-        }
+        self.list_elements[self.head as usize] = x;
         
         self.num_el += 1;
-        self.tail += 1;
+        self.head = (self.head - 1) % (self.capacity as i32);
 
         Ok(())
     }
@@ -245,18 +234,122 @@ impl<T> SimpleList<T> for ArrayedList<T>
         return Ok(self.list_elements[self.head as usize]);
     }
 
+    
+	/// Delete the first item in the list
+	///
+	/// # Arguments
+	/// * `&mut self` - Reference to self
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    /// use kyles_algorithm_crate::base::simple_list::SimpleList;
+    ///
+    /// // Create a new list
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// // Insert some items
+    /// list.insert_last(1);
+    /// list.insert_last(2);
+    /// list.insert_last(3);
+    ///
+    /// // Remove 1 from the list
+    /// list.delete_first();
+	/// ```
     fn delete_first(&mut self) -> Result<(), ContainerEmptyError>{
-        Err(ContainerEmptyError)
-    }
+       
+        // Check for empty list
+        if self.is_empty(){
+            return Err(ContainerEmptyError)
+        }
+       
+        // If we are deleting the current position, move the position up
+        if self.position == self.head{
+            self.position = (self.head + 1) % (self.capacity as i32);
+        }
+        
+        // Move the head up
+        self.head = (self.head + 1) % (self.capacity as i32);
+        self.num_el -= 1;
+            
+        // Check to see if we should be in the before position
+        if self.is_empty(){
+            self.position = ArrayedList::<T>::BEFORE_POS;
+        }
 
+        return Ok(())
+    }
+    
+    
+	/// Insert the given item at the end of the list
+	///
+	/// # Arguments
+	/// * `&mut self` - A reference to self
+	/// * `x` - The item to insert at the end of the list
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    /// use kyles_algorithm_crate::base::simple_list::SimpleList;
+    ///
+    /// // Create a new list
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// // Insert some items at the end of the list
+    /// list.insert_last(1);
+    /// list.insert_last(2);
+    /// list.insert_last(3);
+    ///
+    /// // The list now contains [1, 2, 3]
+	/// ```
     fn insert_last(&mut self, x: T) -> Result<(), ContainerFullError>{
-        Err(ContainerFullError)
-    }
+        
+        // Make sure the list is not full
+        if self.is_full(){
+            return Err(ContainerFullError)
+        }
 
+        self.tail = (self.tail + 1) % (self.capacity as i32);
+
+        self.list_elements[self.tail as usize] = x;
+        self.num_el += 1;
+
+        return Ok(())
+    }
+    
+    
+	/// Return the last item in the list
+	///
+	/// # Arguments
+	/// * `&self` - Reference to the list
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::arrayed_list::ArrayedList;
+    /// use kyles_algorithm_crate::base::simple_list::SimpleList;
+    ///
+    /// // Create a new list
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// // Insert some items
+    /// list.insert_first(1);
+    /// list.insert_first(2);
+    ///
+    /// // Get the last item, which is 2
+    /// list.last_item();
+    ///
+	/// ```
     fn last_item(&self) -> Result<T, ContainerEmptyError>{
-        Err(ContainerEmptyError)
+        
+        // Make sure the list is not empty
+        if self.is_empty(){
+            return Err(ContainerEmptyError)
+        }
+        
+        return Ok(self.list_elements[self.tail as usize])
 
     }
+    
 
     fn delete_last(&mut self) -> Result<(), ContainerEmptyError>{
         Err(ContainerEmptyError)
@@ -328,7 +421,7 @@ impl<T> Searchable<T> for ArrayedList<T>
     where T: Clone
 {
     fn search(&self, x: T){
-        // TODO: Paralellized binary search
+    
     }
 
     fn restart_searches(&mut self){
@@ -372,11 +465,11 @@ impl<T> Container for ArrayedList<T>
     where T: Clone
 {
     fn is_empty(&self) -> bool{
-        return self.num_el == 0;
+        return self.head == self.tail && self.num_el == 0;
     }
     
     fn is_full(&self) -> bool{
-        return self.num_el == self.capacity as u32;
+        return self.head == self.tail && self.num_el == self.capacity as u32;
     }
     
     fn clear(&mut self){
@@ -465,12 +558,12 @@ impl<T> LinearIterator for ArrayedList<T>
            return Err(AfterTheEndError)
 
         // otherwise, if we are going to be after the end when we go forth
-        } else if self.position + 1 > (self.num_el - 1) as i32{
+        } else if self.position == self.tail {
             self.position = ArrayedList::<T>::AFTER_POS;
 
         // Otherwise, increment the position
         } else{
-            self.position += 1;
+            self.position = (self.position + 1) % (self.capacity as i32);
         }
 
         Ok(())
