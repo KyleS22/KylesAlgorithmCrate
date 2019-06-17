@@ -350,9 +350,52 @@ impl<T> SimpleList<T> for ArrayedList<T>
 
     }
     
+    
 
+    
+	/// Delete the last item in the list
+	///
+	/// # Arguments
+	/// * `&mut self` - A reference to the list
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::arrayed_list::ArrayedList;
+    /// use kyles_algorithm_crate::base::simple_list::SimpleList;
+    ///
+    /// // Create a new list
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// // insert some items
+    /// list.insert_first(1);
+    /// list.insert_first(2);
+    /// list.insert_first(3);
+    ///
+    /// // Delete the last item, which is 3 in this case
+    /// list.delete_last();
+    ///
+	/// ```
     fn delete_last(&mut self) -> Result<(), ContainerEmptyError>{
-        Err(ContainerEmptyError)
+        if self.is_empty() {
+            return Err(ContainerEmptyError)
+        }
+
+        // If the cursor is on this item, we need to move it
+        if self.position == self.tail {
+            self.position = (self.tail - 1) % (self.capacity as i32);
+        }
+
+        // Update the tail
+        self.tail = (self.tail - 1) % (self.capacity as i32);
+
+        self.num_el -= 1;
+
+        if self.is_empty(){
+            self.position = ArrayedList::<T>::BEFORE_POS;
+        }
+
+        return Ok(())
+
     }
 
 }
