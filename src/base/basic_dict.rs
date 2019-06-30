@@ -10,7 +10,7 @@ pub trait BasicDict<T>: Membership<T> {
     ///
     /// # Arguments
     /// * `y` - The item to retrieve
-    fn obtain(&self, y: T) -> Result<T, ItemNotFoundError>;
+    fn obtain(&mut self, y: T) -> Result<T, ItemNotFoundError>;
 
     /// Insert an item into the dictionary
     /// Returns ContainerFullError if the container is full, or DuplicateItemsError if 

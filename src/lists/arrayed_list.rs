@@ -404,10 +404,52 @@ impl<T> SimpleList<T> for ArrayedList<T>
 
     
 impl<T> BasicDict<T> for ArrayedList<T>
-    where T: Clone
+    where T: Clone + Copy
 {
-    fn obtain(&self, y: T) -> Result<T, ItemNotFoundError>{
-        Err(ItemNotFoundError)
+    
+    
+	/// Get the given item from the list
+	///
+	/// # Arguments
+	/// * `&self` - A reference to the list
+	/// * `y` - The item to obtain
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    /// use kyles_algorithm_crate::base::simple_list::SimpleList;
+    ///
+    /// // Create a new list
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// // Add some items
+    /// list.insert_first(1);
+    /// list.insert_first(2);
+    /// list.insert_first(3);
+    ///
+    /// // Obtain 2
+    /// let two = list.obtain(2);
+	/// ```
+    fn obtain(&mut self, y: T) -> Result<T, ItemNotFoundError>{
+        
+        // Save the cursor state
+        let save_pos = self.current_position();
+    
+        // Search for y
+        self.search(y);
+
+        // See if there is an item at the cursor
+        if !self.item_exists() {
+            return Err(ItemNotFoundError);
+        }
+
+        let result = self.item().unwrap();
+
+        // Restore cursor
+        self.go_position(&*save_pos);
+
+        return Ok(result)
+
     }
     
     
@@ -553,6 +595,7 @@ impl<T> CursorSaving for ArrayedList<T>
     }
 
 }
+
 
 impl<T> LinearIterator for ArrayedList<T>
     where T: Clone
