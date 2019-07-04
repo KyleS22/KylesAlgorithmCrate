@@ -10,7 +10,7 @@ pub trait Searchable<T>: Membership<T> + Cursor<T>{
     ///
     /// # Arguments
     /// * `x` - The item to search for
-    fn search(&self, x: T);
+    fn search(&mut self, x: T);
 
     /// Set searches to always start from the beginning of the structure
     fn restart_searches(&mut self);

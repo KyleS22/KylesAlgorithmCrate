@@ -1,4 +1,3 @@
-use base::cursor_position::CursorPosition;
 use custom_errors::after_the_end_error::AfterTheEndError;
 use custom_errors::container_empty_error::ContainerEmptyError;
 

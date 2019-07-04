@@ -567,15 +567,73 @@ impl<T> BasicDict<T> for ArrayedList<T>
 
 impl<T> Searchable<T> for ArrayedList<T>
     where T: Clone + Copy
-{
-    fn search(&self, x: T){
+{   
     
-    }
+	/// Search for the given item
+	///
+	/// # Arguments
+	/// * `&self` - Reference to self
+	/// * `x` - The item to search for in the list
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    ///
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// list.insert(1);
+    /// list.insert(2);
+    /// list.insert(3);
+    /// 
+    /// // The cursor of the list will now be on 1
+    /// list.search(1);
+	/// ```
+    fn search(&mut self, x: T){
+        
+        if !self.continue_search {
+            self.go_first();
+        } else if !self.after() {
+            self.go_forth();
+        }
 
+        while !self.after() && !self.membership_equals(x, self.item().unwrap()){
+            self.go_forth();
+        }
+    }
+    
+    
+	/// Set the search mechanism for the list to restart from the beginning of the list each time
+	///
+	/// # Arguments
+	/// * `&mut self` - Reference to self
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    ///
+    /// let &mut list = ArrayedList::new(3);
+    /// 
+    /// // Now the list will start all searches from the beginning of the list
+    /// list.restart_searches();
+	/// ```
     fn restart_searches(&mut self){
         self.continue_search = false;
     }
 
+	/// Set the search mechanism for the list to start from the current cursor position each time
+	///
+	/// # Arguments
+	/// * `&mut self` - Reference to self
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    ///
+    /// let &mut list = ArrayedList::new(3);
+    /// 
+    /// // Now the list will start all searches from the current position
+    /// list.resume_searches();
+	/// ``` 
     fn resume_searches(&mut self){
         self.continue_search = true;
     }
@@ -663,11 +721,44 @@ impl<T> CursorSaving<T> for ArrayedList<T>
 impl<T> LinearIterator for ArrayedList<T>
     where T: Clone
 {
-
+    
+	/// Check to see if the current position in the structure is the before position
+	///
+	/// # Arguments
+	/// * `&self` - Reference to self
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrated_list::ArrayedList;
+    ///
+    /// let &mut list = ArrayedList::new(3);
+    /// 
+    /// if !list.before() {
+    ///     println!("We are not before the list!");
+    /// }
+    /// 
+	/// ```
     fn before(&self) -> bool{
         return self.position == ArrayedList::<T>::BEFORE_POS;
     }
-
+    
+    
+	/// Check to see if the current position in the structure is the after position
+	///
+	/// # Arguments
+	/// * `&self` - Reference to self
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrated_list::ArrayedList;
+    ///
+    /// let &mut list = ArrayedList::new(3);
+    /// 
+    /// if !list.after() {
+    ///     println!("We are not after the list!");
+    /// }
+    /// 
+	/// ```
     fn after(&self) -> bool{
         return self.position == ArrayedList::<T>::AFTER_POS;
     }

@@ -1,4 +1,3 @@
-use base::cursor_position::CursorPosition;
 use custom_errors::no_current_item_error::NoCurrentItemError;
 
 /// Represents a cursor that points to an item
