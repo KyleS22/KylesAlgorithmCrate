@@ -29,7 +29,7 @@ use lists::simple_list::SimpleList;
 use dictionary::dict::Dict;
 
 use std::fmt;
-use std::fmt::Error;
+use std::error::Error;
  
 trait ConstPositions{
     const AFTER_POS: i32 = -1;
@@ -433,8 +433,14 @@ impl<T> BasicDict<T> for ArrayedList<T>
     fn obtain(&mut self, y: T) -> Result<T, ItemNotFoundError>{
         
         // Save the cursor state
-        let save_pos = self.current_position();
-    
+        let save_pos;
+        match self.current_position(){
+            CursorPosition::ArrayedList(pos) => save_pos = pos,
+            _ => return Err(ItemNotFoundError)
+        }
+        
+
+
         // Search for y
         self.search(y);
 
@@ -446,7 +452,7 @@ impl<T> BasicDict<T> for ArrayedList<T>
         let result = self.item().unwrap();
 
         // Restore cursor
-        self.go_position(&*save_pos);
+        self.go_position(CursorPosition::ArrayedList(save_pos));
 
         return Ok(result)
 
@@ -473,7 +479,7 @@ impl<T> BasicDict<T> for ArrayedList<T>
     /// // 2 will be inserted after 1
     /// list.insert(2);
 	/// ```
-    fn insert(&mut self, x: T) -> Result<(), Error>{
+    fn insert(&mut self, x: T) -> Result<(), Box<Error>>{
         self.insert_item(x)
     }
 
@@ -496,14 +502,71 @@ impl<T> BasicDict<T> for ArrayedList<T>
     /// // Delete 1 from the list
     /// list.delete(1);
 	/// ```
-    fn delete(&mut self, x: T) -> Result<(), ItemNotFoundError>{
-        Err(ItemNotFoundError)
+    fn delete(&mut self, x: T) -> Result<(), Box<Error>>{
+        
+        // Make sure the list is not empty
+        if self.is_empty() {
+            return Err(Box::new(ContainerEmptyError));
+        }
+        
+        // Save the cursor
+        let save_pos;
+        
+        match self.current_position(){
+            CursorPosition::ArrayedList(pos) => save_pos = pos,
+            _ => return Err(Box::new(InvalidArgumentError)),
+        }
+        
+
+
+        let save_item;
+
+        // Save the item at the cursor if it exists
+        if save_pos.item_exists() {
+            save_item = Some(save_pos.item());   
+        } else {
+            save_item = None;
+        }
+
+        // Find the item to delete
+        self.search(x);
+        
+        // If there is no item, then it does not exist
+        if !self.item_exists() {
+            return Err(Box::new(ItemNotFoundError));
+        }
+        
+
+        // If we are deleting the item at the cursor, just remove it
+        if self.position == save_pos.position {
+            self.delete_item();
+        
+        // Otherwise, we need to restore the cursor
+        } else {
+
+            match save_item {
+                None => self.position = save_pos.position,
+                Some(item) => {
+                    let save_continue_setting = self.continue_search;
+                    self.restart_searches();
+
+                
+                    self.search(item.unwrap());
+
+                    self.continue_search = save_continue_setting;
+   
+                }
+            }
+        }
+
+        return Ok(())
+
     }
  
 }
 
 impl<T> Searchable<T> for ArrayedList<T>
-    where T: Clone
+    where T: Clone + Copy
 {
     fn search(&self, x: T){
     
@@ -533,10 +596,10 @@ impl<T> Membership<T> for ArrayedList<T>
 }
 
 impl<T> Dispenser<T> for ArrayedList<T>
-    where T: Clone
+    where T: Clone + Copy
 {
-    fn insert_item(&mut self, x: T) -> Result<(), Error>{
-        Err(Error)
+    fn insert_item(&mut self, x: T) -> Result<(), Box<Error>>{
+        Err(Box::new(NoCurrentItemError))
     }
     
     // delets at the current position    
@@ -567,7 +630,7 @@ impl<T> Container for ArrayedList<T>
 }
 
 impl<T> Cursor<T> for ArrayedList<T>
-    where T: Clone
+    where T: Clone + Copy
 {
     
     fn item(&self) -> Result<T, NoCurrentItemError>{
@@ -580,17 +643,17 @@ impl<T> Cursor<T> for ArrayedList<T>
 }
 
 
-impl<T> CursorSaving for ArrayedList<T>
+impl<T> CursorSaving<T> for ArrayedList<T>
     where T: Clone + Copy
 {
   
-    fn current_position(&self) -> Box<CursorPosition>{
+    fn current_position(&self) -> CursorPosition<T> {
         let cursor_pos = ArrayedListIterator::new(self.list_elements.clone(), self.head, self.tail, self.num_el);
-        Box::new(cursor_pos)
+        CursorPosition::ArrayedList(cursor_pos)
     }
     
   
-    fn go_position(&mut self, pos: &CursorPosition){
+    fn go_position(&mut self, pos: CursorPosition<T>){
 
     }
 
@@ -744,11 +807,6 @@ impl<T> Dict<T> for ArrayedList<T>
 
 }
 
-impl<T> CursorPosition for ArrayedList<T>
-    where T: Clone
-{
-
-}
 
 impl<T> fmt::Display for ArrayedList<T> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

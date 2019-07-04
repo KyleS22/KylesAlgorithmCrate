@@ -5,7 +5,7 @@ use custom_errors::container_empty_error::ContainerEmptyError;
 /// An iterator for linearly moving through a collection of items.
 /// Uses a cursor to keep track of the current position, and has functions
 /// to move around in the sequence
-pub trait LinearIterator: CursorPosition {
+pub trait LinearIterator {
     
     /// Is the current position before the start of the structure?
     fn before(&self) -> bool;

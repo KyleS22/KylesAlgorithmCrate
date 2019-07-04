@@ -22,7 +22,7 @@ pub struct ArrayedListIterator<T> {
     tail: i32,
     capacity: u32,
     num_el: u32,
-    position: i32,
+    pub position: i32,
 }
 
 impl<T> ConstPositions for ArrayedListIterator<T>{
@@ -260,9 +260,7 @@ impl<T> LinearIterator for ArrayedListIterator<T> {
 
 }
 
-impl<T> CursorPosition for ArrayedListIterator<T> {
 
-}
 
 #[cfg(test)]
 mod arrayed_list_iterator_tests {
