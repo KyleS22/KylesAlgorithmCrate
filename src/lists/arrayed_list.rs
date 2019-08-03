@@ -70,7 +70,8 @@ impl <T> ArrayedList<T>
 	/// ```
     pub fn new(capacity: usize) -> Self {
         let mut vec = Vec::with_capacity(capacity);
-        ArrayedList {list_elements: vec, head: 0, tail: 0, capacity: capacity, position: 0, num_el: 0,  continue_search: false}
+
+        ArrayedList {list_elements: vec, head: 0, tail: 0, capacity: capacity, position: ArrayedList::<T>::BEFORE_POS, num_el: 0,  continue_search: false}
     }
    
      
@@ -189,8 +190,8 @@ impl<T> SimpleList<T> for ArrayedList<T>
             return Err(ContainerFullError);
         }
         
-
-        self.list_elements[self.head as usize] = x;
+        
+        self.list_elements.insert(0, x);//[self.head as usize] = x;
         
         self.num_el += 1;
         self.head = (self.head - 1) % (self.capacity as i32);
@@ -692,11 +693,20 @@ impl<T> Cursor<T> for ArrayedList<T>
 {
     
     fn item(&self) -> Result<T, NoCurrentItemError>{
-        Err(NoCurrentItemError)
+        
+        if !self.item_exists(){
+            return Err(NoCurrentItemError);
+        }
+
+        return Ok(self.list_elements[self.position as usize]);
     }
     
     fn item_exists(&self) -> bool{
-        false
+        if self.position != ArrayedList::<T>::BEFORE_POS && self.position != ArrayedList::<T>::AFTER_POS {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
@@ -1944,7 +1954,10 @@ mod test_arrayed_list {
         assert!(!list.item_exists());
 
         list.insert_first(1).expect("Error in insert_first");
+    
+        assert!(!list.item_exists());
 
+        list.go_first();
         assert!(list.item_exists());
 
         list.go_before();
@@ -2099,9 +2112,9 @@ mod test_arrayed_list {
             _ => assert!(false)
         }
 
-        assert!(list.before());
+        assert!(!list.before());
 
-        list.insert_first(1).expect("Error in insert_first");
+        list.insert_first(0).expect("Error in insert_first");
         
         list.go_before();
 
