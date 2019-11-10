@@ -642,10 +642,58 @@ impl<T> Searchable<T> for ArrayedList<T>
 }
 
 impl<T> Membership<T> for ArrayedList<T>
-    where T: Clone
+    where T: Clone 
 {
+    
+	/// Return true if the item 'x' exists in the list, false otherwise.
+	///
+	/// # Arguments
+	/// * `&self` - Reference to self
+	/// * `x` - The item to check for
+	/// 
+	/// # Example
+	/// ```
+	/// ise kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    ///
+    /// let & mut list = ArrayedList::new(3);
+    ///
+    /// list.insert_first(4);
+    /// list.insert_first(5);
+    /// 
+    /// // This will print 'True!'
+    /// if (list.has(5)){
+    ///     println!("True!");
+    /// }
+    /// else{
+    ///     println!("False");
+    /// }
+    /// 
+    /// // This will print 'False'
+    /// if (list.has(10)){
+    ///     println!("True");
+    /// }else{
+    ///     println!("False");
+    /// }
+	/// ```
     fn has(&self, x: T) -> bool{
-        false
+        
+        // Place to save the cursor
+        let save_pos;
+
+        match self.current_position(){
+            CursorPosition::ArrayedList(pos) => save_pos = pos,
+            _ => return false,
+        }
+
+        self.search(x);
+
+        if self.item_exists(){
+            return true;
+        }else{
+            return false;
+        }
+
+        self.go_position(save_pos);
     }
 
     fn membership_equals(&self, x: T, y: T) -> bool{
