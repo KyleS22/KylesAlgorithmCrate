@@ -70,7 +70,6 @@ impl <T> ArrayedList<T>
 	/// ```
     pub fn new(capacity: usize) -> Self {
         let mut vec = Vec::with_capacity(capacity);
-
         ArrayedList {list_elements: vec, head: 0, tail: 0, capacity: capacity, position: ArrayedList::<T>::BEFORE_POS, num_el: 0,  continue_search: false}
     }
    
@@ -154,7 +153,7 @@ impl <T> ArrayedList<T>
 }
 
 impl<T> SimpleList<T> for ArrayedList<T>
-    where T: Clone + Copy
+    where T: Clone + Copy + PartialEq
 {
     
 	/// Insert the given item into the list at the first position
@@ -311,8 +310,9 @@ impl<T> SimpleList<T> for ArrayedList<T>
         }
 
         self.tail = (self.tail + 1) % (self.capacity as i32);
-
-        self.list_elements[self.tail as usize] = x;
+        
+        self.list_elements.push(x);
+        //self.list_elements[self.tail as usize] = x;
         self.num_el += 1;
 
         return Ok(())
@@ -405,7 +405,7 @@ impl<T> SimpleList<T> for ArrayedList<T>
 
     
 impl<T> BasicDict<T> for ArrayedList<T>
-    where T: Clone + Copy
+    where T: Clone + Copy + PartialEq
 {
     
     
@@ -567,7 +567,7 @@ impl<T> BasicDict<T> for ArrayedList<T>
 }
 
 impl<T> Searchable<T> for ArrayedList<T>
-    where T: Clone + Copy
+    where T: Clone + Copy + PartialEq
 {   
     
 	/// Search for the given item
@@ -642,7 +642,7 @@ impl<T> Searchable<T> for ArrayedList<T>
 }
 
 impl<T> Membership<T> for ArrayedList<T>
-    where T: Clone + Copy
+    where T: Clone + Copy + PartialEq
 {
     
 	/// Return true if the item 'x' exists in the list, false otherwise.
@@ -653,7 +653,7 @@ impl<T> Membership<T> for ArrayedList<T>
 	/// 
 	/// # Example
 	/// ```
-	/// ise kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
     ///
     /// let & mut list = ArrayedList::new(3);
     ///
@@ -696,8 +696,41 @@ impl<T> Membership<T> for ArrayedList<T>
         self.go_position(save_pos);
     }
 
+    
+	/// Checks to see if two items in the list are equal to eachother
+	///
+	/// # Arguments
+	/// * `x` - The first item to compare
+	/// * `y` - The second item to compare
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    ///
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// list.insert_first(1);
+    /// list.insert_first(2);
+    /// list.insert_first(2);
+    ///
+    /// // This will print 'False'
+    /// if (list.membership_equals(1, 2)){
+    ///     println!("True");
+    /// }else{
+    ///     println!("False");
+    /// }
+    ///
+    /// // This will print 'True'
+    /// // Note that because we pass the items into this function,
+    /// // the items we compare do not need to be in the list.
+    /// if (list.membership_equals(7, 7)){
+    ///     println!("True");
+    /// }else{
+    ///     println!("False");
+    /// }
+	/// ```
     fn membership_equals(&self, x: T, y: T) -> bool{
-        false
+        return x.eq(&y);
     }
 
 }
@@ -952,7 +985,7 @@ impl<T> LinearIterator for ArrayedList<T>
 }
 
 impl<T> Dict<T> for ArrayedList<T>
-    where T: Clone + Copy{
+    where T: Clone + Copy + PartialEq{
 
 }
 
@@ -1692,10 +1725,12 @@ mod test_arrayed_list {
        
         
         let mut list: ArrayedList<i32> = ArrayedList::new(3);
+        
 
         list.insert_last(1).expect("Error in go insert_last");
         list.insert_last(2).expect("Error in go insert_last");
         list.insert_last(3).expect("Error in go insert_last");
+    
 
         if list.membership_equals(1, 2){
             assert!(false);
