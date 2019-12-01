@@ -7,7 +7,7 @@ pub trait Membership<T>: Container{
     ///
     /// # Arguments
     /// * `x` - The element to check for membership
-    fn has(&self, x: T) -> bool;
+    fn has(&mut self, x: T) -> bool;
 
     /// Determines if two elements of type T are equal
     ///

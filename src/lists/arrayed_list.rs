@@ -642,7 +642,7 @@ impl<T> Searchable<T> for ArrayedList<T>
 }
 
 impl<T> Membership<T> for ArrayedList<T>
-    where T: Clone 
+    where T: Clone + Copy
 {
     
 	/// Return true if the item 'x' exists in the list, false otherwise.
@@ -675,13 +675,13 @@ impl<T> Membership<T> for ArrayedList<T>
     ///     println!("False");
     /// }
 	/// ```
-    fn has(&self, x: T) -> bool{
+    fn has(&mut self, x: T) -> bool{
         
         // Place to save the cursor
         let save_pos;
 
         match self.current_position(){
-            CursorPosition::ArrayedList(pos) => save_pos = pos,
+            CursorPosition::ArrayedList(pos) => save_pos = CursorPosition::ArrayedList(pos),
             _ => return false,
         }
 
