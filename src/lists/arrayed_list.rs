@@ -737,9 +737,45 @@ impl<T> Membership<T> for ArrayedList<T>
 
 impl<T> Dispenser<T> for ArrayedList<T>
     where T: Clone + Copy
-{
+{   
+    
+	/// Insert the given item at the current cursor position
+	///
+	/// # Arguments
+	/// * `x` - The item to insert
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    ///
+    /// let &mut list = ArrayedList::new(3);
+    /// 
+    /// // Insert 1 at the current position (which is the start of the list)
+    /// list.insert_item(1);
+    /// 
+    /// // Insert 3 at the current position (which is still the the start)
+    /// list.insert_item(3);
+    /// 
+    /// // Now we are pointed at 1
+    /// list.go_forth();
+    /// list.insert(2);
+    ///
+    /// // List is now 3, 2, 1
+	/// ```
     fn insert_item(&mut self, x: T) -> Result<(), Box<Error>>{
-        Err(Box::new(NoCurrentItemError))
+        
+        if (!self.item_exists()){
+            return Err(Box::new(NoCurrentItemError));
+        }
+        
+        if (self.is_full()){
+            return Err(Box::new(ContainerFullError));
+        }
+
+
+        self.list_elements.insert(self.position as usize, x);
+        
+        Ok(())
     }
     
     // delets at the current position    
