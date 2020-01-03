@@ -1012,16 +1012,63 @@ impl<T> CursorSaving<T> for ArrayedList<T>
     ///
     /// let &mut list = ArrayedList::new(3);
     ///
-    /// // TODO:
+    /// list.insert(3);
+    /// list.insert(2);
+    /// list.insert(1);
+    /// 
+    /// list.go_first();
+    /// list.go_forth();
+    /// 
+    /// // This will be the second position in the list
+    /// let pos = list.current_position();
+    ///
 	/// ```
     fn current_position(&self) -> CursorPosition<T> {
         let cursor_pos = ArrayedListIterator::new(self.list_elements.clone(), self.head, self.tail, self.num_el);
         CursorPosition::ArrayedList(cursor_pos)
     }
     
-    // TODO: Implement
+    
+	/// Move the cursor to the given position in the list
+	///
+	/// # Arguments
+	/// * `&mut self` - Mutable Reference to self
+	/// * `pos` - A CursorPosition representing the position to move to
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    ///
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// list.insert_first(3);
+    /// list.insert_first(2);
+    /// list.insert_first(1);
+    ///
+    /// list.go_first();
+    ///
+    /// // Cursor is on the second position
+    /// list.go_forth();
+    ///
+    /// // Get the position
+    /// let pos = list.current_position();
+    ///
+    /// // Move the cursor
+    /// list.go_after();
+    ///
+    /// // Go back to the stored position
+    /// list.go_position(pos);
+    ///
+    /// match list.item(){
+    ///     2 => println!("It worked!"),
+    ///     _ => println!("Something went wrong!")
+    /// }
+	/// ```
     fn go_position(&mut self, pos: CursorPosition<T>){
 
+        // TODO: Something is missing here
+
+        self.position = pos.position;
     }
 
 }
