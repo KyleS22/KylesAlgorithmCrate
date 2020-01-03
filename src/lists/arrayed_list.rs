@@ -820,14 +820,91 @@ impl<T> Dispenser<T> for ArrayedList<T>
 impl<T> Container for ArrayedList<T>
     where T: Clone
 {
+    
+    
+	/// Return true if the list is empty
+	///
+	/// # Arguments
+	/// * `&self` - Reference to self
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    ///
+    /// // Create a new list
+    /// let &mut list = ArrayedList::new(3);
+    /// 
+    /// // The list is currently empty
+    /// if (list.is_empty()){
+    ///     println!("This should happen, because the list is empty!");
+    /// }
+    /// 
+    /// // Put something in the list and try again
+    /// list.insert(1);
+    ///
+    /// if (list.is_empty()){
+    ///     println!("This will not happen, because the list is not empty");
+    /// }
+	/// ```
     fn is_empty(&self) -> bool{
         return self.head == self.tail && self.num_el == 0;
     }
     
+    
+	/// Return true if the list is full
+	///
+	/// # Arguments
+	/// * `&self` - Reference to self
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    ///
+    /// let &mut list = ArrayedList::new(3);
+    /// 
+    /// // The list is not full
+    /// if (list.is_full()){
+    ///     println!("This will not happen, the list is empty");
+    /// }
+    ///
+    /// list.insert(1);
+    /// list.insert(2);
+    /// list.insert(3);
+    ///
+    /// // Now the list is full
+    /// if (list.is_full()){
+    ///     println!("This will happen, because the list is full");
+    /// }
+	/// ```
     fn is_full(&self) -> bool{
         return self.head == self.tail && self.num_el == self.capacity as u32;
     }
     
+    
+	/// Clear the list of all elements
+	///
+	/// # Arguments
+	/// * `&mut self` - Mutable reference to self
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    ///
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// list.insert(1);
+    /// list.insert(2);
+    /// list.insert(3);
+    ///
+    /// // The list is full
+    ///
+    /// list.clear();
+    ///
+    /// // The list is now empty
+    /// if (list.is_empty()){
+    ///     println!("The list should be empty!");
+    /// }
+	/// ```
     fn clear(&mut self){
         self.list_elements.clear();
         self.num_el = 0;
@@ -841,6 +918,35 @@ impl<T> Cursor<T> for ArrayedList<T>
     where T: Clone + Copy
 {
     
+    
+	/// Return the item at the cursor
+	///
+	/// # Arguments
+	/// * `&self` - Reference to self
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    ///
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// list.insert(1);
+    /// list.insert(2);
+    ///
+    /// list.go_first();
+    ///
+    /// match list.item(){
+    ///     1 => println!("The current item is 1"),
+    ///     _ => println!("Something went wrong!")
+    /// }
+    ///
+    /// list.go_forth();
+    ///
+    /// match list.item() {
+    ///     2 => println!("The current item is 2"),
+    ///     _ => println!("Something went wrong!")
+    /// }
+	/// ```
     fn item(&self) -> Result<T, NoCurrentItemError>{
         
         if !self.item_exists(){
@@ -850,6 +956,36 @@ impl<T> Cursor<T> for ArrayedList<T>
         return Ok(self.list_elements[self.position as usize]);
     }
     
+    
+	/// Return true if there is an item at the cursor
+	///
+	/// # Arguments
+	/// * `&self` - Reference to self
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    ///
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// if (list.item_exists()){
+    ///     println!("This should not happen, there are no items");
+    /// }
+    ///
+    /// list.insert_first(1);
+    /// list.go_first();
+    ///
+    /// if (list.item_exists()){
+    ///     println!("There is an item here!")
+    /// }
+    ///
+    /// list.go_after();
+    /// 
+    /// // No items after the list!
+    /// if (list.item_exists()){
+    ///     println!("This should not happen! No items after the list!");
+    /// }
+	/// ```
     fn item_exists(&self) -> bool{
         if self.position != ArrayedList::<T>::BEFORE_POS && self.position != ArrayedList::<T>::AFTER_POS {
             return true;
@@ -864,12 +1000,26 @@ impl<T> CursorSaving<T> for ArrayedList<T>
     where T: Clone + Copy
 {
   
+    
+	/// Return the current position in the list as a Cursor Position item
+	///
+	/// # Arguments
+	/// * `&self` - Reference to self.
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    ///
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// // TODO:
+	/// ```
     fn current_position(&self) -> CursorPosition<T> {
         let cursor_pos = ArrayedListIterator::new(self.list_elements.clone(), self.head, self.tail, self.num_el);
         CursorPosition::ArrayedList(cursor_pos)
     }
     
-  
+    // TODO: Implement
     fn go_position(&mut self, pos: CursorPosition<T>){
 
     }
@@ -888,7 +1038,7 @@ impl<T> LinearIterator for ArrayedList<T>
 	/// 
 	/// # Example
 	/// ```
-	/// use kyles_algorithm_crate::lists::arrated_list::ArrayedList;
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
     ///
     /// let &mut list = ArrayedList::new(3);
     /// 
@@ -909,7 +1059,7 @@ impl<T> LinearIterator for ArrayedList<T>
 	/// 
 	/// # Example
 	/// ```
-	/// use kyles_algorithm_crate::lists::arrated_list::ArrayedList;
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
     ///
     /// let &mut list = ArrayedList::new(3);
     /// 
