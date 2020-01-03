@@ -778,9 +778,41 @@ impl<T> Dispenser<T> for ArrayedList<T>
         Ok(())
     }
     
-    // delets at the current position    
+    
+	/// Delete the item at the current position
+	///
+	/// 
+	/// # Example
+	/// ```
+	/// use kyles_algorithm_crate::lists::arrayed_list::ArrayedList;
+    ///
+    /// let &mut list = ArrayedList::new(3);
+    ///
+    /// //Insert 1 2 3 into the list
+    /// list.insert_first(3);
+    /// list.insert_first(2);
+    /// list.insert_first(1);
+    ///
+    /// // Move to the beginning of the list
+    /// list.go_first();
+    ///
+    /// // Move forward to place cursor on 2
+    /// list.go_forth();
+    ///
+    /// // Delete 2
+    /// list.delete_item();
+    ///
+	/// ```
     fn delete_item(&mut self) -> Result<(), NoCurrentItemError>{
-        Err(NoCurrentItemError)
+        if (!self.item_exists()){
+            return Err(NoCurrentItemError);
+        }
+
+        self.list_elements.remove(self.position as usize);
+        self.num_el -= 1;
+        
+        Ok(())
+
     }
 
 }
