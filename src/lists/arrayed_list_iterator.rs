@@ -1,5 +1,4 @@
 use base::linear_iterator::LinearIterator;
-use base::cursor_position::CursorPosition;
 
 use custom_errors::container_empty_error::ContainerEmptyError;
 use custom_errors::after_the_end_error::AfterTheEndError;
@@ -437,7 +436,8 @@ mod arrayed_list_iterator_tests {
         }
 
     }
-
+    
+    #[test]
     fn test_go_first(){
         use lists::arrayed_list_iterator::ArrayedListIterator;
         use base::linear_iterator::LinearIterator;
@@ -455,6 +455,7 @@ mod arrayed_list_iterator_tests {
         
     }
 
+    #[test]
     fn test_go_before(){
         use lists::arrayed_list_iterator::ArrayedListIterator;
         use base::linear_iterator::LinearIterator;
@@ -467,6 +468,7 @@ mod arrayed_list_iterator_tests {
         assert_eq!(iter.position, ArrayedListIterator::<i32>::BEFORE_POS);
     }
 
+    #[test]
     fn test_go_after(){
         use lists::arrayed_list_iterator::ArrayedListIterator;
         use base::linear_iterator::LinearIterator;

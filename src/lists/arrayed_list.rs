@@ -69,7 +69,7 @@ impl <T> ArrayedList<T>
     /// let &mut list = ArrayedList::new(3);
 	/// ```
     pub fn new(capacity: usize) -> Self {
-        let mut vec = Vec::with_capacity(capacity);
+        let vec = Vec::with_capacity(capacity);
         ArrayedList {list_elements: vec, head: 0, tail: 0, capacity: capacity, position: ArrayedList::<T>::BEFORE_POS, num_el: 0,  continue_search: false}
     }
    
@@ -142,7 +142,7 @@ impl <T> ArrayedList<T>
     pub fn get_item_at_index(&self, index: u32) -> Result<T, InvalidArgumentError>{
         
         // Make sure the index is valid
-        if index < 0 || index > (self.tail - 1) as u32 {
+        if index > (self.tail - 1) as u32 {
             return Err(InvalidArgumentError);
         }
         
@@ -437,7 +437,7 @@ impl<T> BasicDict<T> for ArrayedList<T>
         let save_pos;
         match self.current_position(){
             CursorPosition::ArrayedList(pos) => save_pos = pos,
-            _ => return Err(ItemNotFoundError)
+            //_ => return Err(ItemNotFoundError)
         }
         
 
@@ -515,7 +515,7 @@ impl<T> BasicDict<T> for ArrayedList<T>
         
         match self.current_position(){
             CursorPosition::ArrayedList(pos) => save_pos = pos,
-            _ => return Err(Box::new(InvalidArgumentError)),
+            //_ => return Err(Box::new(InvalidArgumentError)),
         }
         
 
@@ -540,7 +540,7 @@ impl<T> BasicDict<T> for ArrayedList<T>
 
         // If we are deleting the item at the cursor, just remove it
         if self.position == save_pos.position {
-            self.delete_item();
+            self.delete_item().expect("Failed to delete item.");
         
         // Otherwise, we need to restore the cursor
         } else {
@@ -592,13 +592,13 @@ impl<T> Searchable<T> for ArrayedList<T>
     fn search(&mut self, x: T){
         
         if !self.continue_search {
-            self.go_first();
+            self.go_first().expect("Failed to go to the first element in the list.");
         } else if !self.after() {
-            self.go_forth();
+            self.go_forth().expect("Failed to go forward in list.");
         }
 
         while !self.after() && !self.membership_equals(x, self.item().unwrap()){
-            self.go_forth();
+            self.go_forth().expect("Failed to go forward in list.");
         }
     }
     
@@ -682,18 +682,22 @@ impl<T> Membership<T> for ArrayedList<T>
 
         match self.current_position(){
             CursorPosition::ArrayedList(pos) => save_pos = CursorPosition::ArrayedList(pos),
-            _ => return false,
+            //_ => return false,
         }
 
         self.search(x);
 
+        let res;
+
         if self.item_exists(){
-            return true;
+            res = true;
         }else{
-            return false;
+            res = false;
         }
 
         self.go_position(save_pos);
+
+        return res;
     }
 
     
@@ -764,11 +768,11 @@ impl<T> Dispenser<T> for ArrayedList<T>
 	/// ```
     fn insert_item(&mut self, x: T) -> Result<(), Box<Error>>{
         
-        if (!self.item_exists()){
+        if !self.item_exists(){
             return Err(Box::new(NoCurrentItemError));
         }
         
-        if (self.is_full()){
+        if self.is_full(){
             return Err(Box::new(ContainerFullError));
         }
 
@@ -804,7 +808,7 @@ impl<T> Dispenser<T> for ArrayedList<T>
     ///
 	/// ```
     fn delete_item(&mut self) -> Result<(), NoCurrentItemError>{
-        if (!self.item_exists()){
+        if !self.item_exists() {
             return Err(NoCurrentItemError);
         }
 
@@ -1066,9 +1070,10 @@ impl<T> CursorSaving<T> for ArrayedList<T>
 	/// ```
     fn go_position(&mut self, pos: CursorPosition<T>){
 
-        // TODO: Something is missing here
-
-        self.position = pos.position;
+        match pos {
+            CursorPosition::ArrayedList(p) => self.position = p.position
+        }
+        
     }
 
 }
@@ -1943,10 +1948,7 @@ mod test_arrayed_list {
     #[test]
     fn test_has(){
         use lists::arrayed_list::ArrayedList;
-        use base::searchable::Searchable;
         use lists::simple_list::SimpleList;
-        use base::cursor::Cursor; 
-        use base::linear_iterator::LinearIterator;
         use base::membership::Membership;
         
         let mut list: ArrayedList<i32> = ArrayedList::new(3);
@@ -1982,10 +1984,7 @@ mod test_arrayed_list {
     #[test]
     fn test_membership_equals(){
         use lists::arrayed_list::ArrayedList;
-        use base::searchable::Searchable;
         use lists::simple_list::SimpleList;
-        use base::cursor::Cursor; 
-        use base::linear_iterator::LinearIterator;
         use base::membership::Membership;
        
         
@@ -2015,11 +2014,9 @@ mod test_arrayed_list {
     #[test]
     fn test_insert_item(){
         use lists::arrayed_list::ArrayedList;
-        use base::searchable::Searchable;
         use lists::simple_list::SimpleList;
         use base::cursor::Cursor; 
         use base::linear_iterator::LinearIterator;
-        use base::membership::Membership;
         use base::dispenser::Dispenser;       
         
         let mut list: ArrayedList<i32> = ArrayedList::new(3);
@@ -2087,11 +2084,9 @@ mod test_arrayed_list {
     #[test]
     fn test_delete_item(){
         use lists::arrayed_list::ArrayedList;
-        use base::searchable::Searchable;
         use lists::simple_list::SimpleList;
         use base::cursor::Cursor; 
         use base::linear_iterator::LinearIterator;
-        use base::membership::Membership;
         use base::dispenser::Dispenser;       
         
         let mut list: ArrayedList<i32> = ArrayedList::new(3);
@@ -2148,11 +2143,7 @@ mod test_arrayed_list {
     #[test]
     fn test_is_empty(){
         use lists::arrayed_list::ArrayedList;
-        use base::searchable::Searchable;
         use lists::simple_list::SimpleList;
-        use base::cursor::Cursor; 
-        use base::linear_iterator::LinearIterator;
-        use base::membership::Membership;
         use base::dispenser::Dispenser;       
         use base::container::Container;
         
@@ -2175,11 +2166,7 @@ mod test_arrayed_list {
     #[test]
     fn test_is_full(){
         use lists::arrayed_list::ArrayedList;
-        use base::searchable::Searchable;
         use lists::simple_list::SimpleList;
-        use base::cursor::Cursor; 
-        use base::linear_iterator::LinearIterator;
-        use base::membership::Membership;
         use base::dispenser::Dispenser;       
         use base::container::Container;
         
@@ -2206,12 +2193,7 @@ mod test_arrayed_list {
     #[test]
     fn test_clear(){
         use lists::arrayed_list::ArrayedList;
-        use base::searchable::Searchable;
         use lists::simple_list::SimpleList;
-        use base::cursor::Cursor; 
-        use base::linear_iterator::LinearIterator;
-        use base::membership::Membership;
-        use base::dispenser::Dispenser;       
         use base::container::Container;
         
         let mut list: ArrayedList<i32> = ArrayedList::new(3);
@@ -2237,13 +2219,9 @@ mod test_arrayed_list {
     #[test]
     fn test_item(){
         use lists::arrayed_list::ArrayedList;
-        use base::searchable::Searchable;
-        use lists::simple_list::SimpleList;
         use base::cursor::Cursor; 
         use base::linear_iterator::LinearIterator;
-        use base::membership::Membership;
         use base::dispenser::Dispenser;       
-        use base::container::Container;
         
         let mut list: ArrayedList<i32> = ArrayedList::new(3);
         
@@ -2289,13 +2267,9 @@ mod test_arrayed_list {
     #[test]
     fn test_item_exists(){
         use lists::arrayed_list::ArrayedList;
-        use base::searchable::Searchable;
         use lists::simple_list::SimpleList;
         use base::cursor::Cursor; 
         use base::linear_iterator::LinearIterator;
-        use base::membership::Membership;
-        use base::dispenser::Dispenser;       
-        use base::container::Container;
         
         let mut list: ArrayedList<i32> = ArrayedList::new(3);
         
@@ -2305,7 +2279,7 @@ mod test_arrayed_list {
     
         assert!(!list.item_exists());
 
-        list.go_first();
+        assert!(list.go_first().is_ok());
         assert!(list.item_exists());
 
         list.go_before();
@@ -2340,13 +2314,8 @@ mod test_arrayed_list {
     #[test]
     fn test_before(){
         use lists::arrayed_list::ArrayedList;
-        use base::searchable::Searchable;
         use lists::simple_list::SimpleList;
-        use base::cursor::Cursor; 
         use base::linear_iterator::LinearIterator;
-        use base::membership::Membership;
-        use base::dispenser::Dispenser;       
-        use base::container::Container;
         
         let mut list: ArrayedList<i32> = ArrayedList::new(3);
         
@@ -2367,13 +2336,8 @@ mod test_arrayed_list {
      #[test]
     fn test_after(){
         use lists::arrayed_list::ArrayedList;
-        use base::searchable::Searchable;
         use lists::simple_list::SimpleList;
-        use base::cursor::Cursor; 
         use base::linear_iterator::LinearIterator;
-        use base::membership::Membership;
-        use base::dispenser::Dispenser;       
-        use base::container::Container;
         
         let mut list: ArrayedList<i32> = ArrayedList::new(3);
         
@@ -2395,13 +2359,9 @@ mod test_arrayed_list {
     #[test]
     fn test_go_forth(){
         use lists::arrayed_list::ArrayedList;
-        use base::searchable::Searchable;
         use lists::simple_list::SimpleList;
         use base::cursor::Cursor; 
         use base::linear_iterator::LinearIterator;
-        use base::membership::Membership;
-        use base::dispenser::Dispenser;       
-        use base::container::Container;
         
         let mut list: ArrayedList<i32> = ArrayedList::new(3);
         
@@ -2445,13 +2405,10 @@ mod test_arrayed_list {
     #[test]
     fn test_go_first(){
         use lists::arrayed_list::ArrayedList;
-        use base::searchable::Searchable;
         use lists::simple_list::SimpleList;
         use base::cursor::Cursor; 
         use base::linear_iterator::LinearIterator;
-        use base::membership::Membership;
         use base::dispenser::Dispenser;       
-        use base::container::Container;
         
         let mut list: ArrayedList<i32> = ArrayedList::new(3);
         
@@ -2503,13 +2460,8 @@ mod test_arrayed_list {
     #[test]
     fn test_go_before(){
         use lists::arrayed_list::ArrayedList;
-        use base::searchable::Searchable;
         use lists::simple_list::SimpleList;
-        use base::cursor::Cursor; 
         use base::linear_iterator::LinearIterator;
-        use base::membership::Membership;
-        use base::dispenser::Dispenser;       
-        use base::container::Container;
         
         let mut list: ArrayedList<i32> = ArrayedList::new(3);
         
@@ -2531,13 +2483,8 @@ mod test_arrayed_list {
     #[test]
     fn test_go_after(){
         use lists::arrayed_list::ArrayedList;
-        use base::searchable::Searchable;
         use lists::simple_list::SimpleList;
-        use base::cursor::Cursor; 
         use base::linear_iterator::LinearIterator;
-        use base::membership::Membership;
-        use base::dispenser::Dispenser;       
-        use base::container::Container;
         
         let mut list: ArrayedList<i32> = ArrayedList::new(3);
         
